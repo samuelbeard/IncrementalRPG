@@ -1,0 +1,71 @@
+.header {
+  text-align:center;
+}
+
+.row {
+  margin-bottom:2px;
+  text-align:center;
+}
+
+.alert {
+  text-align:left;
+}
+
+.btn {
+  margin-top:5px;
+}
+
+h6 {
+  margin-left:5px;
+  margin-top:13px;
+  font-family:sans-serif;
+  text-align:left;
+  line-height:5px;
+}
+
+.col-md-6 {
+  padding-left:25px;
+  padding-right:25px;  
+} 
+
+.col-xs-4, .col-xs-3, .col-xs-6 {
+  padding-left:1px;
+  padding-right:1px;
+}
+
+/* Research Bars */
+.progress {
+  width: 100%;
+  height: 39px;
+}
+.progress-wrap-hostel {
+  background: #D9534F;
+  margin: 5px 0 0 0;
+  overflow: hidden;
+  position: relative;
+}
+.progress-bar-hostel {
+  background: #ddd;
+  left: 0;
+  position: absolute;
+  top: 0;
+  border-radius:0;
+}
+
+.researchingComment {
+  line-height:39px;
+  color:white;
+}
+
+.info {
+  overflow:hidden;
+  max-height:200px;
+}
+
+.info p {
+  text-align:left;
+}
+
+.well {
+  padding-top:0;
+}
