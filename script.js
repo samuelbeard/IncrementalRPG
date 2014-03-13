@@ -88,7 +88,7 @@ $(document).ready(function(){
   $('#onLoadModal').modal();
   beginTick();
   updateValues();
-});
+
 
 // Get town and moyor names and display them.
 $('#modalClose').click(function(){
@@ -462,3 +462,5 @@ $('#upgradeMatesRatesStone').click(function(){
     updateValues();
   } else {$("#info").prepend($('<p>You need more resources.</p>').fadeIn('slow'));}
 });
+
+});/*document.ready*/
