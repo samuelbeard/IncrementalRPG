@@ -13,7 +13,7 @@
     <!-- Latest compiled and minified Bootstrap JavaScript -->
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <!--Game Script-->
-    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
 </head>
 
 <body>
@@ -126,6 +126,48 @@
                 </div>
                 <!--.row-->
 
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button type="button" id="mineOre" class="btn btn-primary btn-block">Mine Ore</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-default btn-block disabled">
+                            <span id="oreAmount">0</span> /
+                            <span id="maxOre">0</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-4">
+                        <span class="btn btn-default btn-block disabled">
+                            <span id="oreIncrement">0</span>
+                            <span>/ 5s</span>
+                        </span>
+                    </div>
+                </div>
+                <!--.row-->
+
+                <div class="row resource-counters">
+                    <div class="col-xs-3">
+                        <div class="btn-group btn-group-justified">
+                            <span class="btn disabled iron">Iron</span>
+                            <span id="ironAmount" class="btn disabled iron">0</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="btn-group btn-group-justified">
+                      <span class="btn disabled copper">Copper</span>
+                        <span id="copperAmount" class="btn disabled copper">0</span></div>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="btn-group btn-group-justified">
+                      <span class="btn disabled silver">Silver</span>
+                        <span id="silverAmount" class="btn disabled silver">0</span></div>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="btn-group btn-group-justified">
+                      <span class="btn disabled gold">Gold</span>
+                        <span id="goldAmount" class="btn disabled gold">0</span></div>
+                    </div>
+                  </div>
                 <hr>
 
             </div>
@@ -180,6 +222,21 @@
                         <h6>-
                             <span id="minerCost">10 </span>Food</h6>
                         <h6>+1 Miner</h6>
+                    </div>
+                </div>
+                <!--.row-->
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button type="button" id="createQuarrier" class="btn btn-block btn-success">Create Quarrier</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button type="button" id="quarrierAmount" class="btn btn-block btn-default disabled">0</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6>-
+                            <span id="quarrierCost">10 </span>Food</h6>
+                        <h6>+1 Quarrier</h6>
                     </div>
                 </div>
                 <!--.row-->
@@ -309,6 +366,20 @@
                             <span id="stoneStorageCostWood">0</span>Wood | -
                             <span id="stoneStorageCostStone">0</span>Stone</h6>
                         <h6>+100 Stone Storage</h6>
+                    </div>
+                </div>
+                <!--.row-->
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button id="buildOreStorage" type="button" class="btn btn-danger btn-block">Build Ore Storage</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="oreStorageAmount" type="button" class="btn btn-default btn-block disabled">0</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6>-<span id="oreStorageCostWood">0</span> Wood -<span id="oreStorageCostStone">0</span> Stone -<span id="oreStorageCostIron">0</span> Iron</h6>
+                        <h6>+100 Ore Storage</h6>
                     </div>
                 </div>
                 <!--.row-->

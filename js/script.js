@@ -36,6 +36,34 @@ var names = {
             stone: 50
         }
     },
+     ore = {
+        name: "ore",
+        increment: 0,
+        amount: 0,
+        max: 200,
+        storage: 0,
+        iron: {
+          name: "iron",
+          amount: 0
+        },
+        copper: {
+          name: "copper",
+          amount: 0
+        },
+        silver: {
+          name: "silver",
+          amount: 0
+        },
+        gold: {
+          name: "gold",
+          amount: 0
+        },
+        storageCost: {
+          wood: 100,
+          stone: 100,
+          iron: 25
+        }
+      },
     worker = {
         name: "worker",
         amount: 0,
@@ -53,6 +81,11 @@ var names = {
             increment: 1,
             amount: 0,
             cost: 10
+        },
+        quarrier: {
+            increment: 1,
+            amount: 0,
+            cost: 15
         }
     }, // Buildings
     tent = {
@@ -106,6 +139,7 @@ $(document).ready(function () {
         gatherWood();
         gatherStone();
         gatherFood();
+        gatherOre();
     }
 
     // Display the correct values.
@@ -119,6 +153,11 @@ $(document).ready(function () {
         document.getElementById("foodAmount").innerHTML = food.amount;
         document.getElementById("maxFood").innerHTML = food.max;
         document.getElementById("foodIncrement").innerHTML = food.increment;
+        document.getElementById("ironAmount").innerHTML = ore.iron.amount;
+        document.getElementById("copperAmount").innerHTML = ore.copper.amount;
+        document.getElementById("silverAmount").innerHTML = ore.silver.amount;
+        document.getElementById("goldAmount").innerHTML = ore.gold.amount;
+        document.getElementById("oreAmount").innerHTML = ore.amount;
 
         document.getElementById("workerAmount").innerHTML = worker.amount;
         document.getElementById("maxPop").innerHTML = maxPop;
@@ -128,6 +167,10 @@ $(document).ready(function () {
         document.getElementById("minerCost").innerHTML = worker.miner.cost;
         document.getElementById("hunterAmount").innerHTML = worker.hunter.amount;
         document.getElementById("hunterCost").innerHTML = worker.hunter.cost;
+        document.getElementById("quarrierAmount").innerHTML = worker.quarrier.amount;
+        document.getElementById("quarrierCost").innerHTML = worker.quarrier.cost;
+        document.getElementById("stoneIncrement").innerHTML = stone.increment;
+        document.getElementById("workerAmount").innerHTML = worker.amount;
 
         document.getElementById("tentAmount").innerHTML = tent.amount;
         document.getElementById("tentCostWood").innerHTML = tent.cost.wood;
@@ -149,6 +192,11 @@ $(document).ready(function () {
         document.getElementById("foodStorageAmount").innerHTML = food.storage;
         document.getElementById("foodStorageCostWood").innerHTML = food.storageCost.wood;
         document.getElementById("foodStorageCostStone").innerHTML = food.storageCost.stone;
+        document.getElementById("oreStorageAmount").innerHTML = ore.storage;
+        document.getElementById("oreStorageCostWood").innerHTML = ore.storageCost.wood;
+        document.getElementById("oreStorageCostStone").innerHTML = ore.storageCost.stone;
+        document.getElementById("oreStorageCostIron").innerHTML = ore.storageCost.iron;
+        document.getElementById("maxOre").innerHTML = ore.max;
     }
 
     // Click to Chop, Mine, Gather
@@ -169,6 +217,25 @@ $(document).ready(function () {
         checkMaxFood();
         updateValues();
     });
+
+      $("#mineOre").click(function() {
+        var oreChoice, ores;
+        ores = ["i", "i", "i", "i", "c", "c", "c", "s", "s", "g"];
+        oreChoice = ores[Math.floor(Math.random() * ores.length)];
+        if (oreChoice === "i") {
+          ore.iron.amount += clickIncrement;
+        } else if (oreChoice === "c") {
+          ore.copper.amount += clickIncrement;
+        } else if (oreChoice === "s") {
+          ore.silver.amount += clickIncrement;
+        } else {
+          ore.gold.amount += clickIncrement;
+        }
+        ore.amount += clickIncrement;
+        console.log(oreChoice);
+        checkMaxOre();
+        updateValues();
+      });
 
     // Create Workers
     $('#createLumberjack').click(function () {
@@ -219,6 +286,22 @@ $(document).ready(function () {
         }
     });
 
+  $("#createQuarrier").click(function() {
+    if (worker.amount < maxPop) {
+      if (food.amount >= worker.quarrier.cost) {
+        food.amount -= worker.quarrier.cost;
+        worker.amount++;
+        worker.quarrier.amount++;
+        worker.quarrier.cost++;
+        updateQuarrier();
+      } else {
+        $("#info").prepend($("<p>You need more food.</p>").fadeIn("slow"));
+      }
+    } else {
+      $("#info").prepend($("<p>You need to build more accommodation.</p>").fadeIn("slow"));
+    }
+  });
+
     // Lumberjacks Gather Wood
     function gatherWood() {
         wood.increment = worker.lumberjack.increment * worker.lumberjack.amount;
@@ -227,9 +310,9 @@ $(document).ready(function () {
         updateValues();
     }
 
-    // Miner Gather Stone
+    // Quarrier Gather Stone
     function gatherStone() {
-        stone.increment = worker.miner.increment * worker.miner.amount;
+        stone.increment = worker.quarrier.increment * worker.quarrier.amount;
         stone.amount = stone.amount + stone.increment;
         checkMaxStone();
         updateValues();
@@ -243,6 +326,13 @@ $(document).ready(function () {
         updateValues();
     }
 
+    // Miner Gather Ore
+    function gatherOre() {
+        ore.increment = worker.miner.increment * worker.miner.amount;
+        ore.amount = ore.amount + ore.increment;
+        checkMaxOre();
+        updateValues();
+    }
     // Test max resources
     function checkMaxWood() {
         if (wood.amount > wood.max) {
@@ -259,6 +349,12 @@ $(document).ready(function () {
     function checkMaxFood() {
         if (food.amount > food.max) {
             food.amount = food.max;
+        }
+    }
+
+    function checkMaxOre() {
+        if (ore.iron.amount + ore.copper.amount + ore.silver.amount + ore.gold.amount > ore.max) {
+            ore.amount = ore.max;
         }
     }
 
@@ -378,6 +474,19 @@ $(document).ready(function () {
         }
     });
 
+    // Build ore storage
+    $('#buildOreStorage').click(function () {
+        if (wood.amount >= ore.storageCost.wood && stone.amount >= ore.storageCost.stone) {
+            wood.amount = wood.amount - ore.storageCost.wood;
+            stone.amount = stone.amount - ore.storageCost.stone;
+            ore.storage++;
+            ore.max = food.max + 100;
+            updateValues();
+        } else {
+            $("#info").prepend($('<p>You need more building materials.</p>').fadeIn('slow'));
+        }
+    });
+
     // Upgrades
     $('#upgradeTwoFingers').click(function () {
         if (wood.amount >= 100 && stone.amount >= 100 && food.amount >= 100) {
@@ -458,8 +567,9 @@ $(document).ready(function () {
             stone.amount = stone.amount - 100;
             food.amount = food.amount - 50;
             worker.miner.increment = 2;
+            worker.quarrier.increment = 2;
             $('.upgradeSharpenPicks').addClass('hidden');
-            $("#upgrades").prepend($('<p>Sharpen Picks | Miners Mine Two Stone Each</p>').fadeIn('slow'));
+            $("#upgrades").prepend($('<p>Sharpen Picks | Miners & Quarriers get double resources.</p>').fadeIn('slow'));
             updateValues();
         } else {
             $("#info").prepend($('<p>You need more resources.</p>').fadeIn('slow'));
@@ -507,4 +617,17 @@ $(document).ready(function () {
         }
     });
 
+  wood.amount = 500;
+
+  stone.amount = 500;
+
+  food.amount = 500;
+
+  ore.gold.amount = 20;
+
+  ore.copper.amount = 20;
+
+  ore.iron.amount = 20;
+
+  ore.silver.amount = 20;
 }); /*document.ready*/

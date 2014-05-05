@@ -1,71 +1,103 @@
+.panel,
+.alert,
+.boxes {
+  font-weight: bold;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+}
 .header {
-  text-align:center;
+  text-align: left;
+}
+.alert,
+.panel {
+  text-align: left;
+  margin-top: 5px;
+}
+.panel-hud {
+  font-weight: bold;
+  color: #000;
 }
 
-.row {
-  margin-bottom:2px;
-  text-align:center;
+.hud-btn {
+  min-width: 110px;
 }
-
-.alert {
-  text-align:left;
-}
-
-.btn {
-  margin-top:5px;
-}
-
 h6 {
-  margin-left:5px;
-  margin-top:13px;
-  /*font-family:sans-serif;*/
-  text-align:left;
-  line-height:5px;
+  margin-left: 5px;
+  margin-top: 13px;
+  font-family: sans-serif;
+  text-align: left;
+  line-height: 5px;
 }
-
-.col-md-6 {
-  padding-left:25px;
-  padding-right:25px;
-}
-
-.col-xs-4, .col-xs-3, .col-xs-6 {
-  padding-left:1px;
-  padding-right:1px;
-}
-
 /* Research Bars */
-.progress {
+.progress-bar {
   width: 100%;
-  height: 39px;
+  height: 1.3em;
+  color: #000;
 }
-.progress-wrap-hostel {
-  background: #D9534F;
-  margin: 5px 0 0 0;
+.progress-wrap {
+  background: #d9534f;
   overflow: hidden;
   position: relative;
 }
-.progress-bar-hostel {
-  background: #ddd;
-  left: 0;
-  position: absolute;
-  top: 0;
-  border-radius:0;
-}
-
+.researchProgress,
 .researchingComment {
-  line-height:39px;
-  color:white;
+  line-height: 39px;
+  color: #fff;
 }
-
 .info {
-  overflow:hidden;
-  max-height:200px;
+  overflow: hidden;
+  max-height: 200px;
 }
-
 .info p {
-  text-align:left;
+  text-align: left;
+}
+.well {
+  padding-top: 0;
+}
+.btn {
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.btn-group .btn {
+  min-width: 18em;
 }
 
-.well {
-  padding-top:0;
+.btn-warning {
+  color: #333;
+}
+.resource-counters {
+  text-align: center;
+  color: #000;
+}
+.resource-counters div first-of-type(.btn){
+  border-right: 2px solid #000;
+}
+.iron {
+  background-color: #b8860b;
+  text-align: center;
+}
+.copper {
+  background-color: #9F6D55;
+  text-align: center;
+}
+.silver {
+  background-color: #c0c0c0;
+  text-align: center;
+}
+.gold {
+  background-color: #ffd700;
+}
+.hudList {
+  display: inline;
+  list-style-type: none;
+  text-align: justify;
+}
+.hudNav li {
+  margin-right: 4px;
+}
+.squeeze {
+  padding-right: 0;
+  padding-left: 0;
 }
