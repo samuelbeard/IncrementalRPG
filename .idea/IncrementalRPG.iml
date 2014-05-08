@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="PHP">
+        <CLASSES>
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/fabpot/php-cs-fixer" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/theseer/fdomdocument" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/sebastian/diff" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/composer" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/symfony/finder" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/symfony/console" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/phpunit/php-timer" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/sebastian/finder-facade" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/symfony/filesystem" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/sebastian/version" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/sebastian/phpcpd" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/fabpot/php-cs-fixer" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/theseer/fdomdocument" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/sebastian/diff" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/composer" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/symfony/finder" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/symfony/console" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/phpunit/php-timer" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/sebastian/finder-facade" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/symfony/filesystem" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/sebastian/version" />
+          <root url="file://$USER_HOME$/AppData/Roaming/Composer/vendor/sebastian/phpcpd" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="bootstrap" level="application" />
+  </component>
+</module>
+
