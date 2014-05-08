@@ -6,7 +6,7 @@
   border-radius: 8px;
 }
 .header {
-  text-align: left;
+    text-align: center;
 }
 .alert,
 .panel {
@@ -16,10 +16,6 @@
 .panel-hud {
   font-weight: bold;
   color: #000;
-}
-
-.hud-btn {
-  min-width: 110px;
 }
 h6 {
   margin-left: 5px;
@@ -55,49 +51,54 @@ h6 {
   padding-top: 0;
 }
 .btn {
-  -webkit-border-radius: 8px;
+    webkit-border-radius: 8px;
   border-radius: 8px;
   font-weight: bold;
   margin-top: 5px;
 }
-.btn-group .btn {
-  min-width: 18em;
+
+.hud-btn {
+    min-width: 110px;
 }
 
-.btn-warning {
-  color: #333;
+.hudList {
+    display: inline;
+    list-style-type: none;
+    text-align: justify;
 }
-.resource-counters {
-  text-align: center;
-  color: #000;
+
+.modal-footer button {
+    margin-left: 5em;
 }
-.resource-counters div first-of-type(.btn){
-  border-right: 2px solid #000;
+
+/***********************/
+/*    Helpers         */
+/*********************/
+.justify {
+    min-width: 100%;
+    max-width: 100%;
 }
+
+/***********************/
+/*    Colors         */
+/*********************/
 .iron {
-  background-color: #b8860b;
-  text-align: center;
+    background-color: #888;
+    color: #000;
 }
 .copper {
-  background-color: #9F6D55;
-  text-align: center;
+    background-color: #9f6d55;
+    color: #000;
 }
 .silver {
   background-color: #c0c0c0;
-  text-align: center;
+    color: #000;
 }
 .gold {
   background-color: #ffd700;
+    color: #000;
 }
-.hudList {
-  display: inline;
-  list-style-type: none;
-  text-align: justify;
-}
-.hudNav li {
-  margin-right: 4px;
-}
-.squeeze {
-  padding-right: 0;
-  padding-left: 0;
+
+.dimgray {
+    color: #444;
 }
