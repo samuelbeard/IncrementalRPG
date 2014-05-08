@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpUnit" load_method="PHPUNIT_PHAR" custom_loader_path="" phpunit_phar_path="C:/xampplite/php/pear/PHPUnit/phpunit.phar" use_bootstrap_file="true" use_configuration_file="true" />
+  <component name="ProjectRootManager" version="2" />
+  <component name="VagrantSettings">
+    <option name="instanceFolder" value="" />
+    <option name="provider" value="" />
+    <option name="vagrantExecutable" value="C:\Vagrant\bin\vagrant.bat" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <last-edited>wordpress-content</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+          <order>
+            <scope name="wp-content" />
+            <scope name="wordpress-content" />
+          </order>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
+

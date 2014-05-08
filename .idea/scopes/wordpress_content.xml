@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="wordpress-content" pattern="file:/wp-content//*.php||file:/wp-content//*.css||file:/wp-content//*.js" />
+</component>
