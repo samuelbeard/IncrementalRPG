@@ -90,7 +90,7 @@ $(document).ready(function () {
     updateValues();
 
 
-    // Get town and moyor names and display them.
+    // Get town and mayor names and display them.
     $('#modalClose').click(function () {
         names.town = document.getElementById('town').value;
         document.getElementById("townName").innerHTML = names.town;
@@ -178,6 +178,7 @@ $(document).ready(function () {
                 worker.amount++;
                 worker.lumberjack.amount++;
                 worker.lumberjack.cost++;
+                wood.increment = worker.lumberjack.increment * worker.lumberjack.amount;
                 updateValues();
             } else {
                 $("#info").prepend($('<p>You need more food.</p>').fadeIn('slow'));
@@ -194,6 +195,7 @@ $(document).ready(function () {
                 worker.amount++;
                 worker.miner.amount++;
                 worker.miner.cost++;
+                stone.increment = worker.miner.increment * worker.miner.amount;
                 updateValues();
             } else {
                 $("#info").prepend($('<p>You need more food.</p>').fadeIn('slow'));
@@ -210,6 +212,7 @@ $(document).ready(function () {
                 worker.amount++;
                 worker.hunter.amount++;
                 worker.hunter.cost++;
+                food.increment = worker.hunter.increment * worker.hunter.amount;
                 updateValues();
             } else {
                 $("#info").prepend($('<p>You need more food.</p>').fadeIn('slow'));
@@ -444,6 +447,7 @@ $(document).ready(function () {
             stone.amount = stone.amount - 100;
             food.amount = food.amount - 50;
             worker.lumberjack.increment = 2;
+            wood.increment = worker.lumberjack.increment * worker.lumberjack.amount;
             $('.upgradeSharpenAxes').addClass('hidden');
             $("#upgrades").prepend($('<p>Sharpen Axes | Lumberjacks Chop Two Wood Each</p>').fadeIn('slow'));
             updateValues();
@@ -458,6 +462,7 @@ $(document).ready(function () {
             stone.amount = stone.amount - 100;
             food.amount = food.amount - 50;
             worker.miner.increment = 2;
+            stone.increment = worker.miner.increment * worker.miner.amount;
             $('.upgradeSharpenPicks').addClass('hidden');
             $("#upgrades").prepend($('<p>Sharpen Picks | Miners Mine Two Stone Each</p>').fadeIn('slow'));
             updateValues();
@@ -472,6 +477,7 @@ $(document).ready(function () {
             stone.amount = stone.amount - 100;
             food.amount = food.amount - 50;
             worker.hunter.increment = 2;
+            food.increment = worker.hunter.increment * worker.hunter.amount;
             $('.upgradeSharpenArrows').addClass('hidden');
             $("#upgrades").prepend($('<p>Sharpen Arrows | Hunters Gather Two Food Each</p>').fadeIn('slow'));
             updateValues();
