@@ -264,6 +264,39 @@ $(document).ready(function () {
             food.amount = food.max;
         }
     }
+	function save_game() {
+		localStorage['rpg_save[wood]'] = btoa(JSON.stringify(wood));
+		localStorage['rpg_save[stone]'] = btoa(JSON.stringify(stone));
+		localStorage['rpg_save[food]'] = btoa(JSON.stringify(food));
+		localStorage['rpg_save[worker]'] = btoa(JSON.stringify(worker));
+		
+		localStorage['rpg_save[tent]'] = btoa(JSON.stringify(tent));
+		localStorage['rpg_save[house]'] = btoa(JSON.stringify(house));
+		localStorage['rpg_save[hostel]'] = btoa(JSON.stringify(hostel));
+	}
+	function load_game() {
+		if (!localStorage['rpg_save[wood]']) return;
+		
+		
+		var wood_save = JSON.parse(atob(localStorage['rpg_save[wood]']));
+		var stone_save = JSON.parse(atob(localStorage['rpg_save[stone]']));
+		var food_save = JSON.parse(atob(localStorage['rpg_save[food]']));
+		var worker_save = JSON.parse(atob(localStorage['rpg_save[worker]']));
+		
+		var tent_save = JSON.parse(atob(localStorage['rpg_save[tent]']));
+		var house_save = JSON.parse(atob(localStorage['rpg_save[house]']));
+		var hostel_save = JSON.parse(atob(localStorage['rpg_save[hostel]']));
+		wood = wood_save;
+		stone = stone_save;
+		food = food_save;
+		worker = worker_save;
+		
+		tent = tent_save;
+		house = house_save;
+		hostel = hostel_save;
+		maxPop = (tent.residents * tent.amount) + (house.residents * house.amount);
+		updateValues();
+	}
 
     // Build a tent
     $('#buildTent').click(function () {
@@ -271,7 +304,7 @@ $(document).ready(function () {
             wood.amount = wood.amount - tent.cost.wood;
             tent.amount++;
             tent.cost.wood = tent.cost.wood * 1.2;
-            tent.cost.wood = tent.cost.wood.toFixed(0);
+            tent.cost.wood = tent.cost.wood.toFixed(0); 
             maxPop = maxPop + tent.residents;
             updateValues();
         } else {
@@ -512,5 +545,7 @@ $(document).ready(function () {
             $("#info").prepend($('<p>You need more resources.</p>').fadeIn('slow'));
         }
     });
-
+	setInterval(function () { save_game(); }, 10000);
+	load_game();
 }); /*document.ready*/
+
