@@ -437,11 +437,26 @@ $(document).ready(function () {
             food.amount = food.amount - 120;
             clickIncrement = clickIncrement + 3;
             $('.upgradeFiveFingers').addClass('hidden');
+            $('.upgradeTenFingers').removeClass('hidden');
             $("#upgrades").prepend($('<p>Five Fingers | Five Resources Per Click</p>').fadeIn('slow'));
             updateValues();
         } else {
             $("#info").prepend($('<p>You need more resources.</p>').fadeIn('slow'));
         }
+    });
+    
+    $('#upgradeTenFingers').click(function(){
+    	if(wood.amount >= 750 && stone.amount >= 750 && food.amount >= 250){
+    		wood.amount = wood.amount - 750;
+    		stone.amount = stone.amount - 750;
+    		food.amount = food.amount - 250;
+    		clickIncrement = clickIncrement + 5;
+    		$('.upgradeTenFingers').addClass('hidden');
+    		$("#upgrades").prepend($('<p>Ten Fingers | Ten Resources Per Click</p>').fadeIn('slow'));
+    		updateValues();
+    	}else{
+    		$("#info").prepend($('<p>You need more resources.</p>').fadeIn('slow'));
+    	}
     });
 
     $('#upgradeDoubleSleepingBags').click(function () {
