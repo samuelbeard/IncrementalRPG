@@ -326,6 +326,20 @@ $(document).ready(function () {
             food.amount = food.max;
         }
     }
+    
+    //Upgrade Saving
+    var TwoFingers = 0;
+    var FiveFingers = 0;
+    var TenFingers = 0;
+    var DoubleSleepingBags = 0;
+    var TripleSleepingBags = 0;
+    var BunkBeds = 0;
+    var SharpenAxes = 0;
+    var SharpenPicks = 0;
+    var SharpenArrows = 0;
+    var MatesRatesWood = 0;
+    var MatesRatesStone = 0;
+    
 	function save_game() {
 		localStorage['rpg_save[wood]'] = btoa(JSON.stringify(wood));
 		localStorage['rpg_save[stone]'] = btoa(JSON.stringify(stone));
@@ -336,10 +350,20 @@ $(document).ready(function () {
 		localStorage['rpg_save[tent]'] = btoa(JSON.stringify(tent));
 		localStorage['rpg_save[house]'] = btoa(JSON.stringify(house));
 		localStorage['rpg_save[hostel]'] = btoa(JSON.stringify(hostel));
+        
+        localStorage.setItem("rpg_save[TwoFingers]",TwoFingers);
+        localStorage.setItem("rpg_save[TenFingers]",TenFingers);
+        localStorage.setItem("rpg_save[DoubleSleepingBags]",DoubleSleepingBags);
+        localStorage.setItem("rpg_save[TripleSleepingBags]",TripleSleepingBags);
+        localStorage.setItem("rpg_save[BunkBeds]",BunkBeds);
+        localStorage.setItem("rpg_save[SharpenAxes]",SharpenAxes);
+        localStorage.setItem("rpg_save[SharpenPicks]",SharpenPicks);
+        localStorage.setItem("rpg_save[SharpenArrows]",SharpenArrows);
+        localStorage.setItem("rpg_save[MatesRatesWood]",MatesRatesWood);
+        localStorage.setItem("rpg_save[MatesRatesStone]",MatesRatesStone);
 	}
 	function load_game() {
 		if (!localStorage['rpg_save[wood]']) return;
-		
 		
 		var wood_save = JSON.parse(atob(localStorage['rpg_save[wood]']));
 		var stone_save = JSON.parse(atob(localStorage['rpg_save[stone]']));
@@ -350,6 +374,20 @@ $(document).ready(function () {
 		var tent_save = JSON.parse(atob(localStorage['rpg_save[tent]']));
 		var house_save = JSON.parse(atob(localStorage['rpg_save[house]']));
 		var hostel_save = JSON.parse(atob(localStorage['rpg_save[hostel]']));
+        
+        var TwoFingers_save = localStorage.getItem("rpg_save[TwoFingers]");
+    	var FiveFingers_save = localStorage.getItem("rpg_save[FiveFingers]");
+    	var TenFingers_save = localStorage.getItem("rpg_save[TenFingers]");
+    	var DoubleSleepingBags_save = localStorage.getItem("rpg_save[DoubleSleepingBags]");
+    	var TripleSleepingBags_save = localStorage.getItem("rpg_save[TripleSleepingBags]");
+    	var BunkBeds_save = localStorage.getItem("rpg_save[BunkBeds]");
+    	var SharpenAxes_save = localStorage.getItem("rpg_save[SharpenAxes]");
+    	var SharpenPicks_save = localStorage.getItem("rpg_save[SharpenPicks]");
+    	var SharpenArrows_save = localStorage.getItem("rpg_save[SharpenArrows]");
+    	var MatesRatesWood_save = localStorage.getItem("rpg_save[MatesRatesWood]");
+    	var MatesRatesStone_save = localStorage.getItem("rpg_save[MatesRatesStone]");
+
+        
 		wood = wood_save;
 		stone = stone_save;
         iron = iron_save;
@@ -360,7 +398,21 @@ $(document).ready(function () {
 		house = house_save;
 		hostel = hostel_save;
 		maxPop = (tent.residents * tent.amount) + (house.residents * house.amount);
+        
+        TwoFingers = TwoFingers_save;
+    	FiveFingers = FiveFingers_save;
+    	TenFingers = TenFingers_save;
+    	DoubleSleepingBags = DoubleSleepingBags_save;
+    	TripleSleepingBags = TripleSleepingBags_save;
+    	BunkBeds = BunkBeds_save;
+    	SharpenAxes = SharpenAxes_save;
+    	SharpenPicks = SharpenPicks_save;
+    	SharpenArrows = SharpenArrows_save;
+    	MatesRatesWood = MatesRatesWood_save;
+    	MatesRatesStone = MatesRatesStone_save;
+        
 		updateValues();
+        HideUpgrades();
 	}
 
     // Build a tent
@@ -498,6 +550,7 @@ $(document).ready(function () {
             stone.amount = stone.amount - 100;
             food.amount = food.amount - 100;
             clickIncrement = clickIncrement + 1;
+            TwoFingers = 1;
             $('.upgradeTwoFingers').addClass('hidden');
             $('.upgradeFiveFingers').removeClass('hidden');
             $("#upgrades").prepend($('<p>Two Fingers | Two Resources Per Click</p>').fadeIn('slow'));
@@ -513,6 +566,7 @@ $(document).ready(function () {
             stone.amount = stone.amount - 450;
             food.amount = food.amount - 120;
             clickIncrement = clickIncrement + 3;
+            FiveFingers = 1;
             $('.upgradeFiveFingers').addClass('hidden');
             $('.upgradeTenFingers').removeClass('hidden');
             $("#upgrades").prepend($('<p>Five Fingers | Five Resources Per Click</p>').fadeIn('slow'));
@@ -528,6 +582,7 @@ $(document).ready(function () {
     		stone.amount = stone.amount - 750;
     		food.amount = food.amount - 250;
     		clickIncrement = clickIncrement + 5;
+            TenFingers = 1;
     		$('.upgradeTenFingers').addClass('hidden');
     		$("#upgrades").prepend($('<p>Ten Fingers | Ten Resources Per Click</p>').fadeIn('slow'));
     		updateValues();
@@ -543,6 +598,7 @@ $(document).ready(function () {
             food.amount = food.amount - 100;
             tent.residents = 2;
             maxPop = maxPop + tent.amount; //This only works because we are adding ONE resident.
+            DoubleSleepingBags = 1;
             $('.upgradeDoubleSleepingBags').addClass('hidden');
             $('.upgradeTripleSleepingBags').removeClass('hidden');
             $("#upgrades").prepend($('<p>Double Sleeping Bags | Two People, One Tent</p>').fadeIn('slow'));
@@ -559,6 +615,7 @@ $(document).ready(function () {
             food.amount = food.amount - 200;
             tent.residents = 3;
             maxPop = maxPop + tent.amount;
+            TripleSleepingBags = 1;
             $('.upgradeTripleSleepingBags').addClass('hidden');
             $("#upgrades").prepend($('<p>Triple Sleeping Bags | Three People, One Tent</p>').fadeIn('slow'));
             updateValues();
@@ -574,6 +631,7 @@ $(document).ready(function () {
             food.amount = food.amount - 100;
             house.residents = 5;
             maxPop = maxPop + house.amount; //This only works because we are adding ONE resident.
+            BunkBeds = 1;
             $('.upgradeBunkBeds').addClass('hidden');
             $("#upgrades").prepend($('<p>Bunk Beds | Five People, One House</p>').fadeIn('slow'));
             updateValues();
@@ -589,6 +647,7 @@ $(document).ready(function () {
             food.amount = food.amount - 50;
             worker.lumberjack.increment = 2;
             wood.increment = worker.lumberjack.increment * worker.lumberjack.amount;
+            SharpenAxes = 1;
             $('.upgradeSharpenAxes').addClass('hidden');
             $("#upgrades").prepend($('<p>Sharpen Axes | Lumberjacks Chop Two Wood Each</p>').fadeIn('slow'));
             updateValues();
@@ -604,6 +663,7 @@ $(document).ready(function () {
             food.amount = food.amount - 50;
             worker.miner.increment = 2;
             stone.increment = worker.miner.increment * worker.miner.amount;
+            SharpenPicks = 1;
             $('.upgradeSharpenPicks').addClass('hidden');
             $("#upgrades").prepend($('<p>Sharpen Picks | Miners Mine Two Stone Each</p>').fadeIn('slow'));
             updateValues();
@@ -619,6 +679,7 @@ $(document).ready(function () {
             food.amount = food.amount - 50;
             worker.hunter.increment = 2;
             food.increment = worker.hunter.increment * worker.hunter.amount;
+            SharpenArrows = 1;
             $('.upgradeSharpenArrows').addClass('hidden');
             $("#upgrades").prepend($('<p>Sharpen Arrows | Hunters Gather Two Food Each</p>').fadeIn('slow'));
             updateValues();
@@ -633,6 +694,7 @@ $(document).ready(function () {
             food.amount = food.amount - 50;
             house.cost.wood = house.cost.wood - 20;
             tent.cost.wood = tent.cost.wood - 15;
+            MatesRatesWood = 1;
             $('.upgradeMatesRatesWood').addClass('hidden');
             $("#upgrades").prepend($('<p>Mates Rates - Wood | Houses and Tents Cost Less Wood</p>').fadeIn('slow'));
             updateValues();
@@ -646,6 +708,7 @@ $(document).ready(function () {
             wood.amount = wood.amount - 150;
             food.amount = food.amount - 50;
             house.cost.stone = house.cost.stone - 20;
+            MatesRatesStone = 1;
             $('.upgradeMatesRatesStone').addClass('hidden');
             $("#upgrades").prepend($('<p>Mates Rates - Stone | Houses Cost Less Stone</p>').fadeIn('slow'));
             updateValues();
@@ -653,6 +716,75 @@ $(document).ready(function () {
             $("#info").prepend($('<p>You need more resources.</p>').fadeIn('slow'));
         }
     });
+    
+    //Hide Upgrades if they have already been bought
+    function HideUpgrades(){
+    	if(TwoFingers == 1){
+        	$('.upgradeTwoFingers').addClass('hidden');
+            $('.upgradeFiveFingers').removeClass('hidden');
+            clickIncrement = clickIncrement + 1;
+        }
+        
+        if(FiveFingers == 1){
+        	$('.upgradeFiveFingers').addClass('hidden');
+            $('.upgradeTenFingers').removeClass('hidden');
+            clickIncrement = clickIncrement + 3;
+        }
+        
+        if(TenFingers == 1){
+        	$('.upgradeTenFingers').addClass('hidden');
+            clickIncrement = clickIncrement + 5;
+        }
+        
+        if(DoubleSleepingBags == 1){
+        	$('.upgradeDoubleSleepingBags').addClass('hidden');
+            $('.upgradeTripleSleepingBags').removeClass('hidden');
+            tent.residents = 2;
+            maxPop = maxPop + tent.amount;
+        }
+        
+        if(TripleSleepingBags == 1){
+        	$('.upgradeTripleSleepingBags').addClass('hidden');
+            tent.residents = 3;
+            maxPop = maxPop + tent.amount;
+        }
+        
+        if(BunkBeds == 1){
+        	$('.upgradeBunkBeds').addClass('hidden');
+            house.residents = 5;
+            maxPop = maxPop + house.amount;
+        }
+        
+        if(SharpenAxes == 1){
+        	$('.upgradeSharpenAxes').addClass('hidden');
+            worker.lumberjack.increment = 2;
+            wood.increment = worker.lumberjack.increment * worker.lumberjack.amount;
+        }
+        
+        if(SharpenPicks == 1){
+        	$('.upgradeSharpenPicks').addClass('hidden');
+            worker.miner.increment = 2;
+            stone.increment = worker.miner.increment * worker.miner.amount;
+        }
+        
+        if(SharpenArrows == 1){
+        	$('.upgradeSharpenArrows').addClass('hidden');
+            worker.hunter.increment = 2;
+            food.increment = worker.hunter.increment * worker.hunter.amount;
+        }
+        
+        if(MatesRatesWood == 1){
+        	$('.upgradeMatesRatesWood').addClass('hidden');
+            house.cost.wood = house.cost.wood - 20;
+            tent.cost.wood = tent.cost.wood - 15;
+        }
+        
+        if(MatesRatesStone == 1){
+        	$('.upgradeMatesRatesStone').addClass('hidden');
+            house.cost.stone = house.cost.stone - 20;
+        }
+    }
+    
 	setInterval(function () { save_game(); }, 10000);
 	load_game();
 }); /*document.ready*/
