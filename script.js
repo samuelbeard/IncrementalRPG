@@ -25,6 +25,17 @@ var names = {
             stone: 50
         }
     },
+    iron = {
+    	name: "iron",
+        amount: 0,
+        increment: 0,
+        max: 100,
+        storage: 0,
+        storageCost: {
+        	wood: 100,
+            stone: 100
+        }
+    },
     food = {
         name: "food",
         amount: 0,
@@ -46,6 +57,11 @@ var names = {
         },
         miner: {
             increment: 1,
+            amount: 0,
+            cost: 10
+        },
+        scraper: {
+        	increment: 1,
             amount: 0,
             cost: 10
         },
@@ -105,6 +121,7 @@ $(document).ready(function () {
     function tick() {
         gatherWood();
         gatherStone();
+        gatherIron();
         gatherFood();
     }
 
@@ -116,6 +133,9 @@ $(document).ready(function () {
         document.getElementById("stoneAmount").innerHTML = stone.amount;
         document.getElementById("maxStone").innerHTML = stone.max;
         document.getElementById("stoneIncrement").innerHTML = stone.increment;
+        document.getElementById("ironAmount").innerHTML = iron.amount;
+        document.getElementById("maxIron").innerHTML = iron.max;
+        document.getElementById("ironIncrement").innerHTML = iron.increment;
         document.getElementById("foodAmount").innerHTML = food.amount;
         document.getElementById("maxFood").innerHTML = food.max;
         document.getElementById("foodIncrement").innerHTML = food.increment;
@@ -126,6 +146,8 @@ $(document).ready(function () {
         document.getElementById("lumberjackCost").innerHTML = worker.lumberjack.cost;
         document.getElementById("minerAmount").innerHTML = worker.miner.amount;
         document.getElementById("minerCost").innerHTML = worker.miner.cost;
+        document.getElementById("scraperAmount").innerHTML = worker.scraper.amount;
+        document.getElementById("scraperCost").innerHTML = worker.scraper.cost;
         document.getElementById("hunterAmount").innerHTML = worker.hunter.amount;
         document.getElementById("hunterCost").innerHTML = worker.hunter.cost;
 
@@ -146,6 +168,9 @@ $(document).ready(function () {
         document.getElementById("stoneStorageAmount").innerHTML = stone.storage;
         document.getElementById("stoneStorageCostWood").innerHTML = stone.storageCost.wood;
         document.getElementById("stoneStorageCostStone").innerHTML = stone.storageCost.stone;
+        document.getElementById("ironStorageAmount").innerHTML = iron.storage;
+        document.getElementById("ironStorageCostWood").innerHTML = iron.storageCost.wood;
+        document.getElementById("ironStorageCostStone").innerHTML = iron.storageCost.stone;
         document.getElementById("foodStorageAmount").innerHTML = food.storage;
         document.getElementById("foodStorageCostWood").innerHTML = food.storageCost.wood;
         document.getElementById("foodStorageCostStone").innerHTML = food.storageCost.stone;
@@ -161,6 +186,12 @@ $(document).ready(function () {
     $('#mineStone').click(function () {
         stone.amount = stone.amount + clickIncrement;
         checkMaxStone();
+        updateValues();
+    });
+    
+    $('#mineIron').click(function (){
+    	iron.amount = iron.amount + clickIncrement;
+        checkMaxIron();
         updateValues();
     });
 
@@ -204,6 +235,23 @@ $(document).ready(function () {
             $("#info").prepend($('<p>You need to build more accommodation.</p>').fadeIn('slow'));
         }
     });
+    
+    $('#createScraper').click(function () {
+    	if(worker.amount < maxPop){
+        	if(food.amount >= worker.scraper.cost){
+            	food.amount = food.amount - worker.scraper.cost;
+                worker.amount++;
+                worker.scraper.amount++;
+                worker.scraper.cost++;
+                iron.increment = worker.scraper.increment * worker.scraper.amount;
+                updateValues();
+            } else{
+            	$("#info").prepend($('<p>You need more food</p>').fadeIn('slow'));
+            }
+        } else{
+        	$("#info").prepend($('<p>You need to build more accommodation.</p>').fadeIn('slow'));
+        }
+    });
 
     $('#createHunter').click(function () {
         if (worker.amount < maxPop) {
@@ -237,6 +285,14 @@ $(document).ready(function () {
         checkMaxStone();
         updateValues();
     }
+    
+    //Scraper Gather Iron
+    function gatherIron(){
+    	iron.increment = worker.scraper.increment * worker.scraper.amount;
+        iron.amount = iron.amount + iron.increment;
+        checkMaxIron();
+        updateValues();
+    }
 
     // Hunter Gather Food
     function gatherFood() {
@@ -258,6 +314,12 @@ $(document).ready(function () {
             stone.amount = stone.max;
         }
     }
+    
+    function checkMaxIron(){
+    	if(iron.amount > iron.max){
+        	iron.amount = iron.max;
+        }
+    }
 
     function checkMaxFood() {
         if (food.amount > food.max) {
@@ -267,6 +329,7 @@ $(document).ready(function () {
 	function save_game() {
 		localStorage['rpg_save[wood]'] = btoa(JSON.stringify(wood));
 		localStorage['rpg_save[stone]'] = btoa(JSON.stringify(stone));
+        localStorage['rpg_save[iron]'] = btoa(JSON.stringify(iron));
 		localStorage['rpg_save[food]'] = btoa(JSON.stringify(food));
 		localStorage['rpg_save[worker]'] = btoa(JSON.stringify(worker));
 		
@@ -280,6 +343,7 @@ $(document).ready(function () {
 		
 		var wood_save = JSON.parse(atob(localStorage['rpg_save[wood]']));
 		var stone_save = JSON.parse(atob(localStorage['rpg_save[stone]']));
+        var iron_save = JSON.parse(atob(localStorage['rpg_save[iron]']));
 		var food_save = JSON.parse(atob(localStorage['rpg_save[food]']));
 		var worker_save = JSON.parse(atob(localStorage['rpg_save[worker]']));
 		
@@ -288,6 +352,7 @@ $(document).ready(function () {
 		var hostel_save = JSON.parse(atob(localStorage['rpg_save[hostel]']));
 		wood = wood_save;
 		stone = stone_save;
+        iron = iron_save;
 		food = food_save;
 		worker = worker_save;
 		
@@ -400,6 +465,18 @@ $(document).ready(function () {
             $("#info").prepend($('<p>You need more building materials.</p>').fadeIn('slow'));
         }
     });
+    
+    $('#buildIronStorage').click(function () {
+    	if(wood.amount >= iron.storageCost.wood && stone.amount >= iron.storageCost.stone){
+        	wood.amount = wood.amount - iron.storageCost.wood;
+            stone.amount = stone.amount - iron.storageCost.stone;
+            iron.storage++;
+            iron.max = stone.max + 100;
+            updateValues();
+        } else{
+        	$("#info").prepend($('<p>You need more building materials.</p').fadeIn('slow'));
+        }
+    });
 
     // Build food storage
     $('#buildFoodStorage').click(function () {
@@ -467,10 +544,26 @@ $(document).ready(function () {
             tent.residents = 2;
             maxPop = maxPop + tent.amount; //This only works because we are adding ONE resident.
             $('.upgradeDoubleSleepingBags').addClass('hidden');
+            $('.upgradeTripleSleepingBags').removeClass('hidden');
             $("#upgrades").prepend($('<p>Double Sleeping Bags | Two People, One Tent</p>').fadeIn('slow'));
             updateValues();
         } else {
             $("#info").prepend($('<p>You need more resources.</p>').fadeIn('slow'));
+        }
+    });
+    
+    $('#upgradeTripleSleepingBags').click(function (){
+    	if(wood.amount >= 300 && stone.amount >= 300 && food.amount >= 200){
+        	wood.amount = wood.amount - 300;
+            stone.amount = stone.amount - 300;
+            food.amount = food.amount - 200;
+            tent.residents = 3;
+            maxPop = maxPop + tent.amount;
+            $('.upgradeTripleSleepingBags').addClass('hidden');
+            $("#upgrades").prepend($('<p>Triple Sleeping Bags | Three People, One Tent</p>').fadeIn('slow'));
+            updateValues();
+        } else{
+        	$("#info").prepend($('<p>You need more resources</p>').fadeIn('slow'));
         }
     });
 
