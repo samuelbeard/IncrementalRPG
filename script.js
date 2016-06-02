@@ -86,6 +86,15 @@ var names = {
             stone: 25
         }
     },
+    improvedhouse = {
+    	amount: 0,
+        residents: 8,
+        cost: {
+        	wood: 200,
+            stone: 70,
+            iron: 500
+        }
+    },
     hostel = {
         amount: 0,
         residents: 10,
@@ -94,6 +103,27 @@ var names = {
             stone: 215
         }
     };
+    
+//Audio Declarations
+var chopping_wood_audio = new Audio("sounds/resources/chopping_wood.mp3");
+var mine_stone_audio = new Audio("sounds/resources/mine_stone.mp3");
+var mine_iron_audio = new Audio("sounds/resources/mine_iron.mp3");
+var gather_food_audio = new Audio("sounds/resources/gather_food.mp3");
+var background_audio = new Audio("sounds/background/bensound-happiness.mp3");
+
+//Audio Helper Function
+
+function audioHelper(audioSupport){
+	if(audioSupport.duration > 0 && !audioSupport.paused){
+		//already playing
+		audioSupport.pause();
+		audioSupport.currentTime = 0;
+		audioSupport.play();
+	} else{
+        	//not playing
+			audioSupport.play();    
+        }
+}
 
 var maxPop = (tent.residents * tent.amount) + (house.residents * house.amount);
 var clickIncrement = 1; // Consider changing this to specific materials.
@@ -124,6 +154,9 @@ $(document).ready(function () {
         gatherIron();
         gatherFood();
     }
+    
+    var timer = 10;
+	var lastSave;
 
     // Display the correct values.
     function updateValues() {
@@ -158,6 +191,11 @@ $(document).ready(function () {
         document.getElementById("houseCostWood").innerHTML = house.cost.wood;
         document.getElementById("houseCostStone").innerHTML = house.cost.stone;
         document.getElementById("houseResidents").innerHTML = house.residents;
+        document.getElementById("improvedhouseAmount").innerHTML = improvedhouse.amount;
+        document.getElementById("improvedhouseCostWood").innerHTML = improvedhouse.cost.wood;
+        document.getElementById("improvedhouseCostStone").innerHTML = improvedhouse.cost.stone;
+        document.getElementById("improvedhouseCostIron").innerHTML = improvedhouse.cost.iron;
+        document.getElementById("improvedhouseResidents").innerHTML = improvedhouse.residents;
         document.getElementById("hostelAmount").innerHTML = hostel.amount;
         document.getElementById("hostelCostWood").innerHTML = hostel.cost.wood;
         document.getElementById("hostelCostStone").innerHTML = hostel.cost.stone;
@@ -174,6 +212,8 @@ $(document).ready(function () {
         document.getElementById("foodStorageAmount").innerHTML = food.storage;
         document.getElementById("foodStorageCostWood").innerHTML = food.storageCost.wood;
         document.getElementById("foodStorageCostStone").innerHTML = food.storageCost.stone;
+        
+        document.getElementById("autosave").innerHTML = "Auto-Saving in " + timer + " Last Save: " + lastSave;
     }
 
     // Click to Chop, Mine, Gather
@@ -181,24 +221,28 @@ $(document).ready(function () {
         wood.amount = wood.amount + clickIncrement;
         checkMaxWood();
         updateValues();
+        audioHelper(chopping_wood_audio);
     });
 
     $('#mineStone').click(function () {
         stone.amount = stone.amount + clickIncrement;
         checkMaxStone();
         updateValues();
+        audioHelper(mine_stone_audio);
     });
     
     $('#mineIron').click(function (){
     	iron.amount = iron.amount + clickIncrement;
         checkMaxIron();
         updateValues();
+        audioHelper(mine_iron_audio);
     });
 
     $('#gatherFood').click(function () {
         food.amount = food.amount + clickIncrement;
         checkMaxFood();
         updateValues();
+        audioHelper(gather_food_audio);
     });
 
     // Create Workers
@@ -349,6 +393,7 @@ $(document).ready(function () {
 		
 		localStorage['rpg_save[tent]'] = btoa(JSON.stringify(tent));
 		localStorage['rpg_save[house]'] = btoa(JSON.stringify(house));
+        localStorage['rpg_save[improvedhouse]'] = btoa(JSON.stringify(improvedhouse));
 		localStorage['rpg_save[hostel]'] = btoa(JSON.stringify(hostel));
         
         localStorage.setItem("rpg_save[TwoFingers]",TwoFingers);
@@ -373,6 +418,7 @@ $(document).ready(function () {
 		
 		var tent_save = JSON.parse(atob(localStorage['rpg_save[tent]']));
 		var house_save = JSON.parse(atob(localStorage['rpg_save[house]']));
+        var improvedhouse_save = JSON.parse(atob(localStorage['rpg_save[improvedhouse]']));
 		var hostel_save = JSON.parse(atob(localStorage['rpg_save[hostel]']));
         
         var TwoFingers_save = localStorage.getItem("rpg_save[TwoFingers]");
@@ -396,6 +442,7 @@ $(document).ready(function () {
 		
 		tent = tent_save;
 		house = house_save;
+        improvedhouse = improvedhouse_save;
 		hostel = hostel_save;
 		maxPop = (tent.residents * tent.amount) + (house.residents * house.amount);
         
@@ -443,6 +490,26 @@ $(document).ready(function () {
             updateValues();
         } else {
             $("#info").prepend($('<p>You need more building materials.</p>').fadeIn('slow'));
+        }
+    });
+    
+    //Build Improved House
+    $('#buildImprovedHouse').click(function (){
+    	if(wood.amount >= improvedhouse.cost.wood && stone.amount >= improvedhouse.cost.stone && iron.amount >= improvedhouse.cost.iron){
+        	wood.amount = wood.amount - improvedhouse.cost.wood;
+            stone.amount = stone.amount - improvedhouse.cost.stone;
+            iron.amount = iron.amount - improvedhouse.cost.iron;
+            improvedhouse.amount++;
+            improvedhouse.cost.wood = improvedhouse.cost.wood * 1.2;
+            improvedhouse.cost.stone = improvedhouse.cost.stone * 1.2;
+            improvedhouse.cost.iron = improvedhouse.cost.iron * 1.2;
+            improvedhouse.cost.wood = improvedhouse.cost.wood.toFixed(0);
+            improvedhouse.cost.stone = improvedhouse.cost.stone.toFixed(0);
+            improvedhouse.cost.iron = improvedhouse.cost.iron.toFixed(0);
+            maxPop = maxPop + improvedhouse.residents;
+            updateValues();
+        } else{
+        	$("#info").prepend($('<p>You need more building materials.</p>').fadeIn('slow'));
         }
     });
 
@@ -784,6 +851,19 @@ $(document).ready(function () {
             house.cost.stone = house.cost.stone - 20;
         }
     }
+    
+    function Timer(){
+    	if(timer > 0){
+        	timer--;
+            updateValues();
+        } else{
+        	lastSave = new Date().toLocaleString();
+        	timer = 10;
+            updateValues();
+        }
+    }
+    
+    setInterval(Timer,1000);
     
 	setInterval(function () { save_game(); }, 10000);
 	load_game();
