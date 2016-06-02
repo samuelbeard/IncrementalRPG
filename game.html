@@ -4,9 +4,10 @@
 <head>
     <title>Incremental RPG</title>
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1.0.1">
+    <link rel="stylesheet" type="text/css" href="css/style.css?v=1.0.1">
     <link rel="shortcut icon" href="favicon.ico">
+    
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -14,7 +15,7 @@
     <!-- Latest compiled and minified Bootstrap JavaScript -->
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <!--Game Script-->
-    <script type="text/javascript" src="script.js?v=1.0.5"></script>
+    <script type="text/javascript" src="script.js?v=1.0.7"></script>
     
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -52,7 +53,6 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
             </div>
         </div>
     </div>
-
     <div class="row header">
         <div class="col-md-12">
             <h1>Incremental RPG
@@ -68,11 +68,11 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
             <h3>
                 <small>Our Beloved Mayor:</small>
                 <span id="mayorName"></span>
+                <h6 id='autosave'>Auto-Saving in 0</h6>
             </h3>
         </div>
     </div>
     <div class="container">
-
         <div class="row">
             <div class="col-md-6">
 
@@ -292,11 +292,29 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                     </div>
                 </div>
                 <!--.row-->
+                
+                <div class="row hidden">
+                	<div class="col-xs-4">
+                    	<button type="button" id="buildImprovedHouse" class="btn btn-danger btn-block" onmousedown='return false;'>Build Improved Housing</button>
+                    </div>
+                    <div class="col-xs-4">
+                    	<button type="button" id="improvedhouseAmount" class="btn btn-default btn-block disabled">0</button>
+                    </div>
+                    <div class="col-xs-4">
+                    	<h6>-
+                        	<span id="improvedhouseCostWood">0</span> Wood | -
+                            <span id="improvedhouseCostStone">0</span>Stone | -
+                            <span id="improvedhouseCostIron">0></span>Iron</h6>
+                        <h6>+
+                        	<span id="improvedhouseResidents">0</span> Population</h6>
+                    </div>
+                </div>
+                <!--.row-->
 
                 <div class="row">
 
                     <div class="col-xs-4">
-                        <button id="researchHostel" class="btn btn-danger btn-block" onmousedown='return false;'>Consider Building Hostels</button>
+                        <button id="researchHostel" class="btn btn-danger btn-block" onmousedown='return false;'>Consider Hostels</button>
                         <div class="progress-wrap-hostel progress hidden" data-progress-percent-hostel="100">
                             <span class="researchingComment">Thinking About It</span>
                             <div class="progress-bar-hostel progress"></div>
