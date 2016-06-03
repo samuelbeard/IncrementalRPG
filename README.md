@@ -5,7 +5,7 @@ Incremental Game with the goal of growing and growing as much as possible.
 
 The original game can be played here: http://samuelbeard.github.io/IncrementalRPG/
 
-Project Page: http://www.kongregate.com/games/JosephW55/incrementalrpg
+Project Page: http://samuelbeard.github.io/IncrementalRPG/game.html
 
 ==============
 
