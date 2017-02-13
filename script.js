@@ -127,7 +127,7 @@ function audioHelper(audioSupport){
 
 var maxPop = (tent.residents * tent.amount) + (house.residents * house.amount);
 var clickIncrement = 1; // Consider changing this to specific materials.
-
+var netFood = (worker.hunter.amount * (worker.hunter.increment) - (worker.amount * 0.75)) //Hunger system
 // All OnLoad Functions
 // Modal Commented out during development
 $(document).ready(function () {
