@@ -7,8 +7,6 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css?v=1.0.1">
     <link rel="stylesheet" type="text/css" href="css/style.css?v=1.0.1">
     <link rel="shortcut icon" href="favicon.ico">
-    
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -16,17 +14,17 @@
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <!--Game Script-->
     <script type="text/javascript" src="script.js?v=1.0.7"></script>
-    
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-47311210-3"></script>
     <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-        ga('create', 'UA-47311210-3', 'auto');
-        ga('send', 'pageview');
-
+        gtag('config', 'UA-47311210-3');
     </script>
+
 </head>
 
 <body>
@@ -119,7 +117,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                     </div>
                 </div>
                 <!--.row-->
-                
+
                 <div class="row">
                 	<div class="col-xs-4">
                     	<button type="button" id="mineIron" class="btn btn-primary btn-block" onmousedown='return false;'>Mine Iron</button>
@@ -213,7 +211,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                     </div>
                 </div>
                 <!--.row-->
-                
+
                  <div class="row">
                 	<div class="col-xs-4">
                     	<button type="button" id="createScraper" class="btn btn-block btn-success" onmousedown='return false;'>Create Scraper</button>
@@ -292,7 +290,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                     </div>
                 </div>
                 <!--.row-->
-                
+
                 <div class="row hidden">
                 	<div class="col-xs-4">
                     	<button type="button" id="buildImprovedHouse" class="btn btn-danger btn-block" onmousedown='return false;'>Build Improved Housing</button>
@@ -372,7 +370,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                     </div>
                 </div>
                 <!--.row-->
-                
+
                 <div class="row">
                 	<div class="col-xs-4">
                     	<button type="button" id="buildIronStorage" class="btn btn-danger btn-block" onmousedown='return false;'>Build Iron Storage</button>
@@ -430,7 +428,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                     </div>
                 </div>
                 <!--.row-->
-                
+
                 <div class="row upgradeTenFingers hidden">
                     <div class="col-xs-8">
                         <button type="button" id="upgradeTenFingers" class="btn btn-warning btn-block" onmousedown='return false;'>Ten Fingers</button>
@@ -451,7 +449,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                         <h6>Allow two people to live in one tent.</h6>
                     </div>
                 </div>
-                
+
                 <div class="row upgradeTripleSleepingBags hidden">
                 	<div class="col-xs-4">
                     	<button type="button" id="upgradeTripleSleepingBags" class="btn btn-warning btn-block" onmousedown='return false;'>Triple Sleeping Bags</button>
