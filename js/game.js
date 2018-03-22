@@ -1,7 +1,7 @@
 window.onload = function() {
     updateDisplay();
     setInterval(updateDisplay, 100);
-    setInterval(tick, 1000);
+    setInterval(tick, 5000);
     setInterval(saveGame, 10000);
     loadGame();
 }
@@ -48,6 +48,7 @@ function autoIncrementResource(x) {
 // Add storage for a resource
 // x = The resources object name. E.g. wood
 function addStorage(x) {
+    console.log(x);
     var shortages = [];
 
     for (i in x.storage.cost) {
@@ -67,7 +68,11 @@ function addStorage(x) {
             obj.total -= x.storage.cost[ii]
         }
         x.max += x.storage.max;
+        x.storage.total ++;
     }
 
-    // TO DO: Increase cost of storage each time.
+    for (iii in x.storage.cost) {
+        let obj = eval(x.storage.cost[iii]);
+        x.storage.cost[iii] = Math.floor(obj * x.storage.costIncrease)
+    }
 }

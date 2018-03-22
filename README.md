@@ -1,23 +1,17 @@
-This project is not maintained.
+# IncrementalRPG
+---
 
-IncrementalRPG
-==============
+## NEW VERSION
+I have rebuilt the game from the ground up. It will now be much easier to add to the game as the code is much DRYer.
 
 Incremental Game with the goal of growing and growing as much as possible.
-
-The original game can be played here: http://cdpn.io/AybpC
 
 Project Page: http://samuelbeard.github.io/IncrementalRPG/game.html
 
 ==============
 
-<h3>Our Goals</h3>
-<ul>
-  <li>Alter the style to better suit the theme.</li>
-  <li>More types of accommodation.</li>
-  <li>More buildings.</li>
-  <li>More Upgrades</li>
-  <li>Graphics and icons.</li>
-</ul>
-
-
+## New Look
+- Add price increases for storage buildings.
+- Make population work
+- Make upgrades work.
+- Make population buildings work.

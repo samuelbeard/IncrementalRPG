@@ -8,13 +8,6 @@
     <link rel="stylesheet" type="text/css" href="css/style.css?v=1.0.1">
     <link rel="shortcut icon" href="favicon.ico">
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <!-- Latest compiled and minified Bootstrap JavaScript -->
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <!--Game Script-->
-    <script type="text/javascript" src="script.js?v=1.0.7"></script>
-
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-47311210-3"></script>
     <script>
@@ -33,7 +26,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onmousedown='return false;'>&times;</button>
+                    <button class="close" data-dismiss="modal" aria-hidden="true" onmousedown='return false;'>&times;</button>
                     <h4 class="modal-title" id="myModalLabel">Welcome to Incremental RPG!</h4>
                 </div>
                 <div class="modal-body">
@@ -46,7 +39,7 @@
                     <input class="form-control" id="mayor" type="text">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="modalClose" class="btn btn-success" data-dismiss="modal" onmousedown='return false;'>Done</button>
+                    <button id="modalClose" class="btn btn-success" data-dismiss="modal" onmousedown='return false;'>Done</button>
                 </div>
             </div>
         </div>
@@ -54,7 +47,7 @@
     <div class="row header">
         <div class="col-md-12">
             <h1>Incremental RPG
-                <small>v0.7</small>
+                <small>v0.8</small>
             </h1>
         </div>
     </div>
@@ -67,6 +60,7 @@
                 <small>Our Beloved Mayor:</small>
                 <span id="mayorName"></span>
                 <h6 id='autosave'>Auto-Saving in 0</h6>
+                <button onclick="clearLocalStorage()">Clear Local Storage</button>
             </h3>
         </div>
     </div>
@@ -75,94 +69,88 @@
             <div class="col-md-6">
 
                 <div class="alert alert-info alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
                     <strong>Welcome to Incremental RPG!</strong>
                     <p>To start building your town, click 'Chop Wood', 'Mine Stone' and 'Gather Food' to gather the respective resources.</p>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button type="button" id="chopWood" class="btn btn-primary btn-block" onmousedown='return false;'>Chop Wood</button>
+                        <button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.wood)">Chop <span id="wood-click-increment"></span> Wood</button>
                     </div>
                     <div class="col-xs-4">
                         <button class="btn btn-default btn-block disabled">
-                            <span id="woodAmount">0</span> /
-                            <span id="maxWood">0</span>
+                            <span id="wood-total"></span> /
+                            <span id="wood-max"></span>
                         </button>
                     </div>
                     <div class="col-xs-4">
                         <span class="btn btn-default btn-block disabled">
-                            <span id="woodIncrement">0</span>
+                            <span id="wood-auto-increment"></span>
                             <span>/ 5s</span>
                         </span>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button type="button" id="mineStone" class="btn btn-primary btn-block" onmousedown='return false;'>Mine Stone</button>
+                        <button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.stone)">Mine <span id="stone-click-increment"></span> Stone</button>
                     </div>
                     <div class="col-xs-4">
                         <button class="btn btn-default btn-block disabled">
-                            <span id="stoneAmount">0</span> /
-                            <span id="maxStone">0</span>
+                            <span id="stone-total"></span> /
+                            <span id="stone-max"></span>
                         </button>
                     </div>
                     <div class="col-xs-4">
                         <span class="btn btn-default btn-block disabled">
-                            <span id="stoneIncrement">0</span>
+                            <span id="stone-auto-increment"></span>
                             <span>/ 5s</span>
                         </span>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row">
                 	<div class="col-xs-4">
-                    	<button type="button" id="mineIron" class="btn btn-primary btn-block" onmousedown='return false;'>Mine Iron</button>
+                    	<button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.iron)">Mine <span id="iron-click-increment"></span> Iron</button>
                     </div>
                     <div class="col-xs-4">
                     	<button class="btn btn-default btn-block disabled">
-                        	<span id="ironAmount">0</span> /
-                            <span id="maxIron">0</span>
+                        	<span id="iron-total"></span> /
+                            <span id="iron-max"></span>
                         </button>
                     </div>
                     <div class="col-xs-4">
                     	<span class="btn btn-default btn-block disabled">
-                        	<span id="ironIncrement">0</span>
+                        	<span id="iron-auto-increment"></span>
                             <span>/ 5s</span>
                         </span>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button type="button" id="gatherFood" class="btn btn-primary btn-block" onmousedown='return false;'>Gather Food</button>
+                        <button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.food)">Gather <span id="food-click-increment"></span> Food</button>
                     </div>
                     <div class="col-xs-4">
                         <button class="btn btn-default btn-block disabled">
-                            <span id="foodAmount">0</span> /
-                            <span id="maxFood">0</span>
+                            <span id="food-total"></span> /
+                            <span id="food-max"></span>
                         </button>
                     </div>
                     <div class="col-xs-4">
                         <span class="btn btn-default btn-block disabled">
-                            <span id="foodIncrement">0</span>
+                            <span id="food-auto-increment"></span>
                             <span>/ 5s</span>
                         </span>
                     </div>
                 </div>
-                <!--.row-->
-
             </div>
-            <!---->
 
             <div class="col-md-6">
 
                 <div class="alert alert-info alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
                     <p>Click the buttons below to create workers who will gather resources for you. You will need somewhere for them to live first though.</p>
                 </div>
 
@@ -170,7 +158,7 @@
                     <div class="col-xs-6">
                         <div class="btn-group btn-group-justified">
                             <span class="btn btn-default disabled">Population</span>
-                            <span id="workerAmount" class="btn btn-default disabled">0</span>
+                            <span id="population-total" class="btn btn-default disabled">0</span>
                         </div>
                     </div>
                     <div class="col-xs-6">
@@ -180,14 +168,13 @@
                         </div>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button type="button" id="createLumberjack" class="btn btn-block btn-success" onmousedown='return false;'>Create Lumberjack</button>
+                        <button id="createLumberjack" class="btn btn-block btn-success" onmousedown='return false;'>Create Lumberjack</button>
                     </div>
                     <div class="col-xs-4">
-                        <button type="button" id="lumberjackAmount" class="btn btn-block btn-default disabled">0</button>
+                        <button id="lumberjackAmount" class="btn btn-block btn-default disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
@@ -195,14 +182,13 @@
                         <h6>+1 Lumberjack</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button type="button" id="createMiner" class="btn btn-block btn-success" onmousedown='return false;'>Create Miner</button>
+                        <button id="createMiner" class="btn btn-block btn-success" onmousedown='return false;'>Create Miner</button>
                     </div>
                     <div class="col-xs-4">
-                        <button type="button" id="minerAmount" class="btn btn-block btn-default disabled">0</button>
+                        <button id="minerAmount" class="btn btn-block btn-default disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
@@ -210,14 +196,13 @@
                         <h6>+1 Miner</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                  <div class="row">
                 	<div class="col-xs-4">
-                    	<button type="button" id="createScraper" class="btn btn-block btn-success" onmousedown='return false;'>Create Scraper</button>
+                    	<button id="createScraper" class="btn btn-block btn-success" onmousedown='return false;'>Create Scraper</button>
                     </div>
                     <div class="col-xs-4">
-                    	<button type="button" id="scraperAmount" class="btn btn-block btn-default disabled">0</button>
+                    	<button id="scraperAmount" class="btn btn-block btn-default disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                     	<h6>-
@@ -225,14 +210,13 @@
                         <h6>+1 Scraper</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button type="button" id="createHunter" class="btn btn-block btn-success" onmousedown='return false;'>Create Hunter</button>
+                        <button id="createHunter" class="btn btn-block btn-success" onmousedown='return false;'>Create Hunter</button>
                     </div>
                     <div class="col-xs-4">
-                        <button type="button" id="hunterAmount" class="btn btn-block btn-default disabled">0</button>
+                        <button id="hunterAmount" class="btn btn-block btn-default disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
@@ -240,29 +224,26 @@
                         <h6>+1 Hunter</h6>
                     </div>
                 </div>
-                <!--.row-->
             </div>
-            <!--.col-md-6-->
 
         </div>
-        <!--.row-->
 
         <div class="row">
             <div class="col-md-6">
                 <hr>
                 <div class="alert alert-info alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
                     <p>Use the resources you have gathered to build some accommodation so that you can hire workers.</p>
                     <p>Some buildings need to be researched before you are able to build them.</p>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button type="button" id="buildTent" class="btn btn-danger btn-block" onmousedown='return false;'>Build Tent</button>
+                        <button id="buildTent" class="btn btn-danger btn-block" onmousedown='return false;'>Build Tent</button>
                     </div>
 
                     <div class="col-xs-4">
-                        <button type="button" id="tentAmount" class="btn btn-default btn-block disabled">0</button>
+                        <button id="tentAmount" class="btn btn-default btn-block disabled">0</button>
                     </div>
 
                     <div class="col-xs-4">
@@ -272,14 +253,13 @@
                             <span id="tentResidents">0</span> Population</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button type="button" id="buildHouse" class="btn btn-danger btn-block" onmousedown='return false;'>Build House</button>
+                        <button id="buildHouse" class="btn btn-danger btn-block" onmousedown='return false;'>Build House</button>
                     </div>
                     <div class="col-xs-4">
-                        <button type="button" id="houseAmount" class="btn btn-default btn-block disabled">0</button>
+                        <button id="houseAmount" class="btn btn-default btn-block disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
@@ -289,14 +269,13 @@
                             <span id="houseResidents">0</span> Population</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row hidden">
                 	<div class="col-xs-4">
-                    	<button type="button" id="buildImprovedHouse" class="btn btn-danger btn-block" onmousedown='return false;'>Build Improved Housing</button>
+                    	<button id="buildImprovedHouse" class="btn btn-danger btn-block" onmousedown='return false;'>Build Improved Housing</button>
                     </div>
                     <div class="col-xs-4">
-                    	<button type="button" id="improvedhouseAmount" class="btn btn-default btn-block disabled">0</button>
+                    	<button id="improvedhouseAmount" class="btn btn-default btn-block disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                     	<h6>-
@@ -307,7 +286,6 @@
                         	<span id="improvedhouseResidents">0</span> Population</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row">
 
@@ -321,7 +299,7 @@
                     </div>
 
                     <div class="col-xs-4">
-                        <button type="button" id="hostelAmount" class="btn btn-default btn-block disabled">0</button>
+                        <button id="hostelAmount" class="btn btn-default btn-block disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                         <h6 class="hostelInfo hidden">-
@@ -332,117 +310,108 @@
                             <span id="hostelResidents">0</span> Population</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="alert alert-info alert-dismissable" style="margin-top:15px;">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
                     <p>Build storage houses to store more resources.</p>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button type="button" id="buildWoodStorage" class="btn btn-danger btn-block" onmousedown='return false;'>Build Wood Storage</button>
+                        <button class="btn btn-danger btn-block" onmousedown="addStorage(resource.wood)">Build Wood Storage</button>
                     </div>
                     <div class="col-xs-4">
-                        <button type="button" id="woodStorageAmount" class="btn btn-default btn-block disabled">0</button>
+                        <button id="wood-storage-total" class="btn btn-default btn-block disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
-                            <span id="woodStorageCostWood">0</span> Wood | -
-                            <span id="woodStorageCostStone">0</span> Stone</h6>
+                            <span id="wood-wood-storage-cost"></span> Wood | -
+                            <span id="wood-stone-storage-cost"></span> Stone</h6>
                         <h6>+100 Wood Storage</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button type="button" id="buildStoneStorage" class="btn btn-danger btn-block" onmousedown='return false;'>Build Stone Storage</button>
+                        <button class="btn btn-danger btn-block" onmousedown="addStorage(resource.stone)">Build Stone Storage</button>
                     </div>
                     <div class="col-xs-4">
-                        <button type="button" id="stoneStorageAmount" class="btn btn-default btn-block disabled">0</button>
+                        <button id="stone-storage-total" class="btn btn-default btn-block disabled"></button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
-                            <span id="stoneStorageCostWood">0</span> Wood | -
-                            <span id="stoneStorageCostStone">0</span> Stone</h6>
+                            <span id="stone-wood-storage-cost"></span> Wood | -
+                            <span id="stone-stone-storage-cost"></span> Stone</h6>
                         <h6>+100 Stone Storage</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row">
                 	<div class="col-xs-4">
-                    	<button type="button" id="buildIronStorage" class="btn btn-danger btn-block" onmousedown='return false;'>Build Iron Storage</button>
+                    	<button class="btn btn-danger btn-block" onmousedown="addStorage(resource.iron)">Build Iron Storage</button>
                     </div>
                     <div class="col-xs-4">
-                    	<button type="button" id="ironStorageAmount" class="btn btn-default btn-block disabled">0</button>
+                    	<button id="iron-storage-total" class="btn btn-default btn-block disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                     	<h6>-
-                        	<span id="ironStorageCostWood">0</span> Wood | -
-                            <span id="ironStorageCostStone">0</span> Stone</h6>
+                        	<span id="iron-wood-storage-cost"></span> Wood | -
+                            <span id="iron-stone-storage-cost"></span> Stone</h6>
                         <h6>+100 Iron Storage</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button type="button" id="buildFoodStorage" class="btn btn-danger btn-block" onmousedown='return false;'>Build Food Storage</button>
+                        <button class="btn btn-danger btn-block" onmousedown="addStorage(resource.food)">Build Food Storage</button>
                     </div>
                     <div class="col-xs-4">
-                        <button type="button" id="foodStorageAmount" class="btn btn-default btn-block disabled">0</button>
+                        <button id="food-storage-total" class="btn btn-default btn-block disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
-                            <span id="foodStorageCostWood">0</span> Wood | -
-                            <span id="foodStorageCostStone">0</span> Stone</h6>
+                            <span id="food-wood-storage-cost"></span> Wood | -
+                            <span id="food-stone-storage-cost"></span> Stone</h6>
                         <h6>+100 Food Storage</h6>
                     </div>
                 </div>
-                <!--.row-->
             </div>
-            <!--.col-md-6-->
 
             <div class="col-md-6">
                 <hr>
                 <div class="row upgradeTwoFingers">
                     <div class="col-xs-4">
-                        <button type="button" id="upgradeTwoFingers" class="btn btn-warning btn-block" onmousedown='return false;'>Two Fingers</button>
+                        <button id="upgradeTwoFingers" class="btn btn-warning btn-block" onmousedown='return false;'>Two Fingers</button>
                     </div>
                     <div class="col-xs-8">
                         <h6>-100 Wood | -100 Stone | -100 Food</h6>
                         <h6>Two resources per click.</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row upgradeFiveFingers hidden">
                     <div class="col-xs-4">
-                        <button type="button" id="upgradeFiveFingers" class="btn btn-warning btn-block" onmousedown='return false;'>Five Fingers</button>
+                        <button id="upgradeFiveFingers" class="btn btn-warning btn-block" onmousedown='return false;'>Five Fingers</button>
                     </div>
                     <div class="col-xs-8">
                         <h6>-450 Wood | -450 Stone | -120 Food</h6>
                         <h6>Five resources per click.</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row upgradeTenFingers hidden">
                     <div class="col-xs-8">
-                        <button type="button" id="upgradeTenFingers" class="btn btn-warning btn-block" onmousedown='return false;'>Ten Fingers</button>
+                        <button id="upgradeTenFingers" class="btn btn-warning btn-block" onmousedown='return false;'>Ten Fingers</button>
                     </div>
                     <div class="col-xs-8">
                         <h6>-750 Wood | -750 Stone | -250 Food</h6>
                         <h6>Ten resources per click</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row upgradeDoubleSleepingBags">
                     <div class="col-xs-4">
-                        <button type="button" id="upgradeDoubleSleepingBags" class="btn btn-warning btn-block" onmousedown='return false;'>Double Sleeping Bags</button>
+                        <button id="upgradeDoubleSleepingBags" class="btn btn-warning btn-block" onmousedown='return false;'>Double Sleeping Bags</button>
                     </div>
                     <div class="col-xs-8">
                         <h6>-100 Wood | -100 Stone | -100 Food</h6>
@@ -452,84 +421,75 @@
 
                 <div class="row upgradeTripleSleepingBags hidden">
                 	<div class="col-xs-4">
-                    	<button type="button" id="upgradeTripleSleepingBags" class="btn btn-warning btn-block" onmousedown='return false;'>Triple Sleeping Bags</button>
+                    	<button id="upgradeTripleSleepingBags" class="btn btn-warning btn-block" onmousedown='return false;'>Triple Sleeping Bags</button>
                     </div>
                     <div class="col-xs-8">
                     	<h6>-300 wood | - 300 stone | -200 Food</h6>
                         <h6>Allow 3 people to live in one tent</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row upgradeBunkBeds">
                     <div class="col-xs-4">
-                        <button type="button" id="upgradeBunkBeds" class="btn btn-warning btn-block" onmousedown='return false;'>Bunk Beds</button>
+                        <button id="upgradeBunkBeds" class="btn btn-warning btn-block" onmousedown='return false;'>Bunk Beds</button>
                     </div>
                     <div class="col-xs-8">
                         <h6>-100 Wood | -100 Stone | -100 Food</h6>
                         <h6>Allow five people to live in one house.</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row upgradeSharpenAxes">
                     <div class="col-xs-4">
-                        <button type="button" id="upgradeSharpenAxes" class="btn btn-warning btn-block" onmousedown='return false;'>Sharpen Axes</button>
+                        <button id="upgradeSharpenAxes" class="btn btn-warning btn-block" onmousedown='return false;'>Sharpen Axes</button>
                     </div>
                     <div class="col-xs-8">
                         <h6>-50 Wood | -100 Stone | -50 Food</h6>
                         <h6>Lumberjacks gather two wood every five seconds.</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row upgradeSharpenPicks">
                     <div class="col-xs-4">
-                        <button type="button" id="upgradeSharpenPicks" class="btn btn-warning btn-block" onmousedown='return false;'>Sharpen Picks</button>
+                        <button id="upgradeSharpenPicks" class="btn btn-warning btn-block" onmousedown='return false;'>Sharpen Picks</button>
                     </div>
                     <div class="col-xs-8">
                         <h6>-50 Wood | -100 Stone | -50 Food</h6>
                         <h6>Miners gather two stone every five seconds.</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row upgradeSharpenArrows">
                     <div class="col-xs-4">
-                        <button type="button" id="upgradeSharpenArrows" class="btn btn-warning btn-block" onmousedown='return false;'>Sharpen Arrows</button>
+                        <button id="upgradeSharpenArrows" class="btn btn-warning btn-block" onmousedown='return false;'>Sharpen Arrows</button>
                     </div>
                     <div class="col-xs-8">
                         <h6>-50 Wood | -100 Stone | -50 Food</h6>
                         <h6>Hunters gather two food every five seconds.</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row upgradeMatesRatesWood">
                     <div class="col-xs-4">
-                        <button type="button" id="upgradeMatesRatesWood" class="btn btn-warning btn-block"  onmousedown='return false;'>Mates Rates - Wood</button>
+                        <button id="upgradeMatesRatesWood" class="btn btn-warning btn-block"  onmousedown='return false;'>Mates Rates - Wood</button>
                     </div>
                     <div class="col-xs-8">
                         <h6>-150 Stone | -50 Food</h6>
                         <h6>Befriend the lumberjacks so houses and tents cost less wood.</h6>
                     </div>
                 </div>
-                <!--.row-->
 
                 <div class="row upgradeMatesRatesStone">
                     <div class="col-xs-4">
-                        <button type="button" id="upgradeMatesRatesStone" class="btn btn-warning btn-block"  onmousedown='return false;'>Mates Rates - Stone</button>
+                        <button id="upgradeMatesRatesStone" class="btn btn-warning btn-block"  onmousedown='return false;'>Mates Rates - Stone</button>
                     </div>
                     <div class="col-xs-8">
                         <h6>-150 Wood | -50 Food</h6>
                         <h6>Befriend the miners so houses cost less stone.</h6>
                     </div>
                 </div>
-                <!--.row-->
             </div>
-            <!--.col-md-6-->
         </div>
-        <!--.row-->
 
         <div class="row">
             <div class="col-md-6">
@@ -548,10 +508,17 @@
                 </div>
             </div>
         </div>
-        <!--.row-->
 
     </div>
-    <!--.container-->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Latest compiled and minified Bootstrap JavaScript -->
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <!--Game Scripts-->
+    <script src="js/variables.js"></script>
+    <script src="js/update-display.js"></script>
+    <script src="js/game.js"></script>
 </body>
 
 </html>
