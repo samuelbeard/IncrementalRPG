@@ -69,10 +69,10 @@ function addStorage(x) {
         }
         x.max += x.storage.max;
         x.storage.total ++;
-    }
 
-    for (iii in x.storage.cost) {
-        let obj = eval(x.storage.cost[iii]);
-        x.storage.cost[iii] = Math.floor(obj * x.storage.costIncrease)
+        for (iii in x.storage.cost) {
+            let obj = eval(x.storage.cost[iii]);
+            x.storage.cost[iii] = Math.floor(obj * x.storage.costIncrease)
+        }
     }
 }
