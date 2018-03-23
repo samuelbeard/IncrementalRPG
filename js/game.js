@@ -166,7 +166,6 @@ function buyWorker(x) {
     if (shortages.length > 0) {
         console.log("Can't Afford This! You need more:", shortages);
     } else {
-        console.log("Getting a new worker.");
         // Spend the resources.
         for (ii in x.cost) {
             let obj = eval(resource[ii]);
