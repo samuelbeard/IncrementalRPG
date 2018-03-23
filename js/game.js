@@ -8,8 +8,10 @@ window.onload = function() {
 
 // Increments resources.
 function tick() {
-    autoIncrementResource(resource.wood);
-    autoIncrementResource(resource.stone);
+    autoIncrementResource(workers.lumberjack);
+    autoIncrementResource(workers.miner);
+    autoIncrementResource(workers.scrapper);
+    autoIncrementResource(workers.hunter);
 }
 
 function clickIncrement(x) {
@@ -21,11 +23,15 @@ function clickIncrement(x) {
 }
 
 function autoIncrementResource(x) {
-    let newValue = x.total + x.autoIncrement;
-    if (newValue <= x.max) {
-        x.total += x.autoIncrement;
+    let r = eval(resource[x.resource])
+    let inc = x.total * x.autoIncrement;
+    let max = r.max;
+    let newValue = r.total + inc;
+
+    if (newValue <= max) {
+        r.total += inc;
     } else {
-        x.total = x.max;
+        r.total = max;
     }
 }
 
@@ -61,8 +67,38 @@ function addStorage(x) {
     }
 }
 
-function unlock(x) {
-    var shortages = []
+function buyBuilding(x) {
+    var shortages = [];
+
+    for (i in x.cost) {
+        let obj = eval(resource[i]);
+
+        if (obj.total < x.cost[i]) {
+            shortages.push(obj.name)
+        }
+    }
+
+    if (shortages.length > 0) {
+        console.log("Can't Afford This! You need more:", shortages);
+    } else {
+        for (ii in x.cost) {
+            let obj = eval(resource[ii]);
+
+            obj.total -= x.cost[ii]
+        }
+
+        x.total ++;
+        meta.maxPopulation += x.residents;
+
+        for (iii in x.cost) {
+            let obj = eval(x.cost[iii]);
+            x.cost[iii] = Math.floor(obj * x.costIncrease)
+        }
+    }
+}
+
+function unlockBuilding(x) {
+    var shortages = [];
 
     for (i in x.research.cost) {
         let obj = eval(resource[i]);
@@ -105,4 +141,40 @@ function unlock(x) {
         }, 200);
     }
 
+}
+
+function buyWorker(x) {
+    var shortages = [];
+
+    for (i in x.cost) {
+        let obj = eval(resource[i]);
+
+        if (obj.total < x.cost[i]) {
+            shortages.push(obj.name)
+        }
+    }
+
+    if (meta.population >= meta.maxPopulation) {
+        shortages.push("Population Capacity")
+    }
+
+    if (shortages.length > 0) {
+        console.log("Can't Afford This! You need more:", shortages);
+    } else {
+        console.log("Getting a new worker.");
+        // Spend the resources.
+        for (ii in x.cost) {
+            let obj = eval(resource[ii]);
+
+            obj.total -= x.cost[ii]
+        }
+
+        x.total ++;
+        meta.population ++;
+
+        for (iii in x.cost) {
+            let obj = eval(x.cost[iii]);
+            x.cost[iii] = Math.floor(obj * x.costIncrease)
+        }
+    }
 }

@@ -159,69 +159,69 @@
                     <div class="col-xs-6">
                         <div class="btn-group btn-group-justified">
                             <span class="btn btn-default disabled">Population</span>
-                            <span id="population-total" class="btn btn-default disabled">0</span>
+                            <span id="population-total" class="btn btn-default disabled"></span>
                         </div>
                     </div>
                     <div class="col-xs-6">
                         <div class="btn-group btn-group-justified">
                             <span class="btn btn-default disabled">Max</span>
-                            <span id="maxPop" class="btn btn-default disabled">0</span>
+                            <span id="population-max" class="btn btn-default disabled"></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button id="createLumberjack" class="btn btn-block btn-success" onmousedown='return false;'>Create Lumberjack</button>
+                        <button id="createLumberjack" class="btn btn-block btn-success" onmousedown="buyWorker(workers.lumberjack)">Create Lumberjack</button>
                     </div>
                     <div class="col-xs-4">
-                        <button id="lumberjackAmount" class="btn btn-block btn-default disabled">0</button>
+                        <button id="lumberjack-total" class="btn btn-block btn-default disabled"></button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
-                            <span id="lumberjackCost">10</span> Food</h6>
+                            <span id="lumberjack-food-cost"></span> Food</h6>
                         <h6>+1 Lumberjack</h6>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button id="createMiner" class="btn btn-block btn-success" onmousedown='return false;'>Create Miner</button>
+                        <button id="createMiner" class="btn btn-block btn-success" onmousedown="buyWorker(workers.miner)">Create Miner</button>
                     </div>
                     <div class="col-xs-4">
-                        <button id="minerAmount" class="btn btn-block btn-default disabled">0</button>
+                        <button id="miner-total" class="btn btn-block btn-default disabled"></button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
-                            <span id="minerCost">10</span> Food</h6>
+                            <span id="miner-food-cost"></span> Food</h6>
                         <h6>+1 Miner</h6>
                     </div>
                 </div>
 
                  <div class="row">
                 	<div class="col-xs-4">
-                    	<button id="createScraper" class="btn btn-block btn-success" onmousedown='return false;'>Create Scraper</button>
+                    	<button id="createScraper" class="btn btn-block btn-success" onmousedown="buyWorker(workers.scrapper)">Create Scraper</button>
                     </div>
                     <div class="col-xs-4">
-                    	<button id="scraperAmount" class="btn btn-block btn-default disabled">0</button>
+                    	<button id="scrapper-total" class="btn btn-block btn-default disabled"></button>
                     </div>
                     <div class="col-xs-4">
                     	<h6>-
-                        	<span id="scraperCost">10</span> Food</h6>
+                        	<span id="scrapper-food-cost"></span> Food</h6>
                         <h6>+1 Scraper</h6>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button id="createHunter" class="btn btn-block btn-success" onmousedown='return false;'>Create Hunter</button>
+                        <button id="createHunter" class="btn btn-block btn-success" onmousedown="buyWorker(workers.hunter)">Create Hunter</button>
                     </div>
                     <div class="col-xs-4">
-                        <button id="hunterAmount" class="btn btn-block btn-default disabled">0</button>
+                        <button id="hunter-total" class="btn btn-block btn-default disabled"></button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
-                            <span id="hunterCost">10</span> Food</h6>
+                            <span id="hunter-food-cost"></span> Food</h6>
                         <h6>+1 Hunter</h6>
                     </div>
                 </div>
@@ -240,7 +240,7 @@
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button class="btn btn-danger btn-block" onmousedown='return false;'>Build Tent</button>
+                        <button class="btn btn-danger btn-block" onmousedown="buyBuilding(buildings.tent)">Build Tent</button>
                     </div>
 
                     <div class="col-xs-4">
@@ -248,36 +248,38 @@
                     </div>
 
                     <div class="col-xs-4">
-                        <h6>-<span id="tentCostWood">0</span> Wood</h6>
-                        <h6>+<span id="tentResidents">0</span> Population</h6>
+                        <h6>-<span id="tent-wood-cost"></span> Wood</h6>
+                        <h6>+<span id="tent-residents"></span> Population</h6>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button class="btn btn-danger btn-block" onmousedown='return false;'>Build House</button>
+                        <button class="btn btn-danger btn-block" onmousedown="buyBuilding(buildings.house)">Build House</button>
                     </div>
                     <div class="col-xs-4">
                         <button id="house-total" class="btn btn-default btn-block disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
-                            <span id="houseCostWood">0</span> Wood | -
-                            <span id="houseCostStone">0</span> Stone</h6>
+                            <span id="house-wood-cost"></span> Wood | -
+                            <span id="house-stone-cost"></span> Stone | -
+                            <span id="house-iron-cost"></span> Iron
+                        </h6>
                         <h6>+
-                            <span id="houseResidents">0</span> Population</h6>
+                            <span id="house-residents"></span> Population</h6>
                     </div>
                 </div>
 
                 <div class="row">
 
                     <div class="col-xs-4">
-                        <button id="hostel-research" class="btn btn-danger btn-block" onmousedown="unlock(buildings.hostel)">Consider Hostels</button>
-                        <div id="hostel-progress-wrap" class="progress-wrap-hostel progress hidden" data-progress-percent-hostel="50">
+                        <button id="hostel-research" class="btn btn-danger btn-block" onmousedown="unlockBuilding(buildings.hostel)">Consider Hostels</button>
+                        <div id="hostel-progress-wrap" class="progress-wrap-hostel progress hidden">
                             <span id="hostel-percentage" class="researchingComment"></span>
                             <div id="hostel-progress-bar" class="progress-bar-hostel progress"></div>
                         </div>
-                        <button id="hostel-build" class="btn btn-danger btn-block hidden" onmousedown='return false;'>Build Hostel</button>
+                        <button id="hostel-build" class="btn btn-danger btn-block hidden" onmousedown="buyBuilding(buildings.hostel)">Build Hostel</button>
                     </div>
 
                     <div class="col-xs-4">
@@ -285,11 +287,14 @@
                     </div>
                     <div class="col-xs-4">
                         <h6 class="hostelInfo hidden">-
-                            <span id="hostelCostWood">0</span> Wood | -
-                            <span id="hostelCostStone">0</span> Stone</h6>
-                        <h6 class="hostelResearchInfo">-400 Wood | -150 Stone</h6>
-                        <h6>+
-                            <span id="hostelResidents">0</span> Population</h6>
+                            <span id="hostel-wood-cost"></span> Wood | -
+                            <span id="hostel-stone-cost"></span> Stone
+                        </h6>
+                        <h6 class="hostelResearchInfo">-
+                            <span id="hostel-wood-research-cost"></span> Wood | -
+                            <span id="hostel-stone-research-cost"></span> Stone
+                        </h6>
+                        <h6>+<span id="hostel-residents"></span> Population</h6>
                     </div>
                 </div>
 
