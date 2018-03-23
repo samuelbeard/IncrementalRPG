@@ -240,27 +240,25 @@
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button id="buildTent" class="btn btn-danger btn-block" onmousedown='return false;'>Build Tent</button>
+                        <button class="btn btn-danger btn-block" onmousedown='return false;'>Build Tent</button>
                     </div>
 
                     <div class="col-xs-4">
-                        <button id="tentAmount" class="btn btn-default btn-block disabled">0</button>
+                        <button id="tent-total" class="btn btn-default btn-block disabled"></button>
                     </div>
 
                     <div class="col-xs-4">
-                        <h6>-
-                            <span id="tentCostWood">0</span> Wood</h6>
-                        <h6>+
-                            <span id="tentResidents">0</span> Population</h6>
+                        <h6>-<span id="tentCostWood">0</span> Wood</h6>
+                        <h6>+<span id="tentResidents">0</span> Population</h6>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-4">
-                        <button id="buildHouse" class="btn btn-danger btn-block" onmousedown='return false;'>Build House</button>
+                        <button class="btn btn-danger btn-block" onmousedown='return false;'>Build House</button>
                     </div>
                     <div class="col-xs-4">
-                        <button id="houseAmount" class="btn btn-default btn-block disabled">0</button>
+                        <button id="house-total" class="btn btn-default btn-block disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                         <h6>-
@@ -271,36 +269,19 @@
                     </div>
                 </div>
 
-                <div class="row hidden">
-                	<div class="col-xs-4">
-                    	<button id="buildImprovedHouse" class="btn btn-danger btn-block" onmousedown='return false;'>Build Improved Housing</button>
-                    </div>
-                    <div class="col-xs-4">
-                    	<button id="improvedhouseAmount" class="btn btn-default btn-block disabled">0</button>
-                    </div>
-                    <div class="col-xs-4">
-                    	<h6>-
-                        	<span id="improvedhouseCostWood">0</span> Wood | -
-                            <span id="improvedhouseCostStone">0</span>Stone | -
-                            <span id="improvedhouseCostIron">0></span>Iron</h6>
-                        <h6>+
-                        	<span id="improvedhouseResidents">0</span> Population</h6>
-                    </div>
-                </div>
-
                 <div class="row">
 
                     <div class="col-xs-4">
-                        <button id="researchHostel" class="btn btn-danger btn-block" onmousedown='return false;'>Consider Hostels</button>
-                        <div class="progress-wrap-hostel progress hidden" data-progress-percent-hostel="100">
-                            <span class="researchingComment">Thinking About It</span>
-                            <div class="progress-bar-hostel progress"></div>
+                        <button id="hostel-research" class="btn btn-danger btn-block" onmousedown="unlock(buildings.hostel)">Consider Hostels</button>
+                        <div id="hostel-progress-wrap" class="progress-wrap-hostel progress hidden" data-progress-percent-hostel="50">
+                            <span id="hostel-percentage" class="researchingComment"></span>
+                            <div id="hostel-progress-bar" class="progress-bar-hostel progress"></div>
                         </div>
-                        <button id="buildHostel" class="btn btn-danger btn-block hidden" onmousedown='return false;'>Build Hostel</button>
+                        <button id="hostel-build" class="btn btn-danger btn-block hidden" onmousedown='return false;'>Build Hostel</button>
                     </div>
 
                     <div class="col-xs-4">
-                        <button id="hostelAmount" class="btn btn-default btn-block disabled">0</button>
+                        <button id="hostel-total" class="btn btn-default btn-block disabled">0</button>
                     </div>
                     <div class="col-xs-4">
                         <h6 class="hostelInfo hidden">-
@@ -520,6 +501,7 @@
     <script src="js/variables.js"></script>
     <script src="js/update-display.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/save-load.js"></script>
 </body>
 
 </html>

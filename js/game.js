@@ -6,22 +6,6 @@ window.onload = function() {
     loadGame();
 }
 
-function saveGame() {
-    console.log("Saving Game");
-    localStorage['clicky[wood]'] = btoa(JSON.stringify(resource.wood));
-}
-
-function loadGame() {
-    if (!localStorage['clicky[wood]']) return;
-
-    resource.wood = JSON.parse(atob(localStorage['clicky[wood]']));
-}
-
-function clearLocalStorage() {
-    localStorage.clear();
-    window.location.reload();
-}
-
 // Increments resources.
 function tick() {
     autoIncrementResource(resource.wood);
@@ -75,4 +59,50 @@ function addStorage(x) {
             x.storage.cost[iii] = Math.floor(obj * x.storage.costIncrease)
         }
     }
+}
+
+function unlock(x) {
+    var shortages = []
+
+    for (i in x.research.cost) {
+        let obj = eval(resource[i]);
+
+        if (obj.total < x.research.cost[i]) {
+            shortages.push(obj.name)
+        }
+    }
+
+    if (shortages.length > 0) {
+        console.log("Can't Afford This! You need more:", shortages);
+    } else {
+        // Spend the resources.
+        for (ii in x.research.cost) {
+            let obj = eval(resource[ii]);
+
+            obj.total -= x.research.cost[ii]
+        }
+
+        propName = x.name.toLowerCase() // This gets the JSON property name. This is a really dodgy way of doing it and needs to be fixed.
+
+        x.research.isUnlocking = true;
+        document.getElementById(propName + "-progress-wrap").classList.remove("hidden");
+        document.getElementById(propName + "-research").classList.add("hidden");
+
+        percentageIncrements = parseFloat((100 / x.research.unlockTime).toFixed(2)) / 5
+
+        unlock = setInterval(function() {
+            x.research.unlockedPercent += percentageIncrements;
+
+            // Research Complete:
+            if (x.research.unlockedPercent >= 100) {
+                x.research.locked = false;
+                x.research.isUnlocking = false;
+                document.getElementById(propName + "-progress-wrap").classList.add("hidden");
+                document.getElementById(propName + "-build").classList.remove("hidden");
+                clearInterval(unlock)
+                console.log(x.name, "Unlocked");
+            }
+        }, 200);
+    }
+
 }

@@ -11,9 +11,14 @@ function updateDisplay() {
         }
     }
 
-    // for (b in buildings) {
-    //     document.getElementById(b + "-total").innerHTML = eval(buildings[b].total)
-    // }
+    for (b in buildings) {
+        document.getElementById(b + "-total").innerHTML = eval(buildings[b].total)
+    }
+
+    if (buildings.hostel.research.isUnlocking === true) {
+        document.getElementById("hostel-percentage").innerHTML = buildings.hostel.research.unlockedPercent.toFixed(2);
+        document.getElementById("hostel-progress-bar").style.left = buildings.hostel.research.unlockedPercent + "%";
+    }
 
     document.getElementById("population-total").innerHTML = meta.population;
 }

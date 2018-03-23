@@ -8,10 +8,10 @@ var resource = {
     wood: {
         name: "Wood",
         description: "Brown stuff that grows on trees.",
-        total: 100,
+        total: 400,
         clickIncrement: 1,
         autoIncrement: 1,
-        max: 100,
+        max: 400,
         storage: {
             total: 0,
             max: 100,
@@ -25,10 +25,10 @@ var resource = {
     stone: {
         name: "Stone",
         description: "Hard stuff.",
-        total: 100,
+        total: 150,
         clickIncrement: 1,
         autoIncrement: 0,
-        max: 100,
+        max: 200,
         storage: {
             total: 0,
             max: 100,
@@ -142,6 +142,16 @@ var buildings = {
         cost: {
             wood: 200,
             stone: 215
+        },
+        research: {
+            locked: true,
+            unlockedPercent: 0,
+            unlockTime: 60,
+            isUnlocking: false,
+            cost: {
+                wood: 400,
+                stone: 150
+            }
         }
     }
 }
