@@ -4,6 +4,7 @@ function saveGame() {
     localStorage['rpg_save[resource]'] = btoa(JSON.stringify(resource));
     localStorage['rpg_save[workers]'] = btoa(JSON.stringify(workers));
     localStorage['rpg_save[buildings]'] = btoa(JSON.stringify(buildings));
+    localStorage['rpg_save[upgrades]'] = btoa(JSON.stringify(upgrades));
 }
 
 function loadGame() {
@@ -18,6 +19,7 @@ function loadGame() {
     resource = JSON.parse(atob(localStorage['rpg_save[resource]']));
     workers = JSON.parse(atob(localStorage['rpg_save[workers]']));
     buildings = JSON.parse(atob(localStorage['rpg_save[buildings]']));
+    upgrades = JSON.parse(atob(localStorage['rpg_save[upgrades]']));
 }
 
 function clearLocalStorage() {

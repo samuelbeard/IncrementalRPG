@@ -1,10 +1,10 @@
 window.onload = function() {
-    initDisplay();
     updateDisplay();
     setInterval(updateDisplay, 100);
     setInterval(tick, 5000);
     setInterval(saveGame, 10000);
     loadGame();
+    initDisplay();
 }
 
 // Increments resources.

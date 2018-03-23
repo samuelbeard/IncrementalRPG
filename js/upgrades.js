@@ -44,12 +44,14 @@ function clickIncrementUpgrade(r, i, u) {
         document.getElementById(id).classList.add("hidden");
         u.visible = false;
         u.live = true;
+        console.log(u);
 
         // Check for nextTier and show it
         if (u.nextTier) {
             var tierObj = eval(upgrades[u.nextTier]);
             let id = "upgrade-" + tierObj.name.replace(" ", "-").toLowerCase()
             document.getElementById(id).classList.remove("hidden");
+            tierObj.visible = true;
         } else {
             console.log("No next tier");
         }

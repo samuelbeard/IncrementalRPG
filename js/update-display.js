@@ -1,4 +1,6 @@
 function updateDisplay() {
+
+    // Resources
     for (r in resource) {
         document.getElementById(r + "-total").innerHTML = eval(resource[r].total)
         document.getElementById(r + "-max").innerHTML = eval(resource[r].max)
@@ -15,6 +17,7 @@ function updateDisplay() {
         }
     }
 
+    // Buildings
     for (b in buildings) {
         document.getElementById(b + "-total").innerHTML = eval(buildings[b].total)
         document.getElementById(b + "-residents").innerHTML = eval(buildings[b].residents)
@@ -37,6 +40,7 @@ function updateDisplay() {
         document.getElementById("hostel-progress-bar").style.left = buildings.hostel.research.unlockedPercent + "%";
     }
 
+    // Workers
     for (w in workers) {
         document.getElementById(w + "-total").innerHTML = eval(workers[w].total)
 
@@ -45,6 +49,7 @@ function updateDisplay() {
         }
     }
 
+    // Upgrades
     for (u in upgrades) {
         document.getElementById(u + "-name").innerHTML = eval(upgrades[u]).name;
         document.getElementById(u + "-description").innerHTML = eval(upgrades[u]).description;
@@ -59,7 +64,11 @@ function updateDisplay() {
 }
 
 function initDisplay() {
-    if (upgrades.twoAxes.visible === false) {
-        document.getElementById("upgrade-two-axes").classList.add("hidden");
+    for (u in upgrades) {
+        if (eval(upgrades[u]).visible === false) {
+            let obj = eval(upgrades[u])
+            let id = "upgrade-" + obj.name.replace(" ", "-").toLowerCase()
+            document.getElementById(id).classList.add("hidden");
+        }
     }
 }
