@@ -1,4 +1,5 @@
 window.onload = function() {
+    initDisplay();
     updateDisplay();
     setInterval(updateDisplay, 100);
     setInterval(tick, 5000);

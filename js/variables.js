@@ -10,9 +10,9 @@ var resource = {
         name: "Wood",
         description: "Brown stuff that grows on trees.",
         worker: "lumberjack",
-        total: 0,
+        total: 1500,
         clickIncrement: 1,
-        max: 100,
+        max: 1500,
         storage: {
             total: 0,
             max: 100,
@@ -27,9 +27,9 @@ var resource = {
         name: "Stone",
         description: "Hard stuff.",
         worker: "miner",
-        total: 0,
+        total: 1500,
         clickIncrement: 1,
-        max: 100,
+        max: 1500,
         storage: {
             total: 0,
             max: 100,
@@ -61,9 +61,9 @@ var resource = {
         name: "Food",
         description: "Goes into mouths and is the leading cause of obesity.",
         worker: "hunter",
-        total: 0,
+        total: 1500,
         clickIncrement: 1,
-        max: 100,
+        max: 1500,
         storage: {
             total: 0,
             max: 100,
@@ -167,4 +167,78 @@ var buildings = {
             }
         }
     }
+}
+
+var upgrades = {
+    twoAxes: {
+        name: "Two Axes",
+        description: "Two wood per click.",
+        cost: {
+            wood: 100,
+            stone: 100,
+            food: 100
+        },
+        live: false,
+        visible: true,
+        nextTier: "fiveAxes"
+    },
+    fiveAxes: {
+        name: "Five Axes",
+        description: "Five wood per click.",
+        cost: {
+            wood: 400,
+            stone: 400,
+            food: 400
+        },
+        live: false,
+        visible: false,
+        nextTier: "tenAxes"
+    },
+    tenAxes: {
+        name: "Ten Axes",
+        description: "Ten wood per click.",
+        cost: {
+            wood: 1000,
+            stone: 1000,
+            food: 1000
+        },
+        live: false,
+        visible: false,
+    },
+    twoPickaxes: {
+        name: "Two Pickaxes",
+        description: "Two stone per click.",
+        cost: {
+            wood: 100,
+            stone: 100,
+            food: 100
+        },
+        live: false,
+        visible: true,
+        nextTier: "fivePickaxes"
+    },
+    fivePickaxes: {
+        name: "Five Pickaxes",
+        description: "Five stone per click.",
+        cost: {
+            wood: 400,
+            stone: 400,
+            food: 400
+        },
+        live: false,
+        visible: false,
+        nextTier: "tenPickaxes"
+    },
+    tenPickaxes: {
+        name: "Ten Pickaxes",
+        description: "Ten stone per click.",
+        cost: {
+            wood: 1000,
+            stone: 1000,
+            food: 1000
+        },
+        live: false,
+        visible: false,
+    },
+
 }

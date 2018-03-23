@@ -45,6 +45,21 @@ function updateDisplay() {
         }
     }
 
+    for (u in upgrades) {
+        document.getElementById(u + "-name").innerHTML = eval(upgrades[u]).name;
+        document.getElementById(u + "-description").innerHTML = eval(upgrades[u]).description;
+
+        for (c in upgrades[u].cost) {
+            document.getElementById(u + "-" + c + "-cost").innerHTML = eval(upgrades[u].cost[c])
+        }
+    }
+
     document.getElementById("population-max").innerHTML = meta.maxPopulation;
     document.getElementById("population-total").innerHTML = meta.population;
+}
+
+function initDisplay() {
+    if (upgrades.twoAxes.visible === false) {
+        document.getElementById("upgrade-two-axes").classList.add("hidden");
+    }
 }

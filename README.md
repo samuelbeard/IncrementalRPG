@@ -11,8 +11,5 @@ Project Page: http://samuel-beard.com/IncrementalRPG/game.html
 ==============
 
 ## To Do
-- [x] Add price increases for storage buildings.
-- Make population work.
-- Make upgrades work.
-- Make population buildings work.
-- Update to bootstrap 4 or remove bootstrap all together and make it all bespoke. (We could remove jQuery then too.)
+- [ ] Remove all static information from the localStorage files. We don't need to save resource names, descriptions, etc on the user's computer. We only need to save the user specific data.
+- [ ] Update to bootstrap 4 or remove bootstrap all together and make it all bespoke. (We could remove jQuery then too.)
