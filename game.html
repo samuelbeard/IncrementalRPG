@@ -59,18 +59,19 @@
             <h3>
                 <small>Our Beloved Mayor:</small>
                 <span id="mayorName"></span>
-                <h6 id='autosave'>Auto-Saving in 0</h6>
+            </h3>
+            <div id="dev-buttons" class="hidden">
                 <button onclick="saveGame()">Save</button>
                 <button onclick="clearLocalStorage()">Clear Local Storage</button>
-            </h3>
+            </div>
         </div>
     </div>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
 
-                <div class="alert alert-info alert-dismissable">
-                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
+                <div class="alert alert-info alert-dismissable hidden" id="welcome-alert">
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown="stopAlert('welcome')">&times;</button>
                     <strong>Welcome to Incremental RPG!</strong>
                     <p>To start building your town, click 'Chop Wood', 'Mine Stone' and 'Gather Food' to gather the respective resources.</p>
                 </div>
@@ -150,8 +151,8 @@
 
             <div class="col-md-6">
 
-                <div class="alert alert-info alert-dismissable">
-                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
+                <div class="alert alert-info alert-dismissable hidden" id="workers-alert">
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown="stopAlert('workers')">&times;</button>
                     <p>Click the buttons below to create workers who will gather resources for you. You will need somewhere for them to live first though.</p>
                 </div>
 
@@ -232,8 +233,8 @@
         <div class="row">
             <div class="col-md-6">
                 <hr>
-                <div class="alert alert-info alert-dismissable">
-                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
+                <div class="alert alert-info alert-dismissable hidden" id="accommodation-alert">
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown="stopAlert('accommodation')">&times;</button>
                     <p>Use the resources you have gathered to build some accommodation so that you can hire workers.</p>
                     <p>Some buildings need to be researched before you are able to build them.</p>
                 </div>
@@ -298,8 +299,8 @@
                     </div>
                 </div>
 
-                <div class="alert alert-info alert-dismissable" style="margin-top:15px;">
-                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown='return false;'>&times;</button>
+                <div class="alert alert-info alert-dismissable hidden" style="margin-top:15px;" id="storage-alert">
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown="stopAlert('storage')">&times;</button>
                     <p>Build storage houses to store more resources.</p>
                 </div>
 

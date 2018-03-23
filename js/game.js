@@ -36,6 +36,10 @@ function autoIncrementResource(x) {
     }
 }
 
+function stopAlert(x) {
+    meta.infoAlerts[x] = false;
+}
+
 // Add storage for a resource
 // x = The resources object name. E.g. wood
 function addStorage(x) {

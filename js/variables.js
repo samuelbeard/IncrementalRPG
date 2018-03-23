@@ -1,8 +1,15 @@
 var meta = {
+    devmode: true,
     town: "",
     mayor: "",
     maxPopulation: 0,
     population: 0,
+    infoAlerts: {
+        welcome: true,
+        workers: true,
+        accommodation: true,
+        storage: true
+    }
 }
 
 var resource = {

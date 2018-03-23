@@ -71,4 +71,22 @@ function initDisplay() {
             document.getElementById(id).classList.add("hidden");
         }
     }
+
+    if (meta.devmode === true) {
+        document.getElementById("dev-buttons").classList.remove("hidden");
+    }
+
+    if (meta.infoAlerts.welcome === true) {
+        document.getElementById("welcome-alert").classList.remove("hidden");
+    }
+    if (meta.infoAlerts.workers === true) {
+        document.getElementById("workers-alert").classList.remove("hidden");
+    }
+    if (meta.infoAlerts.accommodation === true) {
+        document.getElementById("accommodation-alert").classList.remove("hidden");
+    }
+    if (meta.infoAlerts.storage === true) {
+        document.getElementById("storage-alert").classList.remove("hidden");
+    }
+
 }
