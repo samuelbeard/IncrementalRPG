@@ -1,7 +1,6 @@
 var meta = {
     devmode: false,
-    town: "",
-    mayor: "",
+    versionNumber: "v0.9",
     maxPopulation: 0,
     population: 0,
     infoAlerts: {
@@ -14,11 +13,14 @@ var meta = {
 
 var resource = {
     wood: {
+        slug: "wood",
         name: "Wood",
         description: "Brown stuff that grows on trees.",
-        worker: "lumberjack",
+        action: "Chop",
         total: 0,
         clickIncrement: 1,
+        autoIncrement: 0,
+        chanceIncrement: 1,
         max: 100,
         storage: {
             total: 0,
@@ -31,11 +33,39 @@ var resource = {
         }
     },
     stone: {
+        slug: "stone",
         name: "Stone",
         description: "Hard stuff.",
-        worker: "miner",
+        action: "Mine",
         total: 0,
         clickIncrement: 1,
+        autoIncrement: 0,
+        chanceIncrement: 1,
+        max: 100,
+        storage: {
+            total: 0,
+            max: 100,
+            cost: {
+                wood: 50,
+                stone: 50,
+            },
+            costIncrease: 1.1
+        },
+        chance: { // Percent
+            iron: 30,
+            silver: 10,
+            gold: 5
+        }
+    },
+    food: {
+        slug: "food",
+        name: "Food",
+        description: "Goes into mouths and is the leading cause of obesity.",
+        action: "Gather",
+        total: 0,
+        clickIncrement: 1,
+        autoIncrement: 0,
+        chanceIncrement: 1,
         max: 100,
         storage: {
             total: 0,
@@ -48,11 +78,12 @@ var resource = {
         }
     },
     iron: {
+        slug: "iron",
         name: "Iron",
         description: "Even harder stuff. Bit rusty.",
-        worker: "scrapper",
         total: 0,
-        clickIncrement: 1,
+        autoIncrement: 0,
+        chanceIncrement: 1,
         max: 100,
         storage: {
             total: 0,
@@ -64,27 +95,49 @@ var resource = {
             costIncrease: 1.1
         }
     },
-    food: {
-        name: "Food",
-        description: "Goes into mouths and is the leading cause of obesity.",
-        worker: "hunter",
+    silver: {
+        slug: "silver",
+        name: "Silver",
+        description: "Shiney...",
         total: 0,
-        clickIncrement: 1,
+        autoIncrement: 0,
+        chanceIncrement: 1,
         max: 100,
         storage: {
             total: 0,
             max: 100,
             cost: {
-                wood: 50,
-                stone: 50,
+                wood: 300,
+                iron: 500,
+                gold: 10
             },
-            costIncrease: 1.1
+            costIncrease: 1.2
+        }
+    },
+    gold: {
+        slug: "gold",
+        name: "Gold",
+        description: "Fancy!",
+        total: 0,
+        autoIncrement: 0,
+        chanceIncrement: 1,
+        max: 100,
+        storage: {
+            total: 0,
+            max: 100,
+            cost: {
+                wood: 350,
+                iron: 600,
+                gold: 20
+            },
+            costIncrease: 1.3
         }
     }
 }
 
 var workers = {
     lumberjack: {
+        slug: "lumberjack",
         name: "Lumberjack",
         description: "A person who likes to chop wood.",
         resource: "wood",
@@ -96,6 +149,7 @@ var workers = {
         costIncrease: 1.1
     },
     miner: {
+        slug: "miner",
         name: "Miner",
         description: "Not a young person.",
         resource: "stone",
@@ -106,18 +160,8 @@ var workers = {
         },
         costIncrease: 1.1
     },
-    scrapper: {
-        name: "Scrapper",
-        description: "Not someone who gets into lots of fights.",
-        resource: "iron",
-        total: 0,
-        autoIncrement: 1,
-        cost: {
-            food: 10
-        },
-        costIncrease: 1.1
-    },
     hunter: {
+        slug: "hunter",
         name: "Hunter",
         description: "The opposite to a gatherer.",
         resource: "food",

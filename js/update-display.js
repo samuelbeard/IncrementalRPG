@@ -4,13 +4,14 @@ function updateDisplay() {
     for (r in resource) {
         document.getElementById(r + "-total").innerHTML = eval(resource[r].total)
         document.getElementById(r + "-max").innerHTML = eval(resource[r].max)
-        document.getElementById(r + "-click-increment").innerHTML = eval(resource[r].clickIncrement)
+
+        if (r.clickIncrement) {
+            document.getElementById(r + "-click-increment").innerHTML = eval(resource[r].clickIncrement)
+        }
+
         document.getElementById(r + "-storage-total").innerHTML = eval(resource[r].storage.total)
 
-        let obj = eval(resource[r])
-        let w = eval(workers[obj.worker])
-        let value = w.total * w.autoIncrement;
-        document.getElementById(r + "-auto-increment").innerHTML = value
+        document.getElementById(r + "-auto-increment").innerHTML = eval(resource[r].autoIncrement)
 
         for (c in resource[r].storage.cost) {
             document.getElementById(r + "-" + c + "-storage-cost").innerHTML = eval(resource[r].storage.cost[c])
@@ -72,6 +73,86 @@ function initDisplay() {
         }
     }
 
+    // Add resources and storage buttons to DOM
+    for (r in resource) {
+        let obj = eval(resource[r]);
+
+        if (obj.clickIncrement) {
+            var clickHTML = `<button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.`+ obj.slug +`)">`+ obj.action +` <span id="`+ obj.slug +`-click-increment"></span> `+ obj.name +`</button>`;
+        } else {
+            var clickHTML = `<button class="btn btn-default btn-block disabled">`+ obj.name +`</button>`
+        }
+
+        let resourceStr = `
+        <div class="row">
+            <div class="col-xs-4">
+                `+ clickHTML +`
+            </div>
+            <div class="col-xs-4">
+                <button class="btn btn-default btn-block disabled">
+                    <span id="`+ obj.slug +`-total"></span> /
+                    <span id="`+ obj.slug +`-max"></span>
+                </button>
+            </div>
+            <div class="col-xs-4">
+                <span class="btn btn-default btn-block disabled">
+                    <span id="`+ obj.slug +`-auto-increment"></span>
+                    <span>/ 5s</span>
+                </span>
+            </div>
+        </div>
+        `
+
+        let resourceParent = document.getElementById("resources")
+        resourceParent.innerHTML += resourceStr;
+
+        var costStr = "";
+        for (c in resource[r].storage.cost) {
+            costStr += `<span id="`+ obj.slug +`-`+ c +`-storage-cost"></span> `+ c +` | `
+        }
+
+        let storageStr = `
+        <div class="row">
+            <div class="col-xs-4">
+                <button class="btn btn-danger btn-block" onmousedown="addStorage(resource.`+ obj.slug +`)">Build `+ obj.name +` Storage</button>
+            </div>
+            <div class="col-xs-4">
+                <button id="`+ obj.slug +`-storage-total" class="btn btn-default btn-block disabled">0</button>
+            </div>
+            <div class="col-xs-4">
+                <h6>| `+ costStr +`<h6>+`+ obj.storage.max +` `+ obj.name +` Storage</h6>
+            </div>
+        </div>
+        `
+
+        let storageParent = document.getElementById("storage-buttons");
+        storageParent.innerHTML += storageStr;
+    }
+
+    // Add workers buttons to the DOM
+    for (w in workers) {
+        let obj = eval(workers[w]);
+
+        let workerStr = `
+        <div class="row">
+            <div class="col-xs-4">
+                <button class="btn btn-block btn-success" onmousedown="buyWorker(workers.`+ obj.slug +`)">Create `+ obj.name +`</button>
+            </div>
+            <div class="col-xs-4">
+                <button id="`+ obj.slug +`-total" class="btn btn-block btn-default disabled"></button>
+            </div>
+            <div class="col-xs-4">
+                <h6>-
+                    <span id="`+ obj.slug +`-food-cost"></span> Food</h6>
+                <h6>+1 `+ obj.name +`</h6>
+            </div>
+        </div>
+        `
+
+        let workerParent = document.getElementById("workers")
+        workerParent.innerHTML += workerStr;
+    }
+
     if (meta.devmode === true) {
         document.getElementById("dev-buttons").classList.remove("hidden");
     }
@@ -88,5 +169,7 @@ function initDisplay() {
     if (meta.infoAlerts.storage === true) {
         document.getElementById("storage-alert").classList.remove("hidden");
     }
+
+    document.getElementById("version-number").innerHTML = meta.versionNumber;
 
 }
