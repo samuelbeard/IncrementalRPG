@@ -18,6 +18,7 @@ Project Page: http://samuel-beard.com/IncrementalRPG
 - [ ] Add a research time to upgrades.
 - [ ] DRY the upgrades. Can I add the value the upgrade changes, the object it changes and the button HTML into the JSON object?
 - [ ] Either remove or reinstate the initial modal where a user names their town and mayor. Is there much point to this?
+- [ ] If the user can't afford something, show the lacking resource in red next to its buy button.
 
 ---
 

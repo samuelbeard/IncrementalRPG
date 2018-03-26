@@ -1,5 +1,5 @@
 var meta = {
-    devmode: false,
+    devmode: true,
     town: "",
     mayor: "",
     maxPopulation: 0,
@@ -325,10 +325,14 @@ var upgrades = {
         name: "Bigger Tents",
         description: "Tents built from now on can hold three people.",
         cost: {
-            wood: 100,
-            stone: 30,
-            iron: 20,
-            food: 200
+            // wood: 100,
+            // stone: 30,
+            // iron: 20,
+            // food: 200
+            wood: 0,
+            stone: 0,
+            iron: 0,
+            food: 0
         },
         live: false,
         visible: true

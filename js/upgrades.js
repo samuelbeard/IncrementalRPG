@@ -64,6 +64,7 @@ function clickIncrementUpgrade(r, i, u) {
 // Handles all the resident size upgrades.
 // r is the resident/building object, i is the new resident value, u is the upgrade object.
 function residentSizeUpgrade(r, i, u) {
+    console.log("r", r, "|| i", i, "||u", u);
     arr = [];
     for (res in u.cost) {
         int = eval(u.cost[res])
