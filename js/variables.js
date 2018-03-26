@@ -321,4 +321,17 @@ var upgrades = {
         visible: false,
     },
 
+    biggerTents: {
+        name: "Bigger Tents",
+        description: "Tents built from now on can hold three people.",
+        cost: {
+            wood: 100,
+            stone: 30,
+            iron: 20,
+            food: 200
+        },
+        live: false,
+        visible: true
+    }
+
 }

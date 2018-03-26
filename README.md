@@ -6,7 +6,7 @@ I have rebuilt the game from the ground up. It will now be much easier to add to
 
 Incremental Game with the goal of growing and growing as much as possible.
 
-Project Page: http://samuel-beard.com/IncrementalRPG/game.html
+Project Page: http://samuel-beard.com/IncrementalRPG
 
 ---
 
@@ -14,8 +14,10 @@ Project Page: http://samuel-beard.com/IncrementalRPG/game.html
 - [ ] Remove all static information from the localStorage files. We don't need to save resource names, descriptions, etc on the user's computer. We only need to save the user specific data.
 - [ ] Update to bootstrap 4 or remove bootstrap all together and make it all bespoke. (We could remove jQuery then too.)
 - [ ] Better message display. Popup notifications?
-- [ ] Better upgrade display? Do we need to show what upgrades have been purchased? 
-
+- [ ] Better upgrade display? Do we need to show what upgrades have been purchased?
+- [ ] Add a research time to upgrades.
+- [ ] DRY the upgrades. Can I add the value the upgrade changes, the object it changes and the button HTML into the JSON object?
+- [ ] Either remove or reinstate the initial modal where a user names their town and mayor. Is there much point to this?
 
 ---
 

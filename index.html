@@ -20,54 +20,595 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse" role="navigation">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Incremental RPG</a>
+    <!-- Modal -->
+    <div class="modal fade" id="onLoadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" aria-hidden="true" onmousedown='return false;'>&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Welcome to Incremental RPG!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>This is an open source project with the goal of creating the BEST incremental game in the world, ever!</p>
+                    <p>Join in and help make this game awesome on <a href="https://github.com/samjb2/IncrementalRPG">GitHub</a>.</p>
+                    <p>This box will show up everytime you start the game dont worry your progress stays saved we just havent added name saving yet but its coming!</p>
+                    <h3>Name Your Town:</h3>
+                    <input class="form-control" id="town" type="text">
+                    <h3>Name Your Mayor:</h3>
+                    <input class="form-control" id="mayor" type="text">
+                </div>
+                <div class="modal-footer">
+                    <button id="modalClose" class="btn btn-success" data-dismiss="modal" onmousedown='return false;'>Done</button>
+                </div>
             </div>
-
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="active">
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li>
-                        <a href="game.html">Game</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-
-    <div class="container">
-        <div class="col-md-6">
-            <h1>Welcome to the Incremental RPG open source project.</h1>
-
-        </div>
-
-        <div class="col-md-6">
-            <a href="game.html">
-                <button class="btn btn-lg btn-success btn-block" onmousedown='return false;'>Play the game in it's current state.</button>
-            </a>
-            <a href="https://github.com/samjb2/IncrementalRPG">
-                <button class="btn btn-lg btn-success btn-block" onmousedown='return false;'>View it on GitHub</button>
-            </a>
         </div>
     </div>
+    <div class="row header">
+        <div class="col-md-12">
+            <h1>Incremental RPG
+                <small>v0.8</small>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                <span id="townName"></span>
+            </h2>
+            <h3>
+                <small>Our Beloved Mayor:</small>
+                <span id="mayorName"></span>
+            </h3>
+            <div id="dev-buttons" class="hidden">
+                <button onclick="saveGame()">Save</button>
+                <button onclick="clearLocalStorage()">Clear Local Storage</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
 
-    <!--script language="javascript" type="text/javascript" src="script.js"></script-->
+                <div class="alert alert-info alert-dismissable hidden" id="welcome-alert">
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown="stopAlert('welcome')">&times;</button>
+                    <strong>Welcome to Incremental RPG!</strong>
+                    <p>To start building your town, click 'Chop Wood', 'Mine Stone' and 'Gather Food' to gather the respective resources.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.wood)">Chop <span id="wood-click-increment"></span> Wood</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-default btn-block disabled">
+                            <span id="wood-total"></span> /
+                            <span id="wood-max"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-4">
+                        <span class="btn btn-default btn-block disabled">
+                            <span id="wood-auto-increment"></span>
+                            <span>/ 5s</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.stone)">Mine <span id="stone-click-increment"></span> Stone</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-default btn-block disabled">
+                            <span id="stone-total"></span> /
+                            <span id="stone-max"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-4">
+                        <span class="btn btn-default btn-block disabled">
+                            <span id="stone-auto-increment"></span>
+                            <span>/ 5s</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                	<div class="col-xs-4">
+                    	<button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.iron)">Mine <span id="iron-click-increment"></span> Iron</button>
+                    </div>
+                    <div class="col-xs-4">
+                    	<button class="btn btn-default btn-block disabled">
+                        	<span id="iron-total"></span> /
+                            <span id="iron-max"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-4">
+                    	<span class="btn btn-default btn-block disabled">
+                        	<span id="iron-auto-increment"></span>
+                            <span>/ 5s</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.food)">Gather <span id="food-click-increment"></span> Food</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-default btn-block disabled">
+                            <span id="food-total"></span> /
+                            <span id="food-max"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-4">
+                        <span class="btn btn-default btn-block disabled">
+                            <span id="food-auto-increment"></span>
+                            <span>/ 5s</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="alert alert-info alert-dismissable hidden" id="workers-alert">
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown="stopAlert('workers')">&times;</button>
+                    <p>Click the buttons below to create workers who will gather resources for you. You will need somewhere for them to live first though.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="btn-group btn-group-justified">
+                            <span class="btn btn-default disabled">Population</span>
+                            <span id="population-total" class="btn btn-default disabled"></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="btn-group btn-group-justified">
+                            <span class="btn btn-default disabled">Max</span>
+                            <span id="population-max" class="btn btn-default disabled"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button id="createLumberjack" class="btn btn-block btn-success" onmousedown="buyWorker(workers.lumberjack)">Create Lumberjack</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="lumberjack-total" class="btn btn-block btn-default disabled"></button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6>-
+                            <span id="lumberjack-food-cost"></span> Food</h6>
+                        <h6>+1 Lumberjack</h6>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button id="createMiner" class="btn btn-block btn-success" onmousedown="buyWorker(workers.miner)">Create Miner</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="miner-total" class="btn btn-block btn-default disabled"></button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6>-
+                            <span id="miner-food-cost"></span> Food</h6>
+                        <h6>+1 Miner</h6>
+                    </div>
+                </div>
+
+                 <div class="row">
+                	<div class="col-xs-4">
+                    	<button id="createScraper" class="btn btn-block btn-success" onmousedown="buyWorker(workers.scrapper)">Create Scraper</button>
+                    </div>
+                    <div class="col-xs-4">
+                    	<button id="scrapper-total" class="btn btn-block btn-default disabled"></button>
+                    </div>
+                    <div class="col-xs-4">
+                    	<h6>-
+                        	<span id="scrapper-food-cost"></span> Food</h6>
+                        <h6>+1 Scraper</h6>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button id="createHunter" class="btn btn-block btn-success" onmousedown="buyWorker(workers.hunter)">Create Hunter</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="hunter-total" class="btn btn-block btn-default disabled"></button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6>-
+                            <span id="hunter-food-cost"></span> Food</h6>
+                        <h6>+1 Hunter</h6>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <hr>
+                <div class="alert alert-info alert-dismissable hidden" id="accommodation-alert">
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown="stopAlert('accommodation')">&times;</button>
+                    <p>Use the resources you have gathered to build some accommodation so that you can hire workers.</p>
+                    <p>Some buildings need to be researched before you are able to build them.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-danger btn-block" onmousedown="buyBuilding(buildings.tent)">Build Tent</button>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <button id="tent-total" class="btn btn-default btn-block disabled"></button>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <h6>-<span id="tent-wood-cost"></span> Wood</h6>
+                        <h6>+<span id="tent-residents"></span> Population</h6>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-danger btn-block" onmousedown="buyBuilding(buildings.house)">Build House</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="house-total" class="btn btn-default btn-block disabled">0</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6>-
+                            <span id="house-wood-cost"></span> Wood | -
+                            <span id="house-stone-cost"></span> Stone | -
+                            <span id="house-iron-cost"></span> Iron
+                        </h6>
+                        <h6>+
+                            <span id="house-residents"></span> Population</h6>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-xs-4">
+                        <button id="hostel-research" class="btn btn-danger btn-block" onmousedown="unlockBuilding(buildings.hostel)">Consider Hostels</button>
+                        <div id="hostel-progress-wrap" class="progress-wrap-hostel progress hidden">
+                            <span id="hostel-percentage" class="researchingComment"></span>
+                            <div id="hostel-progress-bar" class="progress-bar-hostel progress"></div>
+                        </div>
+                        <button id="hostel-build" class="btn btn-danger btn-block hidden" onmousedown="buyBuilding(buildings.hostel)">Build Hostel</button>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <button id="hostel-total" class="btn btn-default btn-block disabled">0</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6 class="hostelInfo hidden">-
+                            <span id="hostel-wood-cost"></span> Wood | -
+                            <span id="hostel-stone-cost"></span> Stone
+                        </h6>
+                        <h6 class="hostelResearchInfo">-
+                            <span id="hostel-wood-research-cost"></span> Wood | -
+                            <span id="hostel-stone-research-cost"></span> Stone
+                        </h6>
+                        <h6>+<span id="hostel-residents"></span> Population</h6>
+                    </div>
+                </div>
+
+                <div class="alert alert-info alert-dismissable hidden" style="margin-top:15px;" id="storage-alert">
+                    <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown="stopAlert('storage')">&times;</button>
+                    <p>Build storage houses to store more resources.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-danger btn-block" onmousedown="addStorage(resource.wood)">Build Wood Storage</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="wood-storage-total" class="btn btn-default btn-block disabled">0</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6>-
+                            <span id="wood-wood-storage-cost"></span> Wood | -
+                            <span id="wood-stone-storage-cost"></span> Stone</h6>
+                        <h6>+100 Wood Storage</h6>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-danger btn-block" onmousedown="addStorage(resource.stone)">Build Stone Storage</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="stone-storage-total" class="btn btn-default btn-block disabled"></button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6>-
+                            <span id="stone-wood-storage-cost"></span> Wood | -
+                            <span id="stone-stone-storage-cost"></span> Stone</h6>
+                        <h6>+100 Stone Storage</h6>
+                    </div>
+                </div>
+
+                <div class="row">
+                	<div class="col-xs-4">
+                    	<button class="btn btn-danger btn-block" onmousedown="addStorage(resource.iron)">Build Iron Storage</button>
+                    </div>
+                    <div class="col-xs-4">
+                    	<button id="iron-storage-total" class="btn btn-default btn-block disabled">0</button>
+                    </div>
+                    <div class="col-xs-4">
+                    	<h6>-
+                        	<span id="iron-wood-storage-cost"></span> Wood | -
+                            <span id="iron-stone-storage-cost"></span> Stone</h6>
+                        <h6>+100 Iron Storage</h6>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-danger btn-block" onmousedown="addStorage(resource.food)">Build Food Storage</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="food-storage-total" class="btn btn-default btn-block disabled">0</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6>-
+                            <span id="food-wood-storage-cost"></span> Wood | -
+                            <span id="food-stone-storage-cost"></span> Stone</h6>
+                        <h6>+100 Food Storage</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <hr>
+                <div class="row" id="upgrade-two-axes">
+                    <div class="col-xs-4">
+                        <button id="twoAxes-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.wood, 2, upgrades.twoAxes)"></button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="twoAxes-wood-cost"></span> Wood | -<span id="twoAxes-stone-cost"></span> Stone | -<span id="twoAxes-food-cost"></span> Food</h6>
+                        <h6 id="twoAxes-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-five-axes">
+                    <div class="col-xs-4">
+                        <button id="fiveAxes-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.wood, 5, upgrades.fiveAxes)">Five Axes</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="fiveAxes-wood-cost"></span> Wood | -<span id="fiveAxes-stone-cost"></span> Stone | -<span id="fiveAxes-food-cost"></span> Food</h6>
+                        <h6 id="fiveAxes-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-ten-axes">
+                    <div class="col-xs-4">
+                        <button id="tenAxes-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.wood, 10, upgrades.tenAxes)">Ten Axes</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="tenAxes-wood-cost"></span> Wood | -<span id="tenAxes-stone-cost"></span> Stone | -<span id="tenAxes-food-cost"></span> Food</h6>
+                        <h6 id="tenAxes-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-two-pickaxes">
+                    <div class="col-xs-4">
+                        <button id="twoPickaxes-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.stone, 2, upgrades.twoPickaxes)"></button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="twoPickaxes-wood-cost"></span> Wood | -<span id="twoPickaxes-stone-cost"></span> Stone | -<span id="twoPickaxes-food-cost"></span> Food</h6>
+                        <h6 id="twoPickaxes-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-five-pickaxes">
+                    <div class="col-xs-4">
+                        <button id="fivePickaxes-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.stone, 5, upgrades.fivePickaxes)">Five Axes</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="fivePickaxes-wood-cost"></span> Wood | -<span id="fivePickaxes-stone-cost"></span> Stone | -<span id="fivePickaxes-food-cost"></span> Food</h6>
+                        <h6 id="fivePickaxes-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-ten-pickaxes">
+                    <div class="col-xs-4">
+                        <button id="tenPickaxes-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.stone, 10, upgrades.tenPickaxes)">Ten Axes</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="tenPickaxes-wood-cost"></span> Wood | -<span id="tenPickaxes-stone-cost"></span> Stone | -<span id="tenPickaxes-food-cost"></span> Food</h6>
+                        <h6 id="tenPickaxes-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-two-wreckages">
+                    <div class="col-xs-4">
+                        <button id="twoWreckages-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.iron, 2, upgrades.twoWreckages)"></button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="twoWreckages-wood-cost"></span> Wood | -<span id="twoWreckages-stone-cost"></span> Stone | -<span id="twoWreckages-iron-cost"></span> Iron | -<span id="twoWreckages-food-cost"></span> Food</h6>
+                        <h6 id="twoWreckages-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-five-wreckages">
+                    <div class="col-xs-4">
+                        <button id="fiveWreckages-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.iron, 5, upgrades.fiveWreckages)">Five Axes</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="fiveWreckages-wood-cost"></span> Wood | -<span id="fiveWreckages-stone-cost"></span> Stone | -<span id="fiveWreckages-iron-cost"></span> Iron | -<span id="fiveWreckages-food-cost"></span> Food</h6>
+                        <h6 id="fiveWreckages-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-ten-wreckages">
+                    <div class="col-xs-4">
+                        <button id="tenWreckages-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.iron, 10, upgrades.tenWreckages)">Ten Axes</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="tenWreckages-wood-cost"></span> Wood | -<span id="tenWreckages-stone-cost"></span> Stone | -<span id="tenWreckages-iron-cost"></span> Iron | -<span id="tenWreckages-food-cost"></span> Food</h6>
+                        <h6 id="tenWreckages-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-two-arrows">
+                    <div class="col-xs-4">
+                        <button id="twoArrows-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.food, 2, upgrades.twoArrows)"></button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="twoArrows-wood-cost"></span> Wood | -<span id="twoArrows-stone-cost"></span> Stone | -<span id="twoArrows-food-cost"></span> Food</h6>
+                        <h6 id="twoArrows-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-five-arrows">
+                    <div class="col-xs-4">
+                        <button id="fiveArrows-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.food, 5, upgrades.fiveArrows)">Five Axes</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="fiveArrows-wood-cost"></span> Wood | -<span id="fiveArrows-stone-cost"></span> Stone | -<span id="fiveArrows-food-cost"></span> Food</h6>
+                        <h6 id="fiveArrows-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-ten-arrows">
+                    <div class="col-xs-4">
+                        <button id="tenArrows-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(resource.food, 10, upgrades.tenArrows)">Ten Axes</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="tenArrows-wood-cost"></span> Wood | -<span id="tenArrows-stone-cost"></span> Stone | -<span id="tenArrows-food-cost"></span> Food</h6>
+                        <h6 id="tenArrows-description"></h6>
+                    </div>
+                </div>
+
+                <div class="row" id="upgrade-bigger-tents">
+                    <div class="col-xs-4">
+                        <button id="biggerTents-name" class="btn btn-warning btn-block" onmousedown="clickIncrementUpgrade(buildings.tent, 3, upgrades.biggerTents)">Ten Axes</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-<span id="biggerTents-wood-cost"></span> Wood | -<span id="biggerTents-stone-cost"></span> Stone | -<span id="biggerTents-iron-cost"></span> Iron | -<span id="biggerTents-food-cost"></span> Food</h6>
+                        <h6 id="biggerTents-description"></h6>
+                    </div>
+                </div>
+
+                <!-- <div class="row upgradeDoubleSleepingBags">
+                    <div class="col-xs-4">
+                        <button id="upgradeDoubleSleepingBags" class="btn btn-warning btn-block" onmousedown='return false;'>Double Sleeping Bags</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-100 Wood | -100 Stone | -100 Food</h6>
+                        <h6>Allow two people to live in one tent.</h6>
+                    </div>
+                </div> -->
+
+                <!-- <div class="row upgradeTripleSleepingBags hidden">
+                	<div class="col-xs-4">
+                    	<button id="upgradeTripleSleepingBags" class="btn btn-warning btn-block" onmousedown='return false;'>Triple Sleeping Bags</button>
+                    </div>
+                    <div class="col-xs-8">
+                    	<h6>-300 wood | - 300 stone | -200 Food</h6>
+                        <h6>Allow 3 people to live in one tent</h6>
+                    </div>
+                </div> -->
+
+                <!-- <div class="row upgradeBunkBeds">
+                    <div class="col-xs-4">
+                        <button id="upgradeBunkBeds" class="btn btn-warning btn-block" onmousedown='return false;'>Bunk Beds</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-100 Wood | -100 Stone | -100 Food</h6>
+                        <h6>Allow five people to live in one house.</h6>
+                    </div>
+                </div> -->
+
+                <!-- <div class="row upgradeSharpenAxes">
+                    <div class="col-xs-4">
+                        <button id="upgradeSharpenAxes" class="btn btn-warning btn-block" onmousedown='return false;'>Sharpen Axes</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-50 Wood | -100 Stone | -50 Food</h6>
+                        <h6>Lumberjacks gather two wood every five seconds.</h6>
+                    </div>
+                </div> -->
+
+                <!-- <div class="row upgradeSharpenPicks">
+                    <div class="col-xs-4">
+                        <button id="upgradeSharpenPicks" class="btn btn-warning btn-block" onmousedown='return false;'>Sharpen Picks</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-50 Wood | -100 Stone | -50 Food</h6>
+                        <h6>Miners gather two stone every five seconds.</h6>
+                    </div>
+                </div> -->
+
+                <!-- <div class="row upgradeSharpenArrows">
+                    <div class="col-xs-4">
+                        <button id="upgradeSharpenArrows" class="btn btn-warning btn-block" onmousedown='return false;'>Sharpen Arrows</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-50 Wood | -100 Stone | -50 Food</h6>
+                        <h6>Hunters gather two food every five seconds.</h6>
+                    </div>
+                </div> -->
+
+                <!-- <div class="row upgradeMatesRatesWood">
+                    <div class="col-xs-4">
+                        <button id="upgradeMatesRatesWood" class="btn btn-warning btn-block"  onmousedown='return false;'>Mates Rates - Wood</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-150 Stone | -50 Food</h6>
+                        <h6>Befriend the lumberjacks so houses and tents cost less wood.</h6>
+                    </div>
+                </div> -->
+
+                <!-- <div class="row upgradeMatesRatesStone">
+                    <div class="col-xs-4">
+                        <button id="upgradeMatesRatesStone" class="btn btn-warning btn-block"  onmousedown='return false;'>Mates Rates - Stone</button>
+                    </div>
+                    <div class="col-xs-8">
+                        <h6>-150 Wood | -50 Food</h6>
+                        <h6>Befriend the miners so houses cost less stone.</h6>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <hr>
+                <div class="well">
+                    <h3>Information</h3>
+                    <div id="message-info" class="info"></div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <hr>
+                <div class="well">
+                    <h3>Upgrades</h3>
+                    <div id="message-upgrades" class="info"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Latest compiled and minified Bootstrap JavaScript -->
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
+    <!--Game Scripts-->
+    <script src="js/variables.js"></script>
+    <script src="js/update-display.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/upgrades.js"></script>
+    <script src="js/save-load.js"></script>
+    <script src="js/messages.js"></script>
 </body>
 
 </html>
