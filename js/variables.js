@@ -1,5 +1,5 @@
 var meta = {
-    devmode: true,
+    devmode: false,
     town: "",
     mayor: "",
     maxPopulation: 0,
