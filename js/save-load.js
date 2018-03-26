@@ -9,10 +9,10 @@ function saveGame() {
 
 function loadGame() {
     if (!localStorage['rpg_save[meta]']) {
-        console.log("No Saved Game - Starting Fresh");
+        message("No Saved Game - Starting Fresh", "info")
         return;
     } else {
-        console.log("Loading Saved Game");
+        message("Loading Saved Game", "info");
     }
 
     meta = JSON.parse(atob(localStorage['rpg_save[meta]']));

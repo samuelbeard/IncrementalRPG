@@ -43,7 +43,6 @@ function stopAlert(x) {
 // Add storage for a resource
 // x = The resources object name. E.g. wood
 function addStorage(x) {
-    console.log(x);
     var shortages = [];
 
     for (i in x.storage.cost) {
@@ -55,7 +54,8 @@ function addStorage(x) {
     }
 
     if (shortages.length > 0) {
-        console.log("Can't Afford This! You need more:", shortages);
+        let msg = "Can't afford this! You need more " + shortages.join(", ");
+        message(msg, "info");
     } else {
         for (ii in x.storage.cost) {
             let obj = eval(resource[ii]);
@@ -84,7 +84,8 @@ function buyBuilding(x) {
     }
 
     if (shortages.length > 0) {
-        console.log("Can't Afford This! You need more:", shortages);
+        let msg = "Can't afford this! You need more " + shortages.join(", ");
+        message(msg, "info");
     } else {
         for (ii in x.cost) {
             let obj = eval(resource[ii]);
@@ -114,7 +115,8 @@ function unlockBuilding(x) {
     }
 
     if (shortages.length > 0) {
-        console.log("Can't Afford This! You need more:", shortages);
+        let msg = "Can't afford this! You need more " + shortages.join(", ");
+        message(msg, "info");
     } else {
         // Spend the resources.
         for (ii in x.research.cost) {
@@ -141,7 +143,8 @@ function unlockBuilding(x) {
                 document.getElementById(propName + "-progress-wrap").classList.add("hidden");
                 document.getElementById(propName + "-build").classList.remove("hidden");
                 clearInterval(unlock)
-                console.log(x.name, "Unlocked");
+                // console.log(x.name, "Unlocked");
+                message(x,name + " Unlocked", "info");
             }
         }, 200);
     }
@@ -164,7 +167,8 @@ function buyWorker(x) {
     }
 
     if (shortages.length > 0) {
-        console.log("Can't Afford This! You need more:", shortages);
+        let msg = "Can't afford this! You need more " + shortages.join(", ");
+        message(msg, "info");
     } else {
         // Spend the resources.
         for (ii in x.cost) {
