@@ -4,13 +4,19 @@ function updateDisplay() {
     for (r in resource) {
         document.getElementById(r + "-total").innerHTML = eval(resource[r].total)
         document.getElementById(r + "-max").innerHTML = eval(resource[r].max)
-        document.getElementById(r + "-click-increment").innerHTML = eval(resource[r].clickIncrement)
+
+        if (r.clickIncrement) {
+            document.getElementById(r + "-click-increment").innerHTML = eval(resource[r].clickIncrement)
+        }
+
         document.getElementById(r + "-storage-total").innerHTML = eval(resource[r].storage.total)
 
-        let obj = eval(resource[r])
-        let w = eval(workers[obj.worker])
-        let value = w.total * w.autoIncrement;
-        document.getElementById(r + "-auto-increment").innerHTML = value
+        if (r.worker) {
+            let obj = eval(resource[r])
+            let w = eval(workers[obj.worker])
+            let value = w.total * w.autoIncrement;
+            document.getElementById(r + "-auto-increment").innerHTML = value
+        }
 
         for (c in resource[r].storage.cost) {
             document.getElementById(r + "-" + c + "-storage-cost").innerHTML = eval(resource[r].storage.cost[c])

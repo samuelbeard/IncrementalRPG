@@ -1,5 +1,5 @@
 var meta = {
-    devmode: false,
+    devmode: true,
     town: "",
     mayor: "",
     maxPopulation: 0,
@@ -45,6 +45,11 @@ var resource = {
                 stone: 50,
             },
             costIncrease: 1.1
+        },
+        chance: {
+            iron: 0.001,
+            silver: 0.0001,
+            gold: 0.00001
         }
     },
     iron: {
@@ -79,6 +84,38 @@ var resource = {
                 stone: 50,
             },
             costIncrease: 1.1
+        }
+    },
+    silver: {
+        name: "Silver",
+        description: "Shiney...",
+        total: 1,
+        max: 100,
+        storage: {
+            total: 0,
+            max: 100,
+            cost: {
+                wood: 300,
+                iron: 500,
+                gold: 10
+            },
+            costIncrease: 1.2
+        }
+    },
+    gold: {
+        name: "Gold",
+        description: "Fancy!",
+        total: 0,
+        max: 100,
+        storage: {
+            total: 0,
+            max: 100,
+            cost: {
+                wood: 350,
+                iron: 600,
+                gold: 20
+            },
+            costIncrease: 1.3
         }
     }
 }

@@ -146,6 +146,42 @@
                         </span>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-default btn-block disabled">Silver</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-default btn-block disabled">
+                            <span id="silver-total"></span> /
+                            <span id="silver-max"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-4">
+                        <span class="btn btn-default btn-block disabled">
+                            <span id="silver-auto-increment"></span>
+                            <span>/ 5s</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-default btn-block disabled">Gold</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-default btn-block disabled">
+                            <span id="gold-total"></span> /
+                            <span id="gold-max"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-4">
+                        <span class="btn btn-default btn-block disabled">
+                            <span id="gold-auto-increment"></span>
+                            <span>/ 5s</span>
+                        </span>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-6">
@@ -360,6 +396,40 @@
                             <span id="food-wood-storage-cost"></span> Wood | -
                             <span id="food-stone-storage-cost"></span> Stone</h6>
                         <h6>+100 Food Storage</h6>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-danger btn-block" onmousedown="addStorage(resource.silver)">Build Silver Storage</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="silver-storage-total" class="btn btn-default btn-block disabled">0</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6>-
+                            <span id="silver-wood-storage-cost"></span> Wood | -
+                            <span id="silver-iron-storage-cost"></span> Iron | -
+                            <span id="silver-gold-storage-cost"></span> Gold
+                        </h6>
+                        <h6>+100 Silver Storage</h6>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button class="btn btn-danger btn-block" onmousedown="addStorage(resource.gold)">Build Gold Storage</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button id="gold-storage-total" class="btn btn-default btn-block disabled">0</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <h6>-
+                            <span id="gold-wood-storage-cost"></span> Wood | -
+                            <span id="gold-iron-storage-cost"></span> Iron | -
+                            <span id="gold-gold-storage-cost"></span> Gold
+                        </h6>
+                        <h6>+100 Gold Storage</h6>
                     </div>
                 </div>
             </div>
