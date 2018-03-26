@@ -1,7 +1,7 @@
 window.onload = function() {
     setInterval(updateDisplay, 100);
     setInterval(tick, 5000);
-    setInterval(saveGame, 10000);
+    setInterval(saveGame, 30000);
     loadGame();
     initDisplay();
 }
@@ -13,23 +13,44 @@ function tick() {
     }
 }
 
-function clickIncrement(x) {
-    if (x.total >= x.max) {
-        console.log("Max " + x.name);
+// x is the resource object, i is the amount to increase by.
+function increaseResourceTotal(x, i) {
+    newValue = x.total + i;
+
+    if (newValue < x.max) {
+        x.total += i;
+        increaseChanceResources(x, i)
+        return true;
     } else {
-        x.total += x.clickIncrement;
+        x.total = x.max;
+        return false;
     }
 }
 
-function autoIncrementResource(x) {
-    let total = x.total;
-    let newValue = x.total + x.autoIncrement;
-    let max = x.max;
+function clickIncrement(x) {
+    increaseResourceTotal(x, x.clickIncrement)
+}
 
-    if (newValue <= max) {
-        x.total += x.autoIncrement;
-    } else {
-        x.total = max;
+function autoIncrementResource(x) {
+    if (x.autoIncrement > 0) {
+        increaseResourceTotal(x, x.autoIncrement)
+    }
+}
+
+function increaseChanceResources(x, i) {
+    if (x.chance) {
+        for (c in x.chance) {
+            let counter = 1
+            while (counter < i) {
+                let num = x.chance[c];
+                let rand = Math.floor(Math.random() * 101)
+                if (rand <= num) {
+                    let obj = eval(resource[c]);
+                    increaseResourceTotal(obj, obj.chanceIncrement)
+                }
+                counter++;
+            }
+        }
     }
 }
 

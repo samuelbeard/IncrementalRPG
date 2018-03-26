@@ -17,7 +17,6 @@ Project Page: http://samuel-beard.com/IncrementalRPG
 - [ ] Better upgrade display? Do we need to show what upgrades have been purchased?
 - [ ] Add a research time to upgrades.
 - [ ] DRY the upgrades. Can I add the value the upgrade changes, the object it changes and the button HTML into the JSON object?
-- [ ] Either remove or reinstate the initial modal where a user names their town and mayor. Is there much point to this?
 - [ ] If the user can't afford something, show the lacking resource in red next to its buy button.
 
 ---
@@ -32,7 +31,7 @@ Project Page: http://samuel-beard.com/IncrementalRPG
 - [ ] Unrusting - Reduce the amount of time it takes for workers to gather iron to one second.
 - [ ] Suicidal Animals - Reduce the amount of time it takes for hunters to gather food to one second.
 
-- [ ] Bigger Tents - Tents built from now on can hold three people.
+- [x] Bigger Tents - Tents built from now on can hold three people.
 - [ ] Squeeze In - Houses built from now on can hold six people.
 - [ ] Bunk Beds - Hostels built from now on can hold twenty people.
 - [ ] Teepees - Tents built from now on can hold five people.

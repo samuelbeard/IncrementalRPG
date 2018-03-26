@@ -129,6 +129,30 @@ function initDisplay() {
         storageParent.innerHTML += storageStr;
     }
 
+    // Add workers buttons to the DOM
+    for (w in workers) {
+        let obj = eval(workers[w]);
+
+        let workerStr = `
+        <div class="row">
+            <div class="col-xs-4">
+                <button class="btn btn-block btn-success" onmousedown="buyWorker(workers.`+ obj.slug +`)">Create `+ obj.name +`</button>
+            </div>
+            <div class="col-xs-4">
+                <button id="`+ obj.slug +`-total" class="btn btn-block btn-default disabled"></button>
+            </div>
+            <div class="col-xs-4">
+                <h6>-
+                    <span id="`+ obj.slug +`-food-cost"></span> Food</h6>
+                <h6>+1 `+ obj.name +`</h6>
+            </div>
+        </div>
+        `
+
+        let workerParent = document.getElementById("workers")
+        workerParent.innerHTML += workerStr;
+    }
+
     if (meta.devmode === true) {
         document.getElementById("dev-buttons").classList.remove("hidden");
     }
@@ -145,5 +169,7 @@ function initDisplay() {
     if (meta.infoAlerts.storage === true) {
         document.getElementById("storage-alert").classList.remove("hidden");
     }
+
+    document.getElementById("version-number").innerHTML = meta.versionNumber;
 
 }

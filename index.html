@@ -46,19 +46,12 @@
     <div class="row header">
         <div class="col-md-12">
             <h1>Incremental RPG
-                <small>v0.8</small>
+                <small id="version-number"></small>
             </h1>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h2>
-                <span id="townName"></span>
-            </h2>
-            <h3>
-                <small>Our Beloved Mayor:</small>
-                <span id="mayorName"></span>
-            </h3>
             <div id="dev-buttons" class="hidden">
                 <button onclick="saveGame()">Save</button>
                 <button onclick="clearLocalStorage()">Clear Local Storage</button>
@@ -99,7 +92,9 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div id="workers"></div>
+
+                <!-- <div class="row">
                     <div class="col-xs-4">
                         <button id="createLumberjack" class="btn btn-block btn-success" onmousedown="buyWorker(workers.lumberjack)">Create Lumberjack</button>
                     </div>
@@ -111,9 +106,9 @@
                             <span id="lumberjack-food-cost"></span> Food</h6>
                         <h6>+1 Lumberjack</h6>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-xs-4">
                         <button id="createMiner" class="btn btn-block btn-success" onmousedown="buyWorker(workers.miner)">Create Miner</button>
                     </div>
@@ -125,9 +120,9 @@
                             <span id="miner-food-cost"></span> Food</h6>
                         <h6>+1 Miner</h6>
                     </div>
-                </div>
+                </div> -->
 
-                 <div class="row">
+                <!-- <div class="row">
                 	<div class="col-xs-4">
                     	<button id="createScraper" class="btn btn-block btn-success" onmousedown="buyWorker(workers.scrapper)">Create Scraper</button>
                     </div>
@@ -139,9 +134,9 @@
                         	<span id="scrapper-food-cost"></span> Food</h6>
                         <h6>+1 Scraper</h6>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-xs-4">
                         <button id="createHunter" class="btn btn-block btn-success" onmousedown="buyWorker(workers.hunter)">Create Hunter</button>
                     </div>
@@ -153,7 +148,7 @@
                             <span id="hunter-food-cost"></span> Food</h6>
                         <h6>+1 Hunter</h6>
                     </div>
-                </div>
+                </div> -->
             </div>
 
         </div>
