@@ -1,5 +1,4 @@
 window.onload = function() {
-    updateDisplay();
     setInterval(updateDisplay, 100);
     setInterval(tick, 5000);
     setInterval(saveGame, 10000);
@@ -9,10 +8,9 @@ window.onload = function() {
 
 // Increments resources.
 function tick() {
-    autoIncrementResource(workers.lumberjack);
-    autoIncrementResource(workers.miner);
-    autoIncrementResource(workers.scrapper);
-    autoIncrementResource(workers.hunter);
+    for (r in resource) {
+        autoIncrementResource(eval(resource[r]))
+    }
 }
 
 function clickIncrement(x) {
@@ -24,15 +22,14 @@ function clickIncrement(x) {
 }
 
 function autoIncrementResource(x) {
-    let r = eval(resource[x.resource])
-    let inc = x.total * x.autoIncrement;
-    let max = r.max;
-    let newValue = r.total + inc;
+    let total = x.total;
+    let newValue = x.total + x.autoIncrement;
+    let max = x.max;
 
     if (newValue <= max) {
-        r.total += inc;
+        x.total += x.autoIncrement;
     } else {
-        r.total = max;
+        x.total = max;
     }
 }
 
@@ -177,8 +174,12 @@ function buyWorker(x) {
             obj.total -= x.cost[ii]
         }
 
+        // Alter values
         x.total ++;
         meta.population ++;
+
+        let res = eval(resource[x.resource])
+        res.autoIncrement += x.autoIncrement
 
         for (iii in x.cost) {
             let obj = eval(x.cost[iii]);

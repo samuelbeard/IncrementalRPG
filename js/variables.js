@@ -2,7 +2,7 @@ var meta = {
     devmode: true,
     town: "",
     mayor: "",
-    maxPopulation: 0,
+    maxPopulation: 10,
     population: 0,
     infoAlerts: {
         welcome: true,
@@ -14,11 +14,13 @@ var meta = {
 
 var resource = {
     wood: {
+        slug: "wood",
         name: "Wood",
         description: "Brown stuff that grows on trees.",
-        worker: "lumberjack",
+        action: "Chop",
         total: 0,
         clickIncrement: 1,
+        autoIncrement: 10,
         max: 100,
         storage: {
             total: 0,
@@ -31,11 +33,13 @@ var resource = {
         }
     },
     stone: {
+        slug: "stone",
         name: "Stone",
         description: "Hard stuff.",
-        worker: "miner",
+        action: "Mine",
         total: 0,
         clickIncrement: 1,
+        autoIncrement: 0,
         max: 100,
         storage: {
             total: 0,
@@ -53,11 +57,13 @@ var resource = {
         }
     },
     iron: {
+        slug: "iron",
         name: "Iron",
         description: "Even harder stuff. Bit rusty.",
-        worker: "scrapper",
+        action: "Mine",
         total: 0,
         clickIncrement: 1,
+        autoIncrement: 0,
         max: 100,
         storage: {
             total: 0,
@@ -70,11 +76,13 @@ var resource = {
         }
     },
     food: {
+        slug: "food",
         name: "Food",
         description: "Goes into mouths and is the leading cause of obesity.",
-        worker: "hunter",
-        total: 0,
+        action: "Gather",
+        total: 30,
         clickIncrement: 1,
+        autoIncrement: 0,
         max: 100,
         storage: {
             total: 0,
@@ -87,9 +95,11 @@ var resource = {
         }
     },
     silver: {
+        slug: "silver",
         name: "Silver",
         description: "Shiney...",
         total: 1,
+        autoIncrement: 10,
         max: 100,
         storage: {
             total: 0,
@@ -103,9 +113,11 @@ var resource = {
         }
     },
     gold: {
+        slug: "gold",
         name: "Gold",
         description: "Fancy!",
         total: 0,
+        autoIncrement: 0,
         max: 100,
         storage: {
             total: 0,
