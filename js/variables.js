@@ -169,8 +169,8 @@ var buildings = {
             unlockTime: 60,
             isUnlocking: false,
             cost: {
-                wood: 400,
-                stone: 150
+                wood: 600,
+                stone: 350
             }
         }
     }
@@ -181,7 +181,7 @@ var upgrades = {
         name: "Two Axes",
         description: "Two wood per click.",
         cost: {
-            wood: 100,
+            wood: 200,
             stone: 100,
             food: 100
         },
@@ -193,7 +193,7 @@ var upgrades = {
         name: "Five Axes",
         description: "Five wood per click.",
         cost: {
-            wood: 400,
+            wood: 800,
             stone: 400,
             food: 400
         },
@@ -205,7 +205,7 @@ var upgrades = {
         name: "Ten Axes",
         description: "Ten wood per click.",
         cost: {
-            wood: 1000,
+            wood: 2000,
             stone: 1000,
             food: 1000
         },
@@ -217,7 +217,7 @@ var upgrades = {
         description: "Two stone per click.",
         cost: {
             wood: 100,
-            stone: 100,
+            stone: 200,
             food: 100
         },
         live: false,
@@ -229,7 +229,7 @@ var upgrades = {
         description: "Five stone per click.",
         cost: {
             wood: 400,
-            stone: 400,
+            stone: 800,
             food: 400
         },
         live: false,
@@ -241,8 +241,81 @@ var upgrades = {
         description: "Ten stone per click.",
         cost: {
             wood: 1000,
-            stone: 1000,
+            stone: 2000,
             food: 1000
+        },
+        live: false,
+        visible: false,
+    },
+    twoWreckages: {
+        name: "Two Wreckages",
+        description: "Two iron per click.",
+        cost: {
+            wood: 100,
+            stone: 100,
+            iron: 200,
+            food: 100
+        },
+        live: false,
+        visible: true,
+        nextTier: "fiveWreckages"
+    },
+    fiveWreckages: {
+        name: "Five Wreckages",
+        description: "Five iron per click.",
+        cost: {
+            wood: 400,
+            stone: 400,
+            iron: 800,
+            food: 400
+        },
+        live: false,
+        visible: false,
+        nextTier: "tenWreckages"
+    },
+    tenWreckages: {
+        name: "Ten Wreckages",
+        description: "Ten iron per click.",
+        cost: {
+            wood: 1000,
+            stone: 1000,
+            iron: 2000,
+            food: 1000
+        },
+        live: false,
+        visible: false,
+    },
+    twoArrows: {
+        name: "Two Arrows",
+        description: "Two food per click.",
+        cost: {
+            wood: 100,
+            stone: 100,
+            food: 200
+        },
+        live: false,
+        visible: true,
+        nextTier: "fiveArrows"
+    },
+    fiveArrows: {
+        name: "Five Arrows",
+        description: "Five food per click.",
+        cost: {
+            wood: 400,
+            stone: 400,
+            food: 800
+        },
+        live: false,
+        visible: false,
+        nextTier: "tenArrows"
+    },
+    tenArrows: {
+        name: "Ten Arrows",
+        description: "Ten food per click.",
+        cost: {
+            wood: 1000,
+            stone: 1000,
+            food: 2000
         },
         live: false,
         visible: false,
