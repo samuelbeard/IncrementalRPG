@@ -20,7 +20,9 @@ function updateDisplay() {
         document.getElementById(r + "-auto-increment").innerHTML = eval(resource[r].autoIncrement)
 
         for (c in resource[r].storage.cost) {
-            document.getElementById(r + "-" + c + "-storage-cost").innerHTML = eval(resource[r].storage.cost[c])
+            let elem = document.getElementById(r + "-" + c + "-storage-cost")
+            elem.innerHTML = eval(resource[r].storage.cost[c])
+            colorText(eval(resource[r].storage.cost[c]), eval(resource[c].total), elem)
         }
     }
 
@@ -30,15 +32,18 @@ function updateDisplay() {
         document.getElementById(b + "-residents").innerHTML = eval(buildings[b].residents)
 
         for (c in buildings[b].cost) {
-            document.getElementById(b + "-" + c + "-cost").innerHTML = eval(buildings[b].cost[c])
+            let elem = document.getElementById(b + "-" + c + "-cost")
+            elem.innerHTML = eval(buildings[b].cost[c])
+            colorText(eval(buildings[b].cost[c]), eval(resource[c].total), elem)
         }
 
         if (buildings[b].research && buildings[b].research.locked === true) {
             for (rc in buildings[b].research.cost) {
-                document.getElementById(b + "-" + rc + "-research-cost").innerHTML = eval(buildings[b].research.cost[rc])
+                let elem = document.getElementById(b + "-" + rc + "-research-cost")
+                elem.innerHTML = eval(buildings[b].research.cost[rc])
+                colorText(eval(buildings[b].research.cost[rc]), eval(resource[rc].total), elem)
             }
         }
-
     }
 
     // TODO: Make this loop through all buildings.
@@ -52,7 +57,9 @@ function updateDisplay() {
         document.getElementById(w + "-total").innerHTML = eval(workers[w].total)
 
         for (c in workers[w].cost) {
-            document.getElementById(w + "-" + c + "-cost").innerHTML = eval(workers[w].cost[c])
+            let elem = document.getElementById(w + "-" + c + "-cost")
+            elem.innerHTML = eval(workers[w].cost[c])
+            colorText(eval(workers[w].cost[c]), eval(resource[c].total), elem)
         }
     }
 
@@ -62,7 +69,9 @@ function updateDisplay() {
         document.getElementById(u + "-description").innerHTML = eval(upgrades[u]).description;
 
         for (c in upgrades[u].cost) {
-            document.getElementById(u + "-" + c + "-cost").innerHTML = eval(upgrades[u].cost[c])
+            let elem = document.getElementById(u + "-" + c + "-cost")
+            elem.innerHTML = eval(upgrades[u].cost[c])
+            colorText(eval(upgrades[u].cost[c]), eval(resource[c].total), elem)
         }
     }
 
@@ -258,4 +267,12 @@ function initDisplay() {
 
     document.getElementById("version-number").innerHTML = meta.versionNumber;
 
+}
+
+function colorText(cost, resource, elem){
+    if (cost > resource) {
+        elem.style.color = "red"
+    } else {
+        elem.style.color = "black"
+    }
 }
