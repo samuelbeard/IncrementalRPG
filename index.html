@@ -162,65 +162,7 @@
                     <p>Some buildings need to be researched before you are able to build them.</p>
                 </div>
 
-                <div class="row">
-                    <div class="col-xs-4">
-                        <button class="btn btn-danger btn-block" onmousedown="buyBuilding(buildings.tent)">Build Tent</button>
-                    </div>
-
-                    <div class="col-xs-4">
-                        <button id="tent-total" class="btn btn-default btn-block disabled"></button>
-                    </div>
-
-                    <div class="col-xs-4">
-                        <h6>-<span id="tent-wood-cost"></span> Wood</h6>
-                        <h6>+<span id="tent-residents"></span> Population</h6>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-4">
-                        <button class="btn btn-danger btn-block" onmousedown="buyBuilding(buildings.house)">Build House</button>
-                    </div>
-                    <div class="col-xs-4">
-                        <button id="house-total" class="btn btn-default btn-block disabled">0</button>
-                    </div>
-                    <div class="col-xs-4">
-                        <h6>-
-                            <span id="house-wood-cost"></span> Wood | -
-                            <span id="house-stone-cost"></span> Stone | -
-                            <span id="house-iron-cost"></span> Iron
-                        </h6>
-                        <h6>+
-                            <span id="house-residents"></span> Population</h6>
-                    </div>
-                </div>
-
-                <div class="row">
-
-                    <div class="col-xs-4">
-                        <button id="hostel-research" class="btn btn-danger btn-block" onmousedown="unlockBuilding(buildings.hostel)">Consider Hostels</button>
-                        <div id="hostel-progress-wrap" class="progress-wrap-hostel progress hidden">
-                            <span id="hostel-percentage" class="researchingComment"></span>
-                            <div id="hostel-progress-bar" class="progress-bar-hostel progress"></div>
-                        </div>
-                        <button id="hostel-build" class="btn btn-danger btn-block hidden" onmousedown="buyBuilding(buildings.hostel)">Build Hostel</button>
-                    </div>
-
-                    <div class="col-xs-4">
-                        <button id="hostel-total" class="btn btn-default btn-block disabled">0</button>
-                    </div>
-                    <div class="col-xs-4">
-                        <h6 class="hostelInfo hidden">-
-                            <span id="hostel-wood-cost"></span> Wood | -
-                            <span id="hostel-stone-cost"></span> Stone
-                        </h6>
-                        <h6 class="hostelResearchInfo">-
-                            <span id="hostel-wood-research-cost"></span> Wood | -
-                            <span id="hostel-stone-research-cost"></span> Stone
-                        </h6>
-                        <h6>+<span id="hostel-residents"></span> Population</h6>
-                    </div>
-                </div>
+                <div id="buildings"></div>
 
                 <div class="alert alert-info alert-dismissable hidden" style="margin-top:15px;" id="storage-alert">
                     <button class="close" data-dismiss="alert" aria-hidden="true" onmousedown="stopAlert('storage')">&times;</button>

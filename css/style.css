@@ -16,11 +16,9 @@
 }
 
 h6 {
-  margin-left:5px;
-  margin-top:13px;
-  /*font-family:sans-serif;*/
+  margin: 10px 0 0 5px;
   text-align:left;
-  line-height:5px;
+  line-height:1;
 }
 
 .col-md-6 {

@@ -17,6 +17,20 @@ function tick() {
 function increaseResourceTotal(x, i) {
     newValue = x.total + i;
 
+    // Check if the resource has a cost and manage that.
+    if (typeof(x.cost) !== 'undefined') {
+        for (c in x.cost) {
+            let obj = eval(resource[c]);
+            let costNum = eval(x.cost[c]);
+            let newValueOfCost = obj.total - costNum;
+            if (newValueOfCost >= 0) {
+                obj.total -= costNum;
+            } else {
+                return
+            }
+        }
+    }
+
     if (newValue < x.max) {
         x.total += i;
         increaseChanceResources(x, i)
@@ -38,9 +52,9 @@ function autoIncrementResource(x) {
 }
 
 function increaseChanceResources(x, i) {
-    if (x.chance) {
+    if (typeof(x.chance) !== "undefined") {
         for (c in x.chance) {
-            let counter = 1
+            var counter = 0;
             while (counter < i) {
                 let num = x.chance[c];
                 let rand = Math.floor(Math.random() * 101)
@@ -161,7 +175,6 @@ function unlockBuilding(x) {
                 document.getElementById(propName + "-progress-wrap").classList.add("hidden");
                 document.getElementById(propName + "-build").classList.remove("hidden");
                 clearInterval(unlock)
-                // console.log(x.name, "Unlocked");
                 message(x,name + " Unlocked", "info");
             }
         }, 200);

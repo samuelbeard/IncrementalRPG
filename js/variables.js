@@ -1,5 +1,5 @@
 var meta = {
-    devmode: false,
+    devmode: true,
     versionNumber: "v0.9",
     maxPopulation: 0,
     population: 0,
@@ -132,6 +132,26 @@ var resource = {
             },
             costIncrease: 1.3
         }
+    },
+    brick: {
+        slug: "brick",
+        name: "Brick",
+        description: "Like rocks but square.",
+        action: "Make",
+        total: 0,
+        clickIncrement: 1,
+        autoIncrement: 0,
+        max: 200,
+        cost: {
+            stone: 2
+        },
+        storage: {
+            total: 0,
+            max: 100,
+            cost: {
+                wood: 100
+            }
+        }
     }
 }
 
@@ -171,11 +191,24 @@ var workers = {
             food: 10
         },
         costIncrease: 1.1
+    },
+    brickmaker: {
+        slug: "brickmaker",
+        name: "Brickmaker",
+        description: "Isn't it obvious?",
+        resource: "brick",
+        total: 0,
+        autoIncrement: 1,
+        cost: {
+            food: 10
+        },
+        costIncrease: 1.2
     }
 }
 
 var buildings = {
     tent: {
+        slug: "tent",
         name: "Tent",
         description: "Just like a house but way smaller and made out of fabric.",
         total: 0,
@@ -186,25 +219,30 @@ var buildings = {
         costIncrease: 1.1
     },
     house: {
+        slug: "house",
         name: "House",
         description: "Just like a tent but way bigger and not made out of fabric.",
         total: 0,
         residents: 4,
         cost: {
             wood: 75,
-            stone: 25,
-            iron: 10
+            stone: 10,
+            iron: 10,
+            brick: 50
         },
         costIncrease: 1.1
     },
     hostel: {
+        slug: "hostel",
         name: "Hostel",
         description: "A bit like a house but not as nice and not as private.",
         total: 0,
         residents: 10,
         cost: {
             wood: 200,
-            stone: 215
+            stone: 30,
+            iron: 30,
+            brick: 200
         },
         costIncrease: 1.1,
         research: {

@@ -153,6 +153,82 @@ function initDisplay() {
         workerParent.innerHTML += workerStr;
     }
 
+    // Add buildings to DOM
+    for (b in buildings) {
+        let obj = eval(buildings[b]);
+        var isResearched = function() {
+            if (obj.research) {
+                return true;
+            } else {
+                var isLocked = false;
+                return false;
+            }
+        }
+        var isLocked = function() {
+            if (isResearched()) {
+                return obj.research.locked;
+            } else {
+                return false;
+            }
+        }
+
+        var costStr = "";
+        for (c in buildings[b].cost) {
+            costStr += `<span id="`+ obj.slug +`-`+ c +`-cost"></span> `+ c +` | `
+        }
+
+        if (isResearched() && isLocked()) {
+            var researchCostStr = ""
+            for (c in buildings[b].research.cost) {
+                researchCostStr += `<span id="`+ obj.slug +`-`+ c +`-research-cost"></span> `+ c +` | `
+            }
+
+            var buildingStr = `
+            <div class="row">
+                <div class="col-xs-4">
+                    <button id="`+ obj.slug +`-research" class="btn btn-danger btn-block" onmousedown="unlockBuilding(buildings.`+ obj.slug +`)">Consider `+ obj.name +`</button>
+                    <div id="`+ obj.slug +`-progress-wrap" class="progress-wrap-`+ obj.slug +` progress hidden">
+                        <span id="`+ obj.slug +`-percentage" class="researchingComment"></span>
+                        <div id="`+ obj.slug +`-progress-bar" class="progress-bar-`+ obj.slug +` progress"></div>
+                    </div>
+                    <button id="`+ obj.slug +`-build" class="btn btn-danger btn-block hidden" onmousedown="buyBuilding(buildings.`+ obj.slug +`)">Build `+ obj.name +`</button>
+                </div>
+
+                <div class="col-xs-4">
+                    <button id="`+ obj.slug +`-total" class="btn btn-default btn-block disabled">0</button>
+                </div>
+                <div class="col-xs-4">
+                    <h6 class="`+ obj.slug +`Info hidden">| 
+                        `+ costStr +`
+                    </h6>
+                    <h6 class="`+ obj.slug +`ResearchInfo">|
+                        `+ researchCostStr +`
+                    </h6>
+                    <h6>+<span id="`+ obj.slug +`-residents"></span> Population</h6>
+                </div>
+            </div>
+            `
+        } else {
+            var buildingStr = `
+            <div class="row">
+                <div class="col-xs-4">
+                    <button id="`+ obj.slug +`-build" class="btn btn-danger btn-block" onmousedown="buyBuilding(buildings.`+ obj.slug +`)">Build `+ obj.name +`</button>
+                </div>
+                <div class="col-xs-4">
+                    <button id="`+ obj.slug +`-total" class="btn btn-default btn-block disabled"></button>
+                </div>
+                <div class="col-xs-4">
+                    <h6>`+ costStr +`</h6>
+                    <h6>+<span id="`+ obj.slug +`-residents"></span> Population</h6>
+                </div>
+            </div>
+            `
+        }
+
+        let buildingParent = document.getElementById("buildings")
+        buildingParent.innerHTML += buildingStr;
+    }
+
     if (meta.devmode === true) {
         document.getElementById("dev-buttons").classList.remove("hidden");
     }
