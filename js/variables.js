@@ -17,7 +17,7 @@ var resource = {
         chanceIncrement: 1,
         max: 100,
         storage: {
-            total: 0,
+            total: 1,
             max: 100,
             cost: {
                 wood: 50,
@@ -37,7 +37,7 @@ var resource = {
         chanceIncrement: 1,
         max: 100,
         storage: {
-            total: 0,
+            total: 1,
             max: 100,
             cost: {
                 wood: 50,
@@ -64,7 +64,7 @@ var resource = {
             stone: 2
         },
         storage: {
-            total: 0,
+            total: 1,
             max: 100,
             cost: {
                 wood: 100
@@ -82,7 +82,7 @@ var resource = {
         chanceIncrement: 1,
         max: 100,
         storage: {
-            total: 0,
+            total: 1,
             max: 100,
             cost: {
                 wood: 50,
@@ -122,7 +122,7 @@ var resource = {
             wheat: 4
         },
         storage: {
-            total: 0,
+            total: 1,
             max: 100,
             cost: {
                 wood: 50,
@@ -140,7 +140,7 @@ var resource = {
         chanceIncrement: 1,
         max: 50,
         storage: {
-            total: 0,
+            total: 1,
             max: 50,
             cost: {
                 wood: 100
@@ -161,7 +161,7 @@ var resource = {
             skin: 2
         },
         storage: {
-            total: 0,
+            total: 1,
             max: 100,
             cost: {
                 wood: 100
@@ -177,7 +177,7 @@ var resource = {
         chanceIncrement: 1,
         max: 100,
         storage: {
-            total: 0,
+            total: 1,
             max: 100,
             cost: {
                 wood: 100,
@@ -195,7 +195,7 @@ var resource = {
         chanceIncrement: 1,
         max: 100,
         storage: {
-            total: 0,
+            total: 1,
             max: 100,
             cost: {
                 wood: 300,
@@ -214,7 +214,7 @@ var resource = {
         chanceIncrement: 1,
         max: 100,
         storage: {
-            total: 0,
+            total: 1,
             max: 100,
             cost: {
                 wood: 350,
