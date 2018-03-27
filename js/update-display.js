@@ -9,6 +9,12 @@ function updateDisplay() {
             document.getElementById(r + "-click-increment").innerHTML = eval(resource[r].clickIncrement)
         }
 
+        if (resource[r].cost !== 'undefined') {
+            for (c in resource[r].cost) {
+                document.getElementById(r + "-" + c + "-cost").innerHTML = eval(resource[r].cost[c])
+            }
+        }
+
         document.getElementById(r + "-storage-total").innerHTML = eval(resource[r].storage.total)
 
         document.getElementById(r + "-auto-increment").innerHTML = eval(resource[r].autoIncrement)
@@ -83,22 +89,34 @@ function initDisplay() {
             var clickHTML = `<button class="btn btn-default btn-block disabled">`+ obj.name +`</button>`
         }
 
+        if (resource[r].cost !== 'undefined') {
+            var resourceCostStr = "";
+            for (c in resource[r].cost) {
+                resourceCostStr += `<h6 class="text-center"><span id="`+ obj.slug +`-`+ c +`-cost"></span> `+ c + "</h6>"
+            }
+        }
+
         let resourceStr = `
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-xs-3">
                 `+ clickHTML +`
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-3">
                 <button class="btn btn-default btn-block disabled">
                     <span id="`+ obj.slug +`-total"></span> /
                     <span id="`+ obj.slug +`-max"></span>
                 </button>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-3">
                 <span class="btn btn-default btn-block disabled">
                     <span id="`+ obj.slug +`-auto-increment"></span>
                     <span>/ 5s</span>
                 </span>
+            </div>
+            <div class="col-xs-3">
+
+                    `+ resourceCostStr +`
+
             </div>
         </div>
         `
@@ -133,6 +151,11 @@ function initDisplay() {
     for (w in workers) {
         let obj = eval(workers[w]);
 
+        var costStr = "";
+        for (c in workers[w].cost) {
+            costStr += `<span id="`+ obj.slug +`-`+ c +`-cost"></span> `+ c +` | `
+        }
+
         let workerStr = `
         <div class="row">
             <div class="col-xs-4">
@@ -142,8 +165,8 @@ function initDisplay() {
                 <button id="`+ obj.slug +`-total" class="btn btn-block btn-default disabled"></button>
             </div>
             <div class="col-xs-4">
-                <h6>-
-                    <span id="`+ obj.slug +`-food-cost"></span> Food</h6>
+                <h6>|
+                    `+ costStr +`
                 <h6>+1 `+ obj.name +`</h6>
             </div>
         </div>
@@ -198,7 +221,7 @@ function initDisplay() {
                     <button id="`+ obj.slug +`-total" class="btn btn-default btn-block disabled">0</button>
                 </div>
                 <div class="col-xs-4">
-                    <h6 class="`+ obj.slug +`Info hidden">| 
+                    <h6 class="`+ obj.slug +`Info hidden">|
                         `+ costStr +`
                     </h6>
                     <h6 class="`+ obj.slug +`ResearchInfo">|
@@ -231,19 +254,6 @@ function initDisplay() {
 
     if (meta.devmode === true) {
         document.getElementById("dev-buttons").classList.remove("hidden");
-    }
-
-    if (meta.infoAlerts.welcome === true) {
-        document.getElementById("welcome-alert").classList.remove("hidden");
-    }
-    if (meta.infoAlerts.workers === true) {
-        document.getElementById("workers-alert").classList.remove("hidden");
-    }
-    if (meta.infoAlerts.accommodation === true) {
-        document.getElementById("accommodation-alert").classList.remove("hidden");
-    }
-    if (meta.infoAlerts.storage === true) {
-        document.getElementById("storage-alert").classList.remove("hidden");
     }
 
     document.getElementById("version-number").innerHTML = meta.versionNumber;

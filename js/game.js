@@ -11,6 +11,12 @@ function tick() {
     for (r in resource) {
         autoIncrementResource(eval(resource[r]))
     }
+
+    for (w in workers) {
+        if (eval(workers[w]).chance) {
+            increaseChanceResourcesFromWorker(eval(workers[w]))
+        }
+    }
 }
 
 // x is the resource object, i is the amount to increase by.
@@ -64,6 +70,28 @@ function increaseChanceResources(x, i) {
                 }
                 counter++;
             }
+        }
+    }
+}
+
+// x = worker obj
+function increaseChanceResourcesFromWorker(x) {
+    for (c in x.chance) {
+        let obj = eval(resource[c])
+        i = obj.chanceIncrement;
+        var counter = 0;
+        while (counter < i) {
+            var secondCounter = 0;
+            while (secondCounter < x.total) {
+                let num = x.chance[c];
+                let rand = Math.floor(Math.random() * 101)
+                if (rand <= num) {
+                    let obj = eval(resource[c]);
+                    increaseResourceTotal(obj, i)
+                }
+                secondCounter++;
+            }
+            counter++;
         }
     }
 }

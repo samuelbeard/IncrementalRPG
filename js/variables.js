@@ -2,13 +2,7 @@ var meta = {
     devmode: true,
     versionNumber: "v0.9",
     maxPopulation: 0,
-    population: 0,
-    infoAlerts: {
-        welcome: true,
-        workers: true,
-        accommodation: true,
-        storage: true
-    }
+    population: 0
 }
 
 var resource = {
@@ -57,11 +51,31 @@ var resource = {
             gold: 5
         }
     },
-    food: {
-        slug: "food",
-        name: "Food",
-        description: "Goes into mouths and is the leading cause of obesity.",
-        action: "Gather",
+    brick: {
+        slug: "brick",
+        name: "Brick",
+        description: "Like rocks but square.",
+        action: "Make",
+        total: 0,
+        clickIncrement: 1,
+        autoIncrement: 0,
+        max: 100,
+        cost: {
+            stone: 2
+        },
+        storage: {
+            total: 0,
+            max: 100,
+            cost: {
+                wood: 100
+            }
+        }
+    },
+    meat: {
+        slug: "meat",
+        name: "Meat",
+        description: "Can be cooked to provide nutrition.",
+        action: "Hunt",
         total: 0,
         clickIncrement: 1,
         autoIncrement: 0,
@@ -75,6 +89,83 @@ var resource = {
                 stone: 50,
             },
             costIncrease: 1.1
+        }
+    },
+    wheat: {
+        slug: "wheat",
+        name: "Wheat",
+        description: "Grows upwards.",
+        action: "Harvest",
+        total: 0,
+        clickIncrement: 1,
+        autoIncrement: 0,
+        max: 0,
+        storage: {
+            total: 0,
+            max: 500,
+            cost: {
+                wood: 1000
+            }
+        }
+    },
+    bread: {
+        slug: "bread",
+        name: "Bread",
+        description: "Another version of food.",
+        action: "Bake",
+        total: 0,
+        clickIncrement: 1,
+        autoIncrement: 0,
+        chanceIncrement: 1,
+        max: 100,
+        cost: {
+            wheat: 4
+        },
+        storage: {
+            total: 0,
+            max: 100,
+            cost: {
+                wood: 50,
+                stone: 50,
+            },
+            costIncrease: 1.1
+        }
+    },
+    skin: {
+        slug: "skin",
+        name: "Skin",
+        description: "The thing that covers animals.",
+        total: 0,
+        autoIncrement: 0,
+        chanceIncrement: 1,
+        max: 50,
+        storage: {
+            total: 0,
+            max: 50,
+            cost: {
+                wood: 100
+            },
+            costIncrease: 1.2
+        }
+    },
+    leather: {
+        slug: "leather",
+        name: "Leather",
+        description: "Nice skin.",
+        action: "Make",
+        total: 0,
+        clickIncrement: 1,
+        autoIncrement: 0,
+        max: 100,
+        cost: {
+            skin: 2
+        },
+        storage: {
+            total: 0,
+            max: 100,
+            cost: {
+                wood: 100
+            }
         }
     },
     iron: {
@@ -133,26 +224,6 @@ var resource = {
             costIncrease: 1.3
         }
     },
-    brick: {
-        slug: "brick",
-        name: "Brick",
-        description: "Like rocks but square.",
-        action: "Make",
-        total: 0,
-        clickIncrement: 1,
-        autoIncrement: 0,
-        max: 200,
-        cost: {
-            stone: 2
-        },
-        storage: {
-            total: 0,
-            max: 100,
-            cost: {
-                wood: 100
-            }
-        }
-    }
 }
 
 var workers = {
@@ -164,7 +235,7 @@ var workers = {
         total: 0,
         autoIncrement: 1,
         cost: {
-            food: 10
+            meat: 10
         },
         costIncrease: 1.1
     },
@@ -176,7 +247,7 @@ var workers = {
         total: 0,
         autoIncrement: 1,
         cost: {
-            food: 10
+            meat: 10
         },
         costIncrease: 1.1
     },
@@ -184,13 +255,16 @@ var workers = {
         slug: "hunter",
         name: "Hunter",
         description: "The opposite to a gatherer.",
-        resource: "food",
+        resource: "meat",
         total: 0,
         autoIncrement: 1,
         cost: {
-            food: 10
+            meat: 10
         },
-        costIncrease: 1.1
+        costIncrease: 1.1,
+        chance: { // Percent
+            skin: 10,
+        }
     },
     brickmaker: {
         slug: "brickmaker",
@@ -200,9 +274,47 @@ var workers = {
         total: 0,
         autoIncrement: 1,
         cost: {
-            food: 10
+            meat: 10,
+            bread: 10
         },
         costIncrease: 1.2
+    },
+    tanner: {
+        slug: "tanner",
+        name: "Tanner",
+        description: "Takes skins and turns them into leather using magic.",
+        resource: "leather",
+        total: 0,
+        autoIncrement: 1,
+        cost: {
+            meat: 10,
+            bread: 10,
+        },
+        costIncrease: 1.2
+    },
+    farmer: {
+        slug: "farmer",
+        name: "Farmer",
+        description: "Enjoys going up and down, up and down.",
+        resource: "wheat",
+        total: 0,
+        autoIncrement: 2,
+        cost: {
+            meat: 15
+        },
+        costIncrease: 1.2
+    },
+    baker: {
+        slug: "baker",
+        name: "Baker",
+        description: "Really relies on the farmers.",
+        resource: "bread",
+        total: 0,
+        autoIncrement: 1,
+        cost: {
+            meat: 10,
+        },
+        costIncrease: 1.1
     }
 }
 
@@ -265,7 +377,7 @@ var upgrades = {
         cost: {
             wood: 200,
             stone: 100,
-            food: 100
+            meat: 100
         },
         live: false,
         visible: true,
@@ -277,7 +389,7 @@ var upgrades = {
         cost: {
             wood: 800,
             stone: 400,
-            food: 400
+            meat: 400
         },
         live: false,
         visible: false,
@@ -289,7 +401,8 @@ var upgrades = {
         cost: {
             wood: 2000,
             stone: 1000,
-            food: 1000
+            meat: 1000,
+            // bread: 100
         },
         live: false,
         visible: false,
@@ -300,7 +413,7 @@ var upgrades = {
         cost: {
             wood: 100,
             stone: 200,
-            food: 100
+            meat: 100
         },
         live: false,
         visible: true,
@@ -312,7 +425,7 @@ var upgrades = {
         cost: {
             wood: 400,
             stone: 800,
-            food: 400
+            meat: 400
         },
         live: false,
         visible: false,
@@ -324,56 +437,19 @@ var upgrades = {
         cost: {
             wood: 1000,
             stone: 2000,
-            food: 1000
-        },
-        live: false,
-        visible: false,
-    },
-    twoWreckages: {
-        name: "Two Wreckages",
-        description: "Two iron per click.",
-        cost: {
-            wood: 100,
-            stone: 100,
-            iron: 200,
-            food: 100
-        },
-        live: false,
-        visible: true,
-        nextTier: "fiveWreckages"
-    },
-    fiveWreckages: {
-        name: "Five Wreckages",
-        description: "Five iron per click.",
-        cost: {
-            wood: 400,
-            stone: 400,
-            iron: 800,
-            food: 400
-        },
-        live: false,
-        visible: false,
-        nextTier: "tenWreckages"
-    },
-    tenWreckages: {
-        name: "Ten Wreckages",
-        description: "Ten iron per click.",
-        cost: {
-            wood: 1000,
-            stone: 1000,
-            iron: 2000,
-            food: 1000
+            meat: 1000,
+            // bread: 100
         },
         live: false,
         visible: false,
     },
     twoArrows: {
         name: "Two Arrows",
-        description: "Two food per click.",
+        description: "Two meat per click.",
         cost: {
             wood: 100,
             stone: 100,
-            food: 200
+            meat: 200
         },
         live: false,
         visible: true,
@@ -381,11 +457,11 @@ var upgrades = {
     },
     fiveArrows: {
         name: "Five Arrows",
-        description: "Five food per click.",
+        description: "Five meat per click.",
         cost: {
             wood: 400,
             stone: 400,
-            food: 800
+            meat: 800
         },
         live: false,
         visible: false,
@@ -393,11 +469,12 @@ var upgrades = {
     },
     tenArrows: {
         name: "Ten Arrows",
-        description: "Ten food per click.",
+        description: "Ten meat per click.",
         cost: {
             wood: 1000,
             stone: 1000,
-            food: 2000
+            meat: 2000,
+            // bread: 100
         },
         live: false,
         visible: false,
@@ -410,7 +487,7 @@ var upgrades = {
             wood: 100,
             stone: 30,
             iron: 20,
-            food: 200
+            meat: 200
         },
         live: false,
         visible: true
