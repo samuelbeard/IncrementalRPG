@@ -2,7 +2,7 @@ function updateDisplay() {
 
     // Resources
     for (r in resource) {
-        document.getElementById(r + "-total").innerHTML = eval(resource[r].total)
+        document.getElementById(r + "-total").innerHTML = eval(resource[r].total).toLocaleString()
         document.getElementById(r + "-max").innerHTML = eval(resource[r].max)
 
         if (r.clickIncrement) {

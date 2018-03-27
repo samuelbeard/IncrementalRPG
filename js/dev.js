@@ -13,6 +13,15 @@ function maxEverything() {
 function upStorage() {
     for (r in resource) {
         let obj = eval(resource[r]);
-        obj.max += 1000;
+        obj.max *= 2;
     }
+}
+
+function dev(){
+    upStorage()
+    maxEverything()
+}
+
+function clear() {
+    clearLocalStorage()
 }
