@@ -21,8 +21,3 @@ function loadGame() {
     buildings = JSON.parse(atob(localStorage['rpg_save[buildings]']));
     upgrades = JSON.parse(atob(localStorage['rpg_save[upgrades]']));
 }
-
-function clearLocalStorage() {
-    localStorage.clear();
-    window.location.reload();
-}

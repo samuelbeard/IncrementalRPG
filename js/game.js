@@ -96,10 +96,6 @@ function increaseChanceResourcesFromWorker(x) {
     }
 }
 
-function stopAlert(x) {
-    meta.infoAlerts[x] = false;
-}
-
 // Add storage for a resource
 // x = The resources object name. E.g. wood
 function addStorage(x) {
@@ -203,7 +199,7 @@ function unlockBuilding(x) {
                 document.getElementById(propName + "-progress-wrap").classList.add("hidden");
                 document.getElementById(propName + "-build").classList.remove("hidden");
                 clearInterval(unlock)
-                message(x,name + " Unlocked", "info");
+                message(x.name + " Unlocked", "info");
             }
         }, 200);
     }

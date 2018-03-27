@@ -33,7 +33,7 @@ function updateDisplay() {
             document.getElementById(b + "-" + c + "-cost").innerHTML = eval(buildings[b].cost[c])
         }
 
-        if (buildings[b].research) {
+        if (buildings[b].research && buildings[b].research.locked === true) {
             for (rc in buildings[b].research.cost) {
                 document.getElementById(b + "-" + rc + "-research-cost").innerHTML = eval(buildings[b].research.cost[rc])
             }

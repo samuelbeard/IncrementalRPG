@@ -1,6 +1,6 @@
 var meta = {
-    devmode: true,
-    versionNumber: "v0.9",
+    devmode: false,
+    versionNumber: "v0.10",
     maxPopulation: 0,
     population: 0
 }
