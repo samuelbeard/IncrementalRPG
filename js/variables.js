@@ -275,7 +275,7 @@ var workers = {
         autoIncrement: 1,
         cost: {
             meat: 10,
-            bread: 10
+            stone: 1
         },
         costIncrease: 1.2
     },
@@ -300,7 +300,8 @@ var workers = {
         total: 0,
         autoIncrement: 2,
         cost: {
-            meat: 15
+            meat: 15,
+            wheat: 10
         },
         costIncrease: 1.2
     },
