@@ -214,7 +214,7 @@ function buyBuilding(x) {
  * x - object = The buildings object.
  */
 function unlockBuilding(x) {
-    if (Calc.spendResources(Clac.expensesArray(x.research.cost))) {
+    if (Calc.spendResources(Calc.expensesArray(x.research.cost))) {
         propName = x.name.toLowerCase() // This gets the JSON property name. This is a really dodgy way of doing it and needs to be fixed.
 
         x.research.isUnlocking = true;

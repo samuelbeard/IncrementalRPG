@@ -2,7 +2,7 @@ var meta = {
     devmode: false,
     versionNumber: "v0.10.1",
     fps: 100,
-    tick: 5000,
+    tick: 1000,
     saveGameInterval: 30000,
     maxPopulation: 0,
     population: 0
