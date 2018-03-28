@@ -1,3 +1,6 @@
+/*
+ * Save the Game to Local Storage
+ */
 function saveGame() {
     console.log("Saving Game");
     localStorage['rpg_save[meta]'] = btoa(JSON.stringify(meta));
@@ -7,6 +10,9 @@ function saveGame() {
     localStorage['rpg_save[upgrades]'] = btoa(JSON.stringify(upgrades));
 }
 
+/*
+ * Load the Game from Local Storage
+ */
 function loadGame() {
     if (!localStorage['rpg_save[meta]']) {
         message("No Saved Game - Starting Fresh", "info")

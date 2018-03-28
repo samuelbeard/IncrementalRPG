@@ -1,6 +1,9 @@
 var meta = {
     devmode: false,
-    versionNumber: "v0.10",
+    versionNumber: "v0.10.1",
+    fps: 100,
+    tick: 5000,
+    saveGameInterval: 30000,
     maxPopulation: 0,
     population: 0
 }
@@ -105,7 +108,8 @@ var resource = {
             max: 500,
             cost: {
                 wood: 1000
-            }
+            },
+            costIncrease: 1.1
         }
     },
     bread: {
@@ -165,7 +169,8 @@ var resource = {
             max: 100,
             cost: {
                 wood: 100
-            }
+            },
+            costIncrease: 1.1
         }
     },
     iron: {

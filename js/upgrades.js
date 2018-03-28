@@ -1,3 +1,6 @@
+/*
+ * USE THE Calc FUNCTIONS
+ */
 function checkResources(arr) {
     for (res in arr) {
         name = arr[res][0];
@@ -13,6 +16,9 @@ function checkResources(arr) {
     return true;
 }
 
+/*
+ * USE THE Calc FUNCTIONS
+ */
 function spendResources(arr) {
     for (res in arr) {
         name = arr[res][0];
@@ -23,8 +29,12 @@ function spendResources(arr) {
     }
 }
 
-// Handles all click increment upgrades
-// r is the resource object, i is the new clickIncrement value, u is the upgrade object
+/*
+ * Handle Click Increment Upgrades
+ * r - object = The resource object.
+ * i - number = The new clickIncrement value for said object.
+ * u - object = The upgrade object
+ */
 function clickIncrementUpgrade(r, i, u) {
     // Check for resources
     arr = []
@@ -61,8 +71,12 @@ function clickIncrementUpgrade(r, i, u) {
     }
 }
 
-// Handles all the resident size upgrades.
-// r is the resident/building object, i is the new resident value, u is the upgrade object.
+/*
+ * Handle Resident Capacity Upgrades
+ * r - object = The resident/building object.
+ * i - number = The new resident value for said object.
+ * u - object = The upgrade object
+ */
 function residentSizeUpgrade(r, i, u) {
     console.log("r", r, "|| i", i, "||u", u);
     arr = [];

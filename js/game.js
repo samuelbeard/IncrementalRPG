@@ -1,12 +1,17 @@
+/*
+ * On Window Load
+ */
 window.onload = function() {
-    setInterval(updateDisplay, 100);
-    setInterval(tick, 5000);
-    setInterval(saveGame, 30000);
+    setInterval(updateDisplay, meta.fps);
+    setInterval(tick, meta.tick);
+    setInterval(saveGame, meta.saveGameInterval);
     loadGame();
     initDisplay();
 }
 
-// Increments resources.
+/*
+ * Increments Resources
+ */
 function tick() {
     for (r in resource) {
         autoIncrementResource(eval(resource[r]))
@@ -19,7 +24,63 @@ function tick() {
     }
 }
 
-// x is the resource object, i is the amount to increase by.
+/*
+ * Calculation Functions
+ */
+Calc = {
+    /*
+     * Spend Multiple Resources
+     * arr - array = Array of arrays. Each contains the resource object slug and the amount to spend of that resource.
+     *
+     * Returns true if all resource has been spent.
+     * Returns false if one resource cannot be spent. It will not spend any resources if one cannot be spent.
+     */
+    spendResources: function(arr) {
+        var shortages = []
+
+        for (a in arr) {
+            let objSlug = arr[a][0]
+            let obj = eval(resource[objSlug]);
+            let i = arr[a][1];
+            let newValue = obj.total - i;
+
+            if (newValue < 0) {
+                shortages.push(obj.name);
+            }
+        }
+
+        if (shortages.length === 0) {
+            for (a in arr) {
+                let objSlug = arr[a][0]
+                let obj = eval(resource[objSlug]);
+                let i = arr[a][1];
+                obj.total -= i;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    },
+    /*
+     * Takes an object of expenses and puts them into an array of arrays.
+     * x - object = The cost object.
+     * Returns an array or arrays [[the resource slug, the amount to spend], [...]]
+     */
+    expensesArray: function(x) {
+        expenses = [];
+        for (i in x) {
+            let costValue = x[i];
+            expenses.push([i, costValue]);
+        }
+        return expenses;
+    }
+}
+
+/* TODO: REWRITE THIS FUNCTION TO RETURN TRUE OR FALSE & PUT IT IN Calc
+ * Increase a Resource Total
+ * x - object = The resource object.
+ * i - number = The amount to increase the total by.
+ */
 function increaseResourceTotal(x, i) {
     newValue = x.total + i;
 
@@ -47,16 +108,30 @@ function increaseResourceTotal(x, i) {
     }
 }
 
+/*
+ * Increment Resource from a Click
+ * Initiated from the DOM
+ * x - object = The resource object.
+ */
 function clickIncrement(x) {
     increaseResourceTotal(x, x.clickIncrement)
 }
 
+/*
+ * Increment Resource Automatically
+ * x - object = The resource object.
+ */
 function autoIncrementResource(x) {
     if (x.autoIncrement > 0) {
         increaseResourceTotal(x, x.autoIncrement)
     }
 }
 
+/* AWFULLY WET
+ * Increment Resource in the Chance Object of the Passed Resource
+ * x - object = The resource object. (Which contains the `chance` object.)
+ * i - number = The number of times the chance check should run.
+ */
 function increaseChanceResources(x, i) {
     if (typeof(x.chance) !== "undefined") {
         for (c in x.chance) {
@@ -74,7 +149,10 @@ function increaseChanceResources(x, i) {
     }
 }
 
-// x = worker obj
+/* AWFULLY WET
+ * Increment Resource in the Chance Object or the Passed Worker
+ * x - object = The worker object. (Which contains the `chance` object.)
+ */
 function increaseChanceResourcesFromWorker(x) {
     for (c in x.chance) {
         let obj = eval(resource[c])
@@ -96,28 +174,13 @@ function increaseChanceResourcesFromWorker(x) {
     }
 }
 
-// Add storage for a resource
-// x = The resources object name. E.g. wood
+/*
+ * Add Storage to a Resource
+ * Initiated from the DOM
+ * x - object = The resource object.
+ */
 function addStorage(x) {
-    var shortages = [];
-
-    for (i in x.storage.cost) {
-        let obj = eval(resource[i]);
-
-        if (obj.total < x.storage.cost[i]) {
-            shortages.push(obj.name)
-        }
-    }
-
-    if (shortages.length > 0) {
-        let msg = "Can't afford this! You need more " + shortages.join(", ");
-        message(msg, "info");
-    } else {
-        for (ii in x.storage.cost) {
-            let obj = eval(resource[ii]);
-
-            obj.total -= x.storage.cost[ii]
-        }
+    if (Calc.spendResources(Calc.expensesArray(x.storage.cost))) {
         x.max += x.storage.max;
         x.storage.total ++;
 
@@ -128,27 +191,13 @@ function addStorage(x) {
     }
 }
 
+/*
+ * Buy a Residential Building
+ * Initiated from the DOM
+ * x - object = The buildings object.
+ */
 function buyBuilding(x) {
-    var shortages = [];
-
-    for (i in x.cost) {
-        let obj = eval(resource[i]);
-
-        if (obj.total < x.cost[i]) {
-            shortages.push(obj.name)
-        }
-    }
-
-    if (shortages.length > 0) {
-        let msg = "Can't afford this! You need more " + shortages.join(", ");
-        message(msg, "info");
-    } else {
-        for (ii in x.cost) {
-            let obj = eval(resource[ii]);
-
-            obj.total -= x.cost[ii]
-        }
-
+    if (Calc.spendResources(Calc.expensesArray(x.cost))) {
         x.total ++;
         meta.maxPopulation += x.residents;
 
@@ -159,28 +208,13 @@ function buyBuilding(x) {
     }
 }
 
+/*
+ * Research a Residential Building
+ * Initiated from the DOM
+ * x - object = The buildings object.
+ */
 function unlockBuilding(x) {
-    var shortages = [];
-
-    for (i in x.research.cost) {
-        let obj = eval(resource[i]);
-
-        if (obj.total < x.research.cost[i]) {
-            shortages.push(obj.name)
-        }
-    }
-
-    if (shortages.length > 0) {
-        let msg = "Can't afford this! You need more " + shortages.join(", ");
-        message(msg, "info");
-    } else {
-        // Spend the resources.
-        for (ii in x.research.cost) {
-            let obj = eval(resource[ii]);
-
-            obj.total -= x.research.cost[ii]
-        }
-
+    if (Calc.spendResources(Clac.expensesArray(x.research.cost))) {
         propName = x.name.toLowerCase() // This gets the JSON property name. This is a really dodgy way of doing it and needs to be fixed.
 
         x.research.isUnlocking = true;
@@ -203,36 +237,20 @@ function unlockBuilding(x) {
             }
         }, 200);
     }
-
 }
 
+/*
+ * Add a Worker
+ * Initiated from the DOM
+ * x - object = The worker object.
+ */
 function buyWorker(x) {
-    var shortages = [];
-
-    for (i in x.cost) {
-        let obj = eval(resource[i]);
-
-        if (obj.total < x.cost[i]) {
-            shortages.push(obj.name)
-        }
-    }
-
+    // Stop the function if there isn't enough population capacity.
     if (meta.population >= meta.maxPopulation) {
-        shortages.push("Population Capacity")
+        return
     }
 
-    if (shortages.length > 0) {
-        let msg = "Can't afford this! You need more " + shortages.join(", ");
-        message(msg, "info");
-    } else {
-        // Spend the resources.
-        for (ii in x.cost) {
-            let obj = eval(resource[ii]);
-
-            obj.total -= x.cost[ii]
-        }
-
-        // Alter values
+    if (Calc.spendResources(Calc.expensesArray(x.cost))) {
         x.total ++;
         meta.population ++;
 

@@ -1,47 +1,51 @@
+/*
+ * Update all the Values in the DOM
+ * Runs every meta.fps milliseconds.
+ */
 function updateDisplay() {
 
     // Resources
     for (r in resource) {
-        document.getElementById(r + "-total").innerHTML = eval(resource[r].total).toLocaleString()
-        document.getElementById(r + "-max").innerHTML = eval(resource[r].max)
+        let obj = eval(resource[r]);
+        document.getElementById(`${r}-total`).innerHTML = obj.total.toLocaleString();
+        document.getElementById(`${r}-max`).innerHTML = obj.max.toLocaleString();
+        document.getElementById(`${r}-storage-total`).innerHTML = obj.storage.total;
+        document.getElementById(`${r}-auto-increment`).innerHTML = obj.autoIncrement;
 
         if (r.clickIncrement) {
-            document.getElementById(r + "-click-increment").innerHTML = eval(resource[r].clickIncrement)
+            document.getElementById(`${r}-click-increment`).innerHTML = obj.clickIncrement;
         }
 
-        if (resource[r].cost !== 'undefined') {
-            for (c in resource[r].cost) {
-                document.getElementById(r + "-" + c + "-cost").innerHTML = eval(resource[r].cost[c])
+        if (typeof obj.cost !== 'undefined') {
+            for (c in obj.cost) {
+                document.getElementById(`${r}-${c}-cost`).innerHTML = obj.cost[c];
             }
         }
 
-        document.getElementById(r + "-storage-total").innerHTML = eval(resource[r].storage.total)
-
-        document.getElementById(r + "-auto-increment").innerHTML = eval(resource[r].autoIncrement)
-
-        for (c in resource[r].storage.cost) {
-            let elem = document.getElementById(r + "-" + c + "-storage-cost")
-            elem.innerHTML = eval(resource[r].storage.cost[c])
-            colorText(eval(resource[r].storage.cost[c]), eval(resource[c].total), elem)
+        for (c in obj.storage.cost) {
+            let elem = document.getElementById(`${r}-${c}-storage-cost`);
+            elem.innerHTML = obj.storage.cost[c];
+            colorText(obj.storage.cost[c], eval(resource[c].total), elem);
         }
     }
 
     // Buildings
     for (b in buildings) {
-        document.getElementById(b + "-total").innerHTML = eval(buildings[b].total)
-        document.getElementById(b + "-residents").innerHTML = eval(buildings[b].residents)
+        let obj = eval(buildings[b]);
+        document.getElementById(`${b}-total`).innerHTML = obj.total;
+        document.getElementById(`${b}-residents`).innerHTML = obj.residents;
 
-        for (c in buildings[b].cost) {
-            let elem = document.getElementById(b + "-" + c + "-cost")
-            elem.innerHTML = eval(buildings[b].cost[c])
-            colorText(eval(buildings[b].cost[c]), eval(resource[c].total), elem)
+        for (c in obj.cost) {
+            let elem = document.getElementById(`${b}-${c}-cost`);
+            elem.innerHTML = obj.cost[c];
+            colorText(obj.cost[c], eval(resource[c].total), elem);
         }
 
-        if (buildings[b].research && buildings[b].research.locked === true) {
-            for (rc in buildings[b].research.cost) {
-                let elem = document.getElementById(b + "-" + rc + "-research-cost")
-                elem.innerHTML = eval(buildings[b].research.cost[rc])
-                colorText(eval(buildings[b].research.cost[rc]), eval(resource[rc].total), elem)
+        if (obj.research && obj.research.locked === true) {
+            for (rc in obj.research.cost) {
+                let elem = document.getElementById(`${b}-${rc}-research-cost`);
+                elem.innerHTML = obj.research.cost[rc];
+                colorText(obj.research.cost[rc], eval(resource[rc].total), elem);
             }
         }
     }
@@ -54,24 +58,26 @@ function updateDisplay() {
 
     // Workers
     for (w in workers) {
-        document.getElementById(w + "-total").innerHTML = eval(workers[w].total)
+        let obj = eval(workers[w]);
+        document.getElementById(`${w}-total`).innerHTML = obj.total;
 
         for (c in workers[w].cost) {
-            let elem = document.getElementById(w + "-" + c + "-cost")
-            elem.innerHTML = eval(workers[w].cost[c])
-            colorText(eval(workers[w].cost[c]), eval(resource[c].total), elem)
+            let elem = document.getElementById(`${w}-${c}-cost`);
+            elem.innerHTML = obj.cost[c];
+            colorText(obj.cost[c], eval(resource[c].total), elem);
         }
     }
 
     // Upgrades
     for (u in upgrades) {
-        document.getElementById(u + "-name").innerHTML = eval(upgrades[u]).name;
-        document.getElementById(u + "-description").innerHTML = eval(upgrades[u]).description;
+        let obj = eval(upgrades[u]);
+        document.getElementById(`${u}-name`).innerHTML = obj.name;
+        document.getElementById(`${u}-description`).innerHTML = obj.description;
 
-        for (c in upgrades[u].cost) {
-            let elem = document.getElementById(u + "-" + c + "-cost")
-            elem.innerHTML = eval(upgrades[u].cost[c])
-            colorText(eval(upgrades[u].cost[c]), eval(resource[c].total), elem)
+        for (c in obj.cost) {
+            let elem = document.getElementById(`${u}-${c}-cost`);
+            elem.innerHTML = obj.cost[c];
+            colorText(obj.cost[c], eval(resource[c].total), elem);
         }
     }
 
@@ -79,6 +85,9 @@ function updateDisplay() {
     document.getElementById("population-total").innerHTML = meta.population;
 }
 
+/*
+ * Update the DOM Values when it Loads
+ */
 function initDisplay() {
     for (u in upgrades) {
         if (eval(upgrades[u]).visible === false) {
@@ -93,39 +102,37 @@ function initDisplay() {
         let obj = eval(resource[r]);
 
         if (obj.clickIncrement) {
-            var clickHTML = `<button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.`+ obj.slug +`)">`+ obj.action +` <span id="`+ obj.slug +`-click-increment"></span> `+ obj.name +`</button>`;
+            var clickHTML = `<button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.${obj.slug})">${obj.action} <span id="${obj.slug}-click-increment"></span> ${obj.name}</button>`;
         } else {
-            var clickHTML = `<button class="btn btn-default btn-block disabled">`+ obj.name +`</button>`
+            var clickHTML = `<button class="btn btn-default btn-block disabled">${obj.name}</button>`
         }
 
         if (resource[r].cost !== 'undefined') {
             var resourceCostStr = "";
             for (c in resource[r].cost) {
-                resourceCostStr += `<h6 class="text-center"><span id="`+ obj.slug +`-`+ c +`-cost"></span> `+ c + "</h6>"
+                resourceCostStr += `<button class="btn btn-primary btn-block disabled">-<span id="${obj.slug}-${c}-cost"></span> ${c}</button>`
             }
         }
 
         let resourceStr = `
         <div class="row">
             <div class="col-xs-3">
-                `+ clickHTML +`
+                ${clickHTML}
             </div>
             <div class="col-xs-3">
                 <button class="btn btn-default btn-block disabled">
-                    <span id="`+ obj.slug +`-total"></span> /
-                    <span id="`+ obj.slug +`-max"></span>
+                    <span id="${obj.slug}-total"></span> /
+                    <span id="${obj.slug}-max"></span>
                 </button>
             </div>
             <div class="col-xs-3">
                 <span class="btn btn-default btn-block disabled">
-                    <span id="`+ obj.slug +`-auto-increment"></span>
+                    <span id="${obj.slug}-auto-increment"></span>
                     <span>/ 5s</span>
                 </span>
             </div>
             <div class="col-xs-3">
-
-                    `+ resourceCostStr +`
-
+                ${resourceCostStr}
             </div>
         </div>
         `
@@ -135,19 +142,19 @@ function initDisplay() {
 
         var costStr = "";
         for (c in resource[r].storage.cost) {
-            costStr += `<span id="`+ obj.slug +`-`+ c +`-storage-cost"></span> `+ c +` | `
+            costStr += `<span id="${obj.slug}-`+ c +`-storage-cost"></span> `+ c +` | `
         }
 
         let storageStr = `
         <div class="row">
             <div class="col-xs-4">
-                <button class="btn btn-danger btn-block" onmousedown="addStorage(resource.`+ obj.slug +`)">Build `+ obj.name +` Storage</button>
+                <button class="btn btn-danger btn-block" onmousedown="addStorage(resource.${obj.slug})">Build ${obj.name} Storage</button>
             </div>
             <div class="col-xs-4">
-                <button id="`+ obj.slug +`-storage-total" class="btn btn-default btn-block disabled">0</button>
+                <button id="${obj.slug}-storage-total" class="btn btn-default btn-block disabled">0</button>
             </div>
             <div class="col-xs-4">
-                <h6>| `+ costStr +`<h6>+`+ obj.storage.max +` `+ obj.name +` Storage</h6>
+                <h6>| ${costStr}<h6>+${obj.storage.max} ${obj.name} Storage</h6>
             </div>
         </div>
         `
@@ -162,21 +169,20 @@ function initDisplay() {
 
         var costStr = "";
         for (c in workers[w].cost) {
-            costStr += `<span id="`+ obj.slug +`-`+ c +`-cost"></span> `+ c +` | `
+            costStr += `<span id="${obj.slug}-`+ c +`-cost"></span> `+ c +` | `
         }
 
         let workerStr = `
         <div class="row">
             <div class="col-xs-4">
-                <button class="btn btn-block btn-success" onmousedown="buyWorker(workers.`+ obj.slug +`)">Create `+ obj.name +`</button>
+                <button class="btn btn-block btn-success" onmousedown="buyWorker(workers.${obj.slug})">Create ${obj.name}</button>
             </div>
             <div class="col-xs-4">
-                <button id="`+ obj.slug +`-total" class="btn btn-block btn-default disabled"></button>
+                <button id="${obj.slug}-total" class="btn btn-block btn-default disabled"></button>
             </div>
             <div class="col-xs-4">
-                <h6>|
-                    `+ costStr +`
-                <h6>+1 `+ obj.name +`</h6>
+                <h6>| ${costStr} </h6>
+                <h6>+1 ${obj.name}</h6>
             </div>
         </div>
         `
@@ -206,37 +212,37 @@ function initDisplay() {
 
         var costStr = "";
         for (c in buildings[b].cost) {
-            costStr += `<span id="`+ obj.slug +`-`+ c +`-cost"></span> `+ c +` | `
+            costStr += `<span id="${obj.slug}-`+ c +`-cost"></span> `+ c +` | `
         }
 
         if (isResearched() && isLocked()) {
             var researchCostStr = ""
             for (c in buildings[b].research.cost) {
-                researchCostStr += `<span id="`+ obj.slug +`-`+ c +`-research-cost"></span> `+ c +` | `
+                researchCostStr += `<span id="${obj.slug}-`+ c +`-research-cost"></span> `+ c +` | `
             }
 
             var buildingStr = `
             <div class="row">
                 <div class="col-xs-4">
-                    <button id="`+ obj.slug +`-research" class="btn btn-danger btn-block" onmousedown="unlockBuilding(buildings.`+ obj.slug +`)">Consider `+ obj.name +`</button>
-                    <div id="`+ obj.slug +`-progress-wrap" class="progress-wrap-`+ obj.slug +` progress hidden">
-                        <span id="`+ obj.slug +`-percentage" class="researchingComment"></span>
-                        <div id="`+ obj.slug +`-progress-bar" class="progress-bar-`+ obj.slug +` progress"></div>
+                    <button id="${obj.slug}-research" class="btn btn-danger btn-block" onmousedown="unlockBuilding(buildings.${obj.slug})">Consider ${obj.name}</button>
+                    <div id="${obj.slug}-progress-wrap" class="progress-wrap-${obj.slug} progress hidden">
+                        <span id="${obj.slug}-percentage" class="researchingComment"></span>
+                        <div id="${obj.slug}-progress-bar" class="progress-bar-${obj.slug} progress"></div>
                     </div>
-                    <button id="`+ obj.slug +`-build" class="btn btn-danger btn-block hidden" onmousedown="buyBuilding(buildings.`+ obj.slug +`)">Build `+ obj.name +`</button>
+                    <button id="${obj.slug}-build" class="btn btn-danger btn-block hidden" onmousedown="buyBuilding(buildings.${obj.slug})">Build ${obj.name}</button>
                 </div>
 
                 <div class="col-xs-4">
-                    <button id="`+ obj.slug +`-total" class="btn btn-default btn-block disabled">0</button>
+                    <button id="${obj.slug}-total" class="btn btn-default btn-block disabled">0</button>
                 </div>
                 <div class="col-xs-4">
-                    <h6 class="`+ obj.slug +`Info hidden">|
-                        `+ costStr +`
+                    <h6 class="${obj.slug}Info hidden">|
+                        ${costStr}
                     </h6>
-                    <h6 class="`+ obj.slug +`ResearchInfo">|
-                        `+ researchCostStr +`
+                    <h6 class="${obj.slug}ResearchInfo">|
+                        ${researchCostStr}
                     </h6>
-                    <h6>+<span id="`+ obj.slug +`-residents"></span> Population</h6>
+                    <h6>+<span id="${obj.slug}-residents"></span> Population</h6>
                 </div>
             </div>
             `
@@ -244,14 +250,14 @@ function initDisplay() {
             var buildingStr = `
             <div class="row">
                 <div class="col-xs-4">
-                    <button id="`+ obj.slug +`-build" class="btn btn-danger btn-block" onmousedown="buyBuilding(buildings.`+ obj.slug +`)">Build `+ obj.name +`</button>
+                    <button id="${obj.slug}-build" class="btn btn-danger btn-block" onmousedown="buyBuilding(buildings.${obj.slug})">Build ${obj.name}</button>
                 </div>
                 <div class="col-xs-4">
-                    <button id="`+ obj.slug +`-total" class="btn btn-default btn-block disabled"></button>
+                    <button id="${obj.slug}-total" class="btn btn-default btn-block disabled"></button>
                 </div>
                 <div class="col-xs-4">
-                    <h6>`+ costStr +`</h6>
-                    <h6>+<span id="`+ obj.slug +`-residents"></span> Population</h6>
+                    <h6>${costStr}</h6>
+                    <h6>+<span id="${obj.slug}-residents"></span> Population</h6>
                 </div>
             </div>
             `
@@ -269,6 +275,9 @@ function initDisplay() {
 
 }
 
+/*
+ * Colours Text Based on if the Player can Afford it.
+ */
 function colorText(cost, resource, elem){
     if (cost > resource) {
         elem.style.color = "red"
