@@ -1,6 +1,6 @@
 var meta = {
     devmode: false,
-    versionNumber: "v0.10.1",
+    versionNumber: "alpha 0.10.2",
     fps: 100,
     tick: 1000,
     saveGameInterval: 30000,

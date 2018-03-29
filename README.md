@@ -1,10 +1,9 @@
 # IncrementalRPG
 ---
 
-## NEW VERSION - As of March 2018!
-I have rebuilt the game from the ground up. It will now be much easier to add to the game as the code is much DRYer and separated into multiple js files.
+Incremental Game with the goal of growing and growing as much as possible. Both in the game and the growing the game itself.
 
-Incremental Game with the goal of growing and growing as much as possible.
+The game is currently in ALPHA so it could break at any moment. Submit an issue if you do play the game and break something.
 
 Project Page: http://samuel-beard.com/IncrementalRPG
 
