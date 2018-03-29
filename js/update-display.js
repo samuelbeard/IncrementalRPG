@@ -32,6 +32,8 @@ function updateDisplay() {
     // Buildings
     for (b in buildings) {
         let obj = eval(buildings[b]);
+
+
         document.getElementById(`${b}-total`).innerHTML = obj.total;
         document.getElementById(`${b}-residents`).innerHTML = obj.residents;
 
@@ -41,20 +43,13 @@ function updateDisplay() {
             colorText(obj.cost[c], eval(resource[c].total), elem);
         }
 
-        if (obj.research && obj.research.locked === true) {
-            for (rc in obj.research.cost) {
-                let elem = document.getElementById(`${b}-${rc}-research-cost`);
-                elem.innerHTML = obj.research.cost[rc];
-                colorText(obj.research.cost[rc], eval(resource[rc].total), elem);
-            }
-        }
+
+
+
+
     }
 
-    // TODO: Make this loop through all buildings.
-    if (buildings.hostel.research.isUnlocking === true) {
-        document.getElementById("hostel-percentage").innerHTML = buildings.hostel.research.unlockedPercent.toFixed(2);
-        document.getElementById("hostel-progress-bar").style.left = buildings.hostel.research.unlockedPercent + "%";
-    }
+
 
     // Workers
     for (w in workers) {
@@ -128,7 +123,7 @@ function initDisplay() {
             <div class="col-xs-3">
                 <span class="btn btn-default btn-block disabled">
                     <span id="${obj.slug}-auto-increment"></span>
-                    <span>/ 5s</span>
+                    <span>/ ${meta.tick / 1000}s</span>
                 </span>
             </div>
             <div class="col-xs-3">
@@ -194,75 +189,26 @@ function initDisplay() {
     // Add buildings to DOM
     for (b in buildings) {
         let obj = eval(buildings[b]);
-        var isResearched = function() {
-            if (obj.research) {
-                return true;
-            } else {
-                var isLocked = false;
-                return false;
-            }
-        }
-        var isLocked = function() {
-            if (isResearched()) {
-                return obj.research.locked;
-            } else {
-                return false;
-            }
-        }
 
         var costStr = "";
         for (c in buildings[b].cost) {
-            costStr += `<span id="${obj.slug}-`+ c +`-cost"></span> `+ c +` | `
+            costStr += `<span id="${obj.slug}-${c}-cost"></span> ${c} | `
         }
 
-        if (isResearched() && isLocked()) {
-            var researchCostStr = ""
-            for (c in buildings[b].research.cost) {
-                researchCostStr += `<span id="${obj.slug}-`+ c +`-research-cost"></span> `+ c +` | `
-            }
-
-            var buildingStr = `
-            <div class="row">
-                <div class="col-xs-4">
-                    <button id="${obj.slug}-research" class="btn btn-danger btn-block" onmousedown="unlockBuilding(buildings.${obj.slug})">Consider ${obj.name}</button>
-                    <div id="${obj.slug}-progress-wrap" class="progress-wrap-${obj.slug} progress hidden">
-                        <span id="${obj.slug}-percentage" class="researchingComment"></span>
-                        <div id="${obj.slug}-progress-bar" class="progress-bar-${obj.slug} progress"></div>
-                    </div>
-                    <button id="${obj.slug}-build" class="btn btn-danger btn-block hidden" onmousedown="buyBuilding(buildings.${obj.slug})">Build ${obj.name}</button>
-                </div>
-
-                <div class="col-xs-4">
-                    <button id="${obj.slug}-total" class="btn btn-default btn-block disabled">0</button>
-                </div>
-                <div class="col-xs-4">
-                    <h6 class="${obj.slug}Info hidden">|
-                        ${costStr}
-                    </h6>
-                    <h6 class="${obj.slug}ResearchInfo">|
-                        ${researchCostStr}
-                    </h6>
-                    <h6>+<span id="${obj.slug}-residents"></span> Population</h6>
-                </div>
+        var buildingStr = `
+        <div class="row">
+            <div class="col-xs-4">
+                <button id="${obj.slug}-build" class="btn btn-danger btn-block" onmousedown="buyBuilding(buildings.${obj.slug})">Build ${obj.name}</button>
             </div>
-            `
-        } else {
-            var buildingStr = `
-            <div class="row">
-                <div class="col-xs-4">
-                    <button id="${obj.slug}-build" class="btn btn-danger btn-block" onmousedown="buyBuilding(buildings.${obj.slug})">Build ${obj.name}</button>
-                </div>
-                <div class="col-xs-4">
-                    <button id="${obj.slug}-total" class="btn btn-default btn-block disabled"></button>
-                </div>
-                <div class="col-xs-4">
-                    <h6>${costStr}</h6>
-                    <h6>+<span id="${obj.slug}-residents"></span> Population</h6>
-                </div>
+            <div class="col-xs-4">
+                <button id="${obj.slug}-total" class="btn btn-default btn-block disabled"></button>
             </div>
-            `
-        }
-
+            <div class="col-xs-4">
+                <h6>${costStr}</h6>
+                <h6>+<span id="${obj.slug}-residents"></span> Population</h6>
+            </div>
+        </div>
+        `
         let buildingParent = document.getElementById("buildings")
         buildingParent.innerHTML += buildingStr;
     }
@@ -272,7 +218,6 @@ function initDisplay() {
     }
 
     document.getElementById("version-number").innerHTML = meta.versionNumber;
-
 }
 
 /*

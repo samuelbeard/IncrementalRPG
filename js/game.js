@@ -209,37 +209,6 @@ function buyBuilding(x) {
 }
 
 /*
- * Research a Residential Building
- * Initiated from the DOM
- * x - object = The buildings object.
- */
-function unlockBuilding(x) {
-    if (Calc.spendResources(Calc.expensesArray(x.research.cost))) {
-        propName = x.name.toLowerCase() // This gets the JSON property name. This is a really dodgy way of doing it and needs to be fixed.
-
-        x.research.isUnlocking = true;
-        document.getElementById(propName + "-progress-wrap").classList.remove("hidden");
-        document.getElementById(propName + "-research").classList.add("hidden");
-
-        percentageIncrements = parseFloat((100 / x.research.unlockTime).toFixed(2)) / 5
-
-        unlock = setInterval(function() {
-            x.research.unlockedPercent += percentageIncrements;
-
-            // Research Complete:
-            if (x.research.unlockedPercent >= 100) {
-                x.research.locked = false;
-                x.research.isUnlocking = false;
-                document.getElementById(propName + "-progress-wrap").classList.add("hidden");
-                document.getElementById(propName + "-build").classList.remove("hidden");
-                clearInterval(unlock)
-                message(x.name + " Unlocked", "info");
-            }
-        }, 200);
-    }
-}
-
-/*
  * Add a Worker
  * Initiated from the DOM
  * x - object = The worker object.

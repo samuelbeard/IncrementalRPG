@@ -363,16 +363,7 @@ var buildings = {
             brick: 200
         },
         costIncrease: 1.1,
-        research: {
-            locked: true,
-            unlockedPercent: 0,
-            unlockTime: 60,
-            isUnlocking: false,
-            cost: {
-                wood: 600,
-                stone: 350
-            }
-        }
+
     }
 }
 
