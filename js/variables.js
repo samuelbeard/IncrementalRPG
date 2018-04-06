@@ -71,7 +71,8 @@ var resource = {
             max: 100,
             cost: {
                 wood: 100
-            }
+            },
+            costIncrease: 1.1
         }
     },
     meat: {

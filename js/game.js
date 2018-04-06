@@ -61,6 +61,7 @@ Calc = {
             return false;
         }
     },
+
     /*
      * Takes an object of expenses and puts them into an array of arrays.
      * x - object = The cost object.

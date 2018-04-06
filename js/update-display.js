@@ -42,14 +42,7 @@ function updateDisplay() {
             elem.innerHTML = obj.cost[c];
             colorText(obj.cost[c], eval(resource[c].total), elem);
         }
-
-
-
-
-
     }
-
-
 
     // Workers
     for (w in workers) {
