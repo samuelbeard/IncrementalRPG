@@ -2,7 +2,7 @@
  * Save the Game to Local Storage
  */
 function saveGame() {
-    console.log("Saving Game");
+    console.log('Saving Game');
     localStorage['rpg_save[meta]'] = btoa(JSON.stringify(meta));
     localStorage['rpg_save[resource]'] = btoa(JSON.stringify(resource));
     localStorage['rpg_save[workers]'] = btoa(JSON.stringify(workers));
@@ -15,10 +15,10 @@ function saveGame() {
  */
 function loadGame() {
     if (!localStorage['rpg_save[meta]']) {
-        message("No Saved Game - Starting Fresh", "info")
+        message('No Saved Game - Starting Fresh', 'info');
         return;
     } else {
-        message("Loading Saved Game", "info");
+        message('Loading Saved Game', 'info');
     }
 
     meta = JSON.parse(atob(localStorage['rpg_save[meta]']));

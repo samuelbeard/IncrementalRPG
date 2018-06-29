@@ -7,19 +7,19 @@ window.onload = function() {
     setInterval(saveGame, meta.saveGameInterval);
     loadGame();
     initDisplay();
-}
+};
 
 /*
  * Increments Resources
  */
 function tick() {
     for (r in resource) {
-        autoIncrementResource(eval(resource[r]))
+        autoIncrementResource(eval(resource[r]));
     }
 
     for (w in workers) {
         if (eval(workers[w]).chance) {
-            increaseChanceResourcesFromWorker(eval(workers[w]))
+            increaseChanceResourcesFromWorker(eval(workers[w]));
         }
     }
 }
@@ -36,10 +36,10 @@ Calc = {
      * Returns false if one resource cannot be spent. It will not spend any resources if one cannot be spent.
      */
     spendResources: function(arr) {
-        var shortages = []
+        var shortages = [];
 
         for (a in arr) {
-            let objSlug = arr[a][0]
+            let objSlug = arr[a][0];
             let obj = eval(resource[objSlug]);
             let i = arr[a][1];
             let newValue = obj.total - i;
@@ -51,7 +51,7 @@ Calc = {
 
         if (shortages.length === 0) {
             for (a in arr) {
-                let objSlug = arr[a][0]
+                let objSlug = arr[a][0];
                 let obj = eval(resource[objSlug]);
                 let i = arr[a][1];
                 obj.total -= i;
@@ -75,7 +75,7 @@ Calc = {
         }
         return expenses;
     }
-}
+};
 
 /* TODO: REWRITE THIS FUNCTION TO RETURN TRUE OR FALSE & PUT IT IN Calc
  * Increase a Resource Total
@@ -86,7 +86,7 @@ function increaseResourceTotal(x, i) {
     newValue = x.total + i;
 
     // Check if the resource has a cost and manage that.
-    if (typeof(x.cost) !== 'undefined') {
+    if (typeof x.cost !== 'undefined') {
         for (c in x.cost) {
             let obj = eval(resource[c]);
             let costNum = eval(x.cost[c]);
@@ -94,14 +94,14 @@ function increaseResourceTotal(x, i) {
             if (newValueOfCost >= 0) {
                 obj.total -= costNum;
             } else {
-                return
+                return;
             }
         }
     }
 
     if (newValue < x.max) {
         x.total += i;
-        increaseChanceResources(x, i)
+        increaseChanceResources(x, i);
         return true;
     } else {
         x.total = x.max;
@@ -115,7 +115,7 @@ function increaseResourceTotal(x, i) {
  * x - object = The resource object.
  */
 function clickIncrement(x) {
-    increaseResourceTotal(x, x.clickIncrement)
+    increaseResourceTotal(x, x.clickIncrement);
 }
 
 /*
@@ -124,7 +124,7 @@ function clickIncrement(x) {
  */
 function autoIncrementResource(x) {
     if (x.autoIncrement > 0) {
-        increaseResourceTotal(x, x.autoIncrement)
+        increaseResourceTotal(x, x.autoIncrement);
     }
 }
 
@@ -134,15 +134,15 @@ function autoIncrementResource(x) {
  * i - number = The number of times the chance check should run.
  */
 function increaseChanceResources(x, i) {
-    if (typeof(x.chance) !== "undefined") {
+    if (typeof x.chance !== 'undefined') {
         for (c in x.chance) {
             var counter = 0;
             while (counter < i) {
                 let num = x.chance[c];
-                let rand = Math.floor(Math.random() * 101)
+                let rand = Math.floor(Math.random() * 101);
                 if (rand <= num) {
                     let obj = eval(resource[c]);
-                    increaseResourceTotal(obj, obj.chanceIncrement)
+                    increaseResourceTotal(obj, obj.chanceIncrement);
                 }
                 counter++;
             }
@@ -156,17 +156,17 @@ function increaseChanceResources(x, i) {
  */
 function increaseChanceResourcesFromWorker(x) {
     for (c in x.chance) {
-        let obj = eval(resource[c])
+        let obj = eval(resource[c]);
         i = obj.chanceIncrement;
         var counter = 0;
         while (counter < i) {
             var secondCounter = 0;
             while (secondCounter < x.total) {
                 let num = x.chance[c];
-                let rand = Math.floor(Math.random() * 101)
+                let rand = Math.floor(Math.random() * 101);
                 if (rand <= num) {
                     let obj = eval(resource[c]);
-                    increaseResourceTotal(obj, i)
+                    increaseResourceTotal(obj, i);
                 }
                 secondCounter++;
             }
@@ -183,11 +183,11 @@ function increaseChanceResourcesFromWorker(x) {
 function addStorage(x) {
     if (Calc.spendResources(Calc.expensesArray(x.storage.cost))) {
         x.max += x.storage.max;
-        x.storage.total ++;
+        x.storage.total++;
 
         for (iii in x.storage.cost) {
             let obj = eval(x.storage.cost[iii]);
-            x.storage.cost[iii] = Math.floor(obj * x.storage.costIncrease)
+            x.storage.cost[iii] = Math.floor(obj * x.storage.costIncrease);
         }
     }
 }
@@ -199,12 +199,12 @@ function addStorage(x) {
  */
 function buyBuilding(x) {
     if (Calc.spendResources(Calc.expensesArray(x.cost))) {
-        x.total ++;
+        x.total++;
         meta.maxPopulation += x.residents;
 
         for (iii in x.cost) {
             let obj = eval(x.cost[iii]);
-            x.cost[iii] = Math.floor(obj * x.costIncrease)
+            x.cost[iii] = Math.floor(obj * x.costIncrease);
         }
     }
 }
@@ -217,19 +217,19 @@ function buyBuilding(x) {
 function buyWorker(x) {
     // Stop the function if there isn't enough population capacity.
     if (meta.population >= meta.maxPopulation) {
-        return
+        return;
     }
 
     if (Calc.spendResources(Calc.expensesArray(x.cost))) {
-        x.total ++;
-        meta.population ++;
+        x.total++;
+        meta.population++;
 
-        let res = eval(resource[x.resource])
-        res.autoIncrement += x.autoIncrement
+        let res = eval(resource[x.resource]);
+        res.autoIncrement += x.autoIncrement;
 
         for (iii in x.cost) {
             let obj = eval(x.cost[iii]);
-            x.cost[iii] = Math.floor(obj * x.costIncrease)
+            x.cost[iii] = Math.floor(obj * x.costIncrease);
         }
     }
 }

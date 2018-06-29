@@ -10,16 +10,16 @@ function clickIncrementUpgrade(r, i, u) {
         r.clickIncrement = i;
 
         // Hide upgrade
-        let id = "upgrade-" + u.name.replace(" ", "-").toLowerCase()
-        document.getElementById(id).classList.add("hidden");
+        let id = 'upgrade-' + u.name.replace(' ', '-').toLowerCase();
+        document.getElementById(id).classList.add('hidden');
         u.visible = false;
         u.live = true;
 
         // Check for nextTier and show it
         if (u.nextTier) {
             var tierObj = eval(upgrades[u.nextTier]);
-            let id = "upgrade-" + tierObj.name.replace(" ", "-").toLowerCase()
-            document.getElementById(id).classList.remove("hidden");
+            let id = 'upgrade-' + tierObj.name.replace(' ', '-').toLowerCase();
+            document.getElementById(id).classList.remove('hidden');
             tierObj.visible = true;
         }
     }
@@ -37,16 +37,16 @@ function residentSizeUpgrade(r, i, u) {
         r.residents = i;
 
         // Hide Upgrade
-        let id = "upgrade-" + u.name.replace(" ", "-").toLowerCase()
-        document.getElementById(id).classList.add("hidden");
+        let id = 'upgrade-' + u.name.replace(' ', '-').toLowerCase();
+        document.getElementById(id).classList.add('hidden');
         u.visible = false;
         u.live = true;
 
         // Check for next tier
         if (u.nextTier) {
             var tierObj = eval(upgrades[u.nextTier]);
-            let id = "upgrade-" + tierObj.name.replace(" ", "-").toLowerCase()
-            document.getElementById(id).classList.remove("hidden");
+            let id = 'upgrade-' + tierObj.name.replace(' ', '-').toLowerCase();
+            document.getElementById(id).classList.remove('hidden');
             tierObj.visible = true;
         }
     }

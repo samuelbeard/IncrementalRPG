@@ -3,7 +3,6 @@
  * Runs every meta.fps milliseconds.
  */
 function updateDisplay() {
-
     // Resources
     for (r in resource) {
         let obj = eval(resource[r]);
@@ -32,7 +31,6 @@ function updateDisplay() {
     // Buildings
     for (b in buildings) {
         let obj = eval(buildings[b]);
-
 
         document.getElementById(`${b}-total`).innerHTML = obj.total;
         document.getElementById(`${b}-residents`).innerHTML = obj.residents;
@@ -69,8 +67,8 @@ function updateDisplay() {
         }
     }
 
-    document.getElementById("population-max").innerHTML = meta.maxPopulation;
-    document.getElementById("population-total").innerHTML = meta.population;
+    document.getElementById('population-max').innerHTML = meta.maxPopulation;
+    document.getElementById('population-total').innerHTML = meta.population;
 }
 
 /*
@@ -79,9 +77,9 @@ function updateDisplay() {
 function initDisplay() {
     for (u in upgrades) {
         if (eval(upgrades[u]).visible === false) {
-            let obj = eval(upgrades[u])
-            let id = "upgrade-" + obj.name.replace(" ", "-").toLowerCase()
-            document.getElementById(id).classList.add("hidden");
+            let obj = eval(upgrades[u]);
+            let id = 'upgrade-' + obj.name.replace(' ', '-').toLowerCase();
+            document.getElementById(id).classList.add('hidden');
         }
     }
 
@@ -92,13 +90,13 @@ function initDisplay() {
         if (obj.clickIncrement) {
             var clickHTML = `<button class="btn btn-primary btn-block" onmousedown="clickIncrement(resource.${obj.slug})">${obj.action} <span id="${obj.slug}-click-increment"></span> ${obj.name}</button>`;
         } else {
-            var clickHTML = `<button class="btn btn-default btn-block disabled">${obj.name}</button>`
+            var clickHTML = `<button class="btn btn-default btn-block disabled">${obj.name}</button>`;
         }
 
         if (resource[r].cost !== 'undefined') {
-            var resourceCostStr = "";
+            var resourceCostStr = '';
             for (c in resource[r].cost) {
-                resourceCostStr += `<button class="btn btn-primary btn-block disabled">-<span id="${obj.slug}-${c}-cost"></span> ${c}</button>`
+                resourceCostStr += `<button class="btn btn-primary btn-block disabled">-<span id="${obj.slug}-${c}-cost"></span> ${c}</button>`;
             }
         }
 
@@ -123,14 +121,14 @@ function initDisplay() {
                 ${resourceCostStr}
             </div>
         </div>
-        `
+        `;
 
-        let resourceParent = document.getElementById("resources")
+        let resourceParent = document.getElementById('resources');
         resourceParent.innerHTML += resourceStr;
 
-        var costStr = "";
+        var costStr = '';
         for (c in resource[r].storage.cost) {
-            costStr += `<span id="${obj.slug}-`+ c +`-storage-cost"></span> `+ c +` | `
+            costStr += `<span id="${obj.slug}-` + c + `-storage-cost"></span> ` + c + ` | `;
         }
 
         let storageStr = `
@@ -145,9 +143,9 @@ function initDisplay() {
                 <h6>| ${costStr}<h6>+${obj.storage.max} ${obj.name} Storage</h6>
             </div>
         </div>
-        `
+        `;
 
-        let storageParent = document.getElementById("storage-buttons");
+        let storageParent = document.getElementById('storage-buttons');
         storageParent.innerHTML += storageStr;
     }
 
@@ -155,9 +153,9 @@ function initDisplay() {
     for (w in workers) {
         let obj = eval(workers[w]);
 
-        var costStr = "";
+        var costStr = '';
         for (c in workers[w].cost) {
-            costStr += `<span id="${obj.slug}-`+ c +`-cost"></span> `+ c +` | `
+            costStr += `<span id="${obj.slug}-` + c + `-cost"></span> ` + c + ` | `;
         }
 
         let workerStr = `
@@ -173,9 +171,9 @@ function initDisplay() {
                 <h6>+1 ${obj.name}</h6>
             </div>
         </div>
-        `
+        `;
 
-        let workerParent = document.getElementById("workers")
+        let workerParent = document.getElementById('workers');
         workerParent.innerHTML += workerStr;
     }
 
@@ -183,9 +181,9 @@ function initDisplay() {
     for (b in buildings) {
         let obj = eval(buildings[b]);
 
-        var costStr = "";
+        var costStr = '';
         for (c in buildings[b].cost) {
-            costStr += `<span id="${obj.slug}-${c}-cost"></span> ${c} | `
+            costStr += `<span id="${obj.slug}-${c}-cost"></span> ${c} | `;
         }
 
         var buildingStr = `
@@ -201,25 +199,25 @@ function initDisplay() {
                 <h6>+<span id="${obj.slug}-residents"></span> Population</h6>
             </div>
         </div>
-        `
-        let buildingParent = document.getElementById("buildings")
+        `;
+        let buildingParent = document.getElementById('buildings');
         buildingParent.innerHTML += buildingStr;
     }
 
     if (meta.devmode === true) {
-        document.getElementById("dev-buttons").classList.remove("hidden");
+        document.getElementById('dev-buttons').classList.remove('hidden');
     }
 
-    document.getElementById("version-number").innerHTML = meta.versionNumber;
+    document.getElementById('version-number').innerHTML = meta.versionNumber;
 }
 
 /*
  * Colours Text Based on if the Player can Afford it.
  */
-function colorText(cost, resource, elem){
+function colorText(cost, resource, elem) {
     if (cost > resource) {
-        elem.style.color = "red"
+        elem.style.color = 'red';
     } else {
-        elem.style.color = "black"
+        elem.style.color = 'black';
     }
 }

@@ -17,11 +17,11 @@ function upStorage() {
     }
 }
 
-function dev(){
-    upStorage()
-    maxEverything()
+function dev() {
+    upStorage();
+    maxEverything();
 }
 
 function clear() {
-    clearLocalStorage()
+    clearLocalStorage();
 }
